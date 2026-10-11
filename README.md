@@ -221,3 +221,6 @@ Heretic's search is stochastic, so a rerun finds a different Pareto front; the e
 the trial behind `h0` are in [`results/stage1/`](results/stage1/) and can be replayed with Heretic's
 reproduction mode. Raw per-item outputs for every eval are in [`results/`](results/); the full story,
 including what went wrong, is in [`LOG.md`](LOG.md).
+
+## License
+[Apache-2.0](LICENSE), the same licence as the Qwen3.5 base weights.
