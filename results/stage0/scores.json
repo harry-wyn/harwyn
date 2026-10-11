@@ -1,0 +1,26 @@
+{
+ "math500": {
+  "score": 0.6,
+  "n": 500,
+  "mean_tokens": 5598,
+  "truncated": 0.404
+ },
+ "gpqa": {
+  "score": 0.10101010101010101,
+  "n": 198,
+  "mean_tokens": 7695,
+  "truncated": 0.8080808080808081
+ },
+ "humaneval": {
+  "score": 0.768,
+  "n": 164,
+  "mean_tokens": 3047,
+  "truncated": 0.12195121951219512
+ },
+ "ifeval": {
+  "score": 0.8077634011090573,
+  "n": 541,
+  "mean_tokens": 4305,
+  "truncated": 0.09611829944547134
+ }
+}

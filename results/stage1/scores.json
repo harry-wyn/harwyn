@@ -1,0 +1,14 @@
+{
+ "gpqa": {
+  "score": 0.0707070707070707,
+  "n": 99,
+  "mean_tokens": 7655,
+  "truncated": 0.7777777777777778
+ },
+ "humaneval": {
+  "score": 0.774,
+  "n": 164,
+  "mean_tokens": 2985,
+  "truncated": 0.13414634146341464
+ }
+}

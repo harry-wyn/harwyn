@@ -1,0 +1,10 @@
+front[0] trial 27: refusals 0.0, KL 11.0544
+front[1] trial 41: refusals 0.01, KL 1.1084
+front[2] trial 37: refusals 0.02, KL 0.9960
+front[3] trial 38: refusals 0.04, KL 0.4922
+front[4] trial 47: refusals 0.06, KL 0.1344
+front[5] trial 45: refusals 0.09, KL 0.0484
+front[6] trial 3: refusals 0.11, KL 0.0429
+front[7] trial 4: refusals 0.92, KL 0.0182
+front[8] trial 7: refusals 0.94, KL 0.0102
+chosen: front[6] = trial 3
