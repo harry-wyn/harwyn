@@ -1,0 +1,2024 @@
+Run ID: 20261012-075942_7acac9
+Checkpoints: $HARWYN_WORK/gsq-runs/2bit/20261012-075942_7acac9
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Preprocessing 10000 OpenThoughts samples (chat template)...
+Tokenizing into 800 chunks of length 2048...
+Broadcasting 800 chunks to 1 ranks...
+Dataset ready.
+2026-10-12 07:59:51,627 - quantization - INFO - Loading weights for layer: model.language_model.layers.0
+2026-10-12 07:59:51,799 - quantization - INFO - Loading embedding weights
+2026-10-12 07:59:52,790 - quantization - INFO - Capturing GPTQ inputs (256 samples)
+  get_inputs: 6/32 batches
+  get_inputs: 12/32 batches
+  get_inputs: 18/32 batches
+  get_inputs: 24/32 batches
+  get_inputs: 30/32 batches
+2026-10-12 07:59:56,567 - quantization - INFO - Capturing train inputs (512 samples)
+  get_inputs: 12/64 batches
+  get_inputs: 24/64 batches
+  get_inputs: 36/64 batches
+  get_inputs: 48/64 batches
+  get_inputs: 60/64 batches
+2026-10-12 08:00:05,495 - quantization - INFO - Capturing val inputs (32 samples)
+  get_inputs: 1/4 batches
+  get_inputs: 2/4 batches
+  get_inputs: 3/4 batches
+  get_inputs: 4/4 batches
+2026-10-12 08:00:06,214 - quantization - INFO - Offloading embedding to meta
+2026-10-12 08:00:06,219 - quantization - INFO - Starting quantization for layer: model.language_model.layers.0
+────────────────────────────────────────────────────────────
+  Layer 1 / 32  (3.1%)  |  Stage: GPTQ
+  Elapsed: 00:00:00  ETA: 00:00:00
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:04  ETA: 00:00:38
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:05  ETA: 00:00:22
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:06  ETA: 00:00:16
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:08  ETA: 00:00:12
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:09  ETA: 00:00:09
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:10  ETA: 00:00:07
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:11  ETA: 00:00:05
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:13  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:14  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:15  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.0.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:00:26,672 - quantization - INFO - Layer model.language_model.layers.0.mlp.gate_proj: GPTQ Loss = 33024.0
+  [GPTQ] Linear 2/3: model.language_model.layers.0.mlp.up_proj  Elapsed: 00:00:04
+2026-10-12 08:00:30,305 - quantization - INFO - Layer model.language_model.layers.0.mlp.up_proj: GPTQ Loss = 28928.0
+  [GPTQ] Linear 3/3: model.language_model.layers.0.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 08:00:39,441 - quantization - INFO - Layer model.language_model.layers.0.mlp.down_proj: GPTQ Loss = 69.0
+  [GPTQ] Done in 00:00:32  avg_loss=20673.6667
+────────────────────────────────────────────────────────────
+  Layer 1 / 32  (3.1%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:00:33  ETA: 00:17:21
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=2.07e-05
+  [Gumbel] Step 24/128  loss=1.66e-05
+  [Gumbel] Step 36/128  loss=1.71e-05
+  [Gumbel] Step 48/128  loss=1.56e-05
+  [Gumbel] Step 60/128  loss=1.04e-05
+2026-10-12 08:02:02,141 - quantization - INFO - Layer model.language_model.layers.0 - Epoch 1: Train Loss = 1.95e-05, Val Soft Loss = 1.36e-05, Val Hard Loss = 1.50e-05
+  [Gumbel] model.language_model.layers.0  Epoch 1/2
+  Phase elapsed: 00:01:22  ETA: 00:01:22
+  train_loss=1.95e-05  val_hard_loss=1.50e-05  epoch_time=80.2s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=1.73e-05
+  [Gumbel] Step 84/128  loss=1.32e-05
+  [Gumbel] Step 96/128  loss=1.32e-05
+  [Gumbel] Step 108/128  loss=1.42e-05
+  [Gumbel] Step 120/128  loss=1.34e-05
+  [Gumbel] Step 128/128  loss=1.61e-05
+2026-10-12 08:03:23,679 - quantization - INFO - Layer model.language_model.layers.0 - Epoch 2: Train Loss = 1.39e-05, Val Soft Loss = 1.48e-05, Val Hard Loss = 1.43e-05
+  [Gumbel] model.language_model.layers.0  Epoch 2/2
+  Phase elapsed: 00:02:43  ETA: 00:00:00
+  train_loss=1.39e-05  val_hard_loss=1.43e-05  epoch_time=81.5s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.0)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.0)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 1/32
+    sec/layer:  197.9s  (GPTQ 32.9s + Gumbel 164.3s)
+    avg sec/layer: 197.9s  est. remaining: 01:42:15
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.0
+2026-10-12 08:03:24,473 - quantization - INFO - Loaded quantized weights for model.language_model.layers.0 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.0)
+2026-10-12 08:03:55,514 - quantization - INFO - Moving to next layer: model.language_model.layers.1
+2026-10-12 08:03:55,939 - quantization - INFO - Starting quantization for layer: model.language_model.layers.1
+────────────────────────────────────────────────────────────
+  Layer 2 / 32  (6.2%)  |  Stage: GPTQ
+  Elapsed: 00:03:49  ETA: 00:57:25
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:11
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:10
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:03  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:06
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:07  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:10  ETA: 00:00:02
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.1.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:04:13,514 - quantization - INFO - Layer model.language_model.layers.1.mlp.gate_proj: GPTQ Loss = 69632.0
+  [GPTQ] Linear 2/3: model.language_model.layers.1.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:04:17,232 - quantization - INFO - Layer model.language_model.layers.1.mlp.up_proj: GPTQ Loss = 59136.0
+  [GPTQ] Linear 3/3: model.language_model.layers.1.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 08:04:28,009 - quantization - INFO - Layer model.language_model.layers.1.mlp.down_proj: GPTQ Loss = 159.0
+  [GPTQ] Done in 00:00:31  avg_loss=42975.6667
+────────────────────────────────────────────────────────────
+  Layer 2 / 32  (6.2%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:04:22  ETA: 01:05:31
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=4.37e-05
+  [Gumbel] Step 24/128  loss=4.52e-05
+  [Gumbel] Step 36/128  loss=3.53e-05
+  [Gumbel] Step 48/128  loss=3.89e-05
+  [Gumbel] Step 60/128  loss=3.53e-05
+2026-10-12 08:05:52,199 - quantization - INFO - Layer model.language_model.layers.1 - Epoch 1: Train Loss = 4.35e-05, Val Soft Loss = 3.29e-05, Val Hard Loss = 3.60e-05
+  [Gumbel] model.language_model.layers.1  Epoch 1/2
+  Phase elapsed: 00:01:23  ETA: 00:01:23
+  train_loss=4.35e-05  val_hard_loss=3.60e-05  epoch_time=81.7s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=3.08e-05
+  [Gumbel] Step 84/128  loss=3.14e-05
+  [Gumbel] Step 96/128  loss=3.22e-05
+  [Gumbel] Step 108/128  loss=3.23e-05
+  [Gumbel] Step 120/128  loss=3.45e-05
+  [Gumbel] Step 128/128  loss=3.92e-05
+2026-10-12 08:07:15,120 - quantization - INFO - Layer model.language_model.layers.1 - Epoch 2: Train Loss = 3.41e-05, Val Soft Loss = 3.59e-05, Val Hard Loss = 3.50e-05
+  [Gumbel] model.language_model.layers.1  Epoch 2/2
+  Phase elapsed: 00:02:46  ETA: 00:00:00
+  train_loss=3.41e-05  val_hard_loss=3.50e-05  epoch_time=82.9s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.1)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.1)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 2/32
+    sec/layer:  199.6s  (GPTQ 31.9s + Gumbel 167.2s)
+    avg sec/layer: 198.8s  est. remaining: 01:39:22
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.1
+2026-10-12 08:07:15,896 - quantization - INFO - Loaded quantized weights for model.language_model.layers.1 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.1)
+2026-10-12 08:07:35,332 - quantization - INFO - Moving to next layer: model.language_model.layers.2
+2026-10-12 08:07:35,494 - quantization - INFO - Starting quantization for layer: model.language_model.layers.2
+────────────────────────────────────────────────────────────
+  Layer 3 / 32  (9.4%)  |  Stage: GPTQ
+  Elapsed: 00:07:29  ETA: 01:12:22
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.2.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:07:53,261 - quantization - INFO - Layer model.language_model.layers.2.mlp.gate_proj: GPTQ Loss = 102400.0
+  [GPTQ] Linear 2/3: model.language_model.layers.2.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:07:56,774 - quantization - INFO - Layer model.language_model.layers.2.mlp.up_proj: GPTQ Loss = 76288.0
+  [GPTQ] Linear 3/3: model.language_model.layers.2.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 08:08:07,253 - quantization - INFO - Layer model.language_model.layers.2.mlp.down_proj: GPTQ Loss = 280.0
+  [GPTQ] Done in 00:00:31  avg_loss=59656.0000
+────────────────────────────────────────────────────────────
+  Layer 3 / 32  (9.4%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:08:01  ETA: 01:17:34
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=1.05e-04
+  [Gumbel] Step 24/128  loss=7.64e-05
+  [Gumbel] Step 36/128  loss=6.00e-05
+  [Gumbel] Step 48/128  loss=6.51e-05
+  [Gumbel] Step 60/128  loss=5.85e-05
+2026-10-12 08:09:32,618 - quantization - INFO - Layer model.language_model.layers.2 - Epoch 1: Train Loss = 7.65e-05, Val Soft Loss = 5.39e-05, Val Hard Loss = 5.73e-05
+  [Gumbel] model.language_model.layers.2  Epoch 1/2
+  Phase elapsed: 00:01:24  ETA: 00:01:24
+  train_loss=7.65e-05  val_hard_loss=5.73e-05  epoch_time=82.7s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=5.47e-05
+  [Gumbel] Step 84/128  loss=5.64e-05
+  [Gumbel] Step 96/128  loss=5.57e-05
+  [Gumbel] Step 108/128  loss=6.54e-05
+  [Gumbel] Step 120/128  loss=5.67e-05
+  [Gumbel] Step 128/128  loss=6.51e-05
+2026-10-12 08:10:56,374 - quantization - INFO - Layer model.language_model.layers.2 - Epoch 2: Train Loss = 5.48e-05, Val Soft Loss = 5.61e-05, Val Hard Loss = 5.48e-05
+  [Gumbel] model.language_model.layers.2  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=5.48e-05  val_hard_loss=5.48e-05  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.2)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.2)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 3/32
+    sec/layer:  201.3s  (GPTQ 31.7s + Gumbel 169.0s)
+    avg sec/layer: 199.6s  est. remaining: 01:36:28
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.2
+2026-10-12 08:10:57,138 - quantization - INFO - Loaded quantized weights for model.language_model.layers.2 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.2)
+2026-10-12 08:11:16,530 - quantization - INFO - Moving to next layer: model.language_model.layers.3
+2026-10-12 08:11:16,682 - quantization - INFO - Starting quantization for layer: model.language_model.layers.3
+────────────────────────────────────────────────────────────
+  Layer 4 / 32  (12.5%)  |  Stage: GPTQ
+  Elapsed: 00:11:10  ETA: 01:18:13
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:11
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:10
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:03  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:10  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.3.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:11:34,154 - quantization - INFO - Layer model.language_model.layers.3.mlp.gate_proj: GPTQ Loss = 125440.0
+  [GPTQ] Linear 2/3: model.language_model.layers.3.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:11:37,713 - quantization - INFO - Layer model.language_model.layers.3.mlp.up_proj: GPTQ Loss = 104960.0
+  [GPTQ] Linear 3/3: model.language_model.layers.3.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 08:11:48,247 - quantization - INFO - Layer model.language_model.layers.3.mlp.down_proj: GPTQ Loss = 440.0
+  [GPTQ] Done in 00:00:31  avg_loss=76946.6667
+────────────────────────────────────────────────────────────
+  Layer 4 / 32  (12.5%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:11:42  ETA: 01:21:57
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=1.32e-04
+  [Gumbel] Step 24/128  loss=1.07e-04
+  [Gumbel] Step 36/128  loss=9.30e-05
+  [Gumbel] Step 48/128  loss=8.88e-05
+  [Gumbel] Step 60/128  loss=8.11e-05
+2026-10-12 08:13:11,488 - quantization - INFO - Layer model.language_model.layers.3 - Epoch 1: Train Loss = 1.13e-04, Val Soft Loss = 8.74e-05, Val Hard Loss = 9.41e-05
+  [Gumbel] model.language_model.layers.3  Epoch 1/2
+  Phase elapsed: 00:01:22  ETA: 00:01:22
+  train_loss=1.13e-04  val_hard_loss=9.41e-05  epoch_time=80.7s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=9.48e-05
+  [Gumbel] Step 84/128  loss=1.03e-04
+  [Gumbel] Step 96/128  loss=9.49e-05
+  [Gumbel] Step 108/128  loss=9.85e-05
+  [Gumbel] Step 120/128  loss=9.01e-05
+  [Gumbel] Step 128/128  loss=9.70e-05
+2026-10-12 08:14:32,910 - quantization - INFO - Layer model.language_model.layers.3 - Epoch 2: Train Loss = 9.10e-05, Val Soft Loss = 9.38e-05, Val Hard Loss = 9.17e-05
+  [Gumbel] model.language_model.layers.3  Epoch 2/2
+  Phase elapsed: 00:02:44  ETA: 00:00:00
+  train_loss=9.10e-05  val_hard_loss=9.17e-05  epoch_time=81.4s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.3)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.3)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 4/32
+    sec/layer:  196.7s  (GPTQ 31.5s + Gumbel 164.6s)
+    avg sec/layer: 198.9s  est. remaining: 01:32:48
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.3
+2026-10-12 08:14:33,682 - quantization - INFO - Loaded quantized weights for model.language_model.layers.3 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.3)
+2026-10-12 08:14:52,346 - quantization - INFO - Moving to next layer: model.language_model.layers.4
+2026-10-12 08:14:52,510 - quantization - INFO - Starting quantization for layer: model.language_model.layers.4
+────────────────────────────────────────────────────────────
+  Layer 5 / 32  (15.6%)  |  Stage: GPTQ
+  Elapsed: 00:14:46  ETA: 01:19:45
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:14  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.4.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:15:10,426 - quantization - INFO - Layer model.language_model.layers.4.mlp.gate_proj: GPTQ Loss = 193536.0
+  [GPTQ] Linear 2/3: model.language_model.layers.4.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:15:13,915 - quantization - INFO - Layer model.language_model.layers.4.mlp.up_proj: GPTQ Loss = 159744.0
+  [GPTQ] Linear 3/3: model.language_model.layers.4.mlp.down_proj  Elapsed: 00:00:06
+2026-10-12 08:15:25,212 - quantization - INFO - Layer model.language_model.layers.4.mlp.down_proj: GPTQ Loss = 716.0
+  [GPTQ] Done in 00:00:32  avg_loss=117998.6667
+────────────────────────────────────────────────────────────
+  Layer 5 / 32  (15.6%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:15:19  ETA: 01:22:44
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=2.11e-04
+  [Gumbel] Step 24/128  loss=1.90e-04
+  [Gumbel] Step 36/128  loss=1.62e-04
+  [Gumbel] Step 48/128  loss=1.34e-04
+  [Gumbel] Step 60/128  loss=1.43e-04
+2026-10-12 08:16:50,628 - quantization - INFO - Layer model.language_model.layers.4 - Epoch 1: Train Loss = 1.90e-04, Val Soft Loss = 1.49e-04, Val Hard Loss = 1.61e-04
+  [Gumbel] model.language_model.layers.4  Epoch 1/2
+  Phase elapsed: 00:01:25  ETA: 00:01:25
+  train_loss=1.90e-04  val_hard_loss=1.61e-04  epoch_time=82.9s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=1.45e-04
+  [Gumbel] Step 84/128  loss=1.32e-04
+  [Gumbel] Step 96/128  loss=1.45e-04
+  [Gumbel] Step 108/128  loss=1.60e-04
+  [Gumbel] Step 120/128  loss=1.69e-04
+  [Gumbel] Step 128/128  loss=1.65e-04
+2026-10-12 08:18:14,334 - quantization - INFO - Layer model.language_model.layers.4 - Epoch 2: Train Loss = 1.54e-04, Val Soft Loss = 1.60e-04, Val Hard Loss = 1.56e-04
+  [Gumbel] model.language_model.layers.4  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=1.54e-04  val_hard_loss=1.56e-04  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.4)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.4)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 5/32
+    sec/layer:  202.2s  (GPTQ 32.6s + Gumbel 169.2s)
+    avg sec/layer: 199.5s  est. remaining: 01:29:47
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.4
+2026-10-12 08:18:15,072 - quantization - INFO - Loaded quantized weights for model.language_model.layers.4 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.4)
+2026-10-12 08:18:34,403 - quantization - INFO - Moving to next layer: model.language_model.layers.5
+2026-10-12 08:18:34,561 - quantization - INFO - Starting quantization for layer: model.language_model.layers.5
+────────────────────────────────────────────────────────────
+  Layer 6 / 32  (18.8%)  |  Stage: GPTQ
+  Elapsed: 00:18:28  ETA: 01:20:02
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.5.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:18:52,374 - quantization - INFO - Layer model.language_model.layers.5.mlp.gate_proj: GPTQ Loss = 270336.0
+  [GPTQ] Linear 2/3: model.language_model.layers.5.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:18:55,762 - quantization - INFO - Layer model.language_model.layers.5.mlp.up_proj: GPTQ Loss = 204800.0
+  [GPTQ] Linear 3/3: model.language_model.layers.5.mlp.down_proj  Elapsed: 00:00:06
+2026-10-12 08:19:06,337 - quantization - INFO - Layer model.language_model.layers.5.mlp.down_proj: GPTQ Loss = 1352.0
+  [GPTQ] Done in 00:00:31  avg_loss=158829.3333
+────────────────────────────────────────────────────────────
+  Layer 6 / 32  (18.8%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:19:00  ETA: 01:22:22
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=4.25e-04
+  [Gumbel] Step 24/128  loss=3.39e-04
+  [Gumbel] Step 36/128  loss=2.93e-04
+  [Gumbel] Step 48/128  loss=2.71e-04
+  [Gumbel] Step 60/128  loss=2.82e-04
+2026-10-12 08:20:31,904 - quantization - INFO - Layer model.language_model.layers.5 - Epoch 1: Train Loss = 3.37e-04, Val Soft Loss = 2.63e-04, Val Hard Loss = 2.85e-04
+  [Gumbel] model.language_model.layers.5  Epoch 1/2
+  Phase elapsed: 00:01:25  ETA: 00:01:25
+  train_loss=3.37e-04  val_hard_loss=2.85e-04  epoch_time=82.9s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=2.74e-04
+  [Gumbel] Step 84/128  loss=2.33e-04
+  [Gumbel] Step 96/128  loss=2.63e-04
+  [Gumbel] Step 108/128  loss=2.94e-04
+  [Gumbel] Step 120/128  loss=2.54e-04
+  [Gumbel] Step 128/128  loss=2.86e-04
+2026-10-12 08:21:55,640 - quantization - INFO - Layer model.language_model.layers.5 - Epoch 2: Train Loss = 2.74e-04, Val Soft Loss = 2.83e-04, Val Hard Loss = 2.77e-04
+  [Gumbel] model.language_model.layers.5  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=2.74e-04  val_hard_loss=2.77e-04  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.5)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.5)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 6/32
+    sec/layer:  201.5s  (GPTQ 31.7s + Gumbel 169.3s)
+    avg sec/layer: 199.9s  est. remaining: 01:26:36
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.5
+2026-10-12 08:21:56,443 - quantization - INFO - Loaded quantized weights for model.language_model.layers.5 in 0.4s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.5)
+2026-10-12 08:22:15,743 - quantization - INFO - Moving to next layer: model.language_model.layers.6
+2026-10-12 08:22:15,891 - quantization - INFO - Starting quantization for layer: model.language_model.layers.6
+────────────────────────────────────────────────────────────
+  Layer 7 / 32  (21.9%)  |  Stage: GPTQ
+  Elapsed: 00:22:09  ETA: 01:19:08
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.6.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:22:34,187 - quantization - INFO - Layer model.language_model.layers.6.mlp.gate_proj: GPTQ Loss = 350208.0
+  [GPTQ] Linear 2/3: model.language_model.layers.6.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:22:37,942 - quantization - INFO - Layer model.language_model.layers.6.mlp.up_proj: GPTQ Loss = 245760.0
+  [GPTQ] Linear 3/3: model.language_model.layers.6.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 08:22:49,167 - quantization - INFO - Layer model.language_model.layers.6.mlp.down_proj: GPTQ Loss = 1760.0
+  [GPTQ] Done in 00:00:33  avg_loss=199242.6667
+────────────────────────────────────────────────────────────
+  Layer 7 / 32  (21.9%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:22:43  ETA: 01:21:08
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=5.70e-04
+  [Gumbel] Step 24/128  loss=4.77e-04
+  [Gumbel] Step 36/128  loss=3.83e-04
+  [Gumbel] Step 48/128  loss=3.66e-04
+  [Gumbel] Step 60/128  loss=3.95e-04
+2026-10-12 08:24:14,528 - quantization - INFO - Layer model.language_model.layers.6 - Epoch 1: Train Loss = 4.79e-04, Val Soft Loss = 3.61e-04, Val Hard Loss = 3.94e-04
+  [Gumbel] model.language_model.layers.6  Epoch 1/2
+  Phase elapsed: 00:01:25  ETA: 00:01:25
+  train_loss=4.79e-04  val_hard_loss=3.94e-04  epoch_time=82.8s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=3.68e-04
+  [Gumbel] Step 84/128  loss=3.77e-04
+  [Gumbel] Step 96/128  loss=3.60e-04
+  [Gumbel] Step 108/128  loss=3.88e-04
+  [Gumbel] Step 120/128  loss=3.89e-04
+  [Gumbel] Step 128/128  loss=3.74e-04
+2026-10-12 08:25:38,232 - quantization - INFO - Layer model.language_model.layers.6 - Epoch 2: Train Loss = 3.74e-04, Val Soft Loss = 3.87e-04, Val Hard Loss = 3.77e-04
+  [Gumbel] model.language_model.layers.6  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=3.74e-04  val_hard_loss=3.77e-04  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.6)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.6)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 7/32
+    sec/layer:  202.8s  (GPTQ 33.2s + Gumbel 169.1s)
+    avg sec/layer: 200.3s  est. remaining: 01:23:27
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.6
+2026-10-12 08:25:38,972 - quantization - INFO - Loaded quantized weights for model.language_model.layers.6 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.6)
+2026-10-12 08:25:58,415 - quantization - INFO - Moving to next layer: model.language_model.layers.7
+2026-10-12 08:25:58,534 - quantization - INFO - Starting quantization for layer: model.language_model.layers.7
+────────────────────────────────────────────────────────────
+  Layer 8 / 32  (25.0%)  |  Stage: GPTQ
+  Elapsed: 00:25:52  ETA: 01:17:36
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:11
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:10
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:03  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:10  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.7.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:26:15,966 - quantization - INFO - Layer model.language_model.layers.7.mlp.gate_proj: GPTQ Loss = 405504.0
+  [GPTQ] Linear 2/3: model.language_model.layers.7.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:26:19,464 - quantization - INFO - Layer model.language_model.layers.7.mlp.up_proj: GPTQ Loss = 266240.0
+  [GPTQ] Linear 3/3: model.language_model.layers.7.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 08:26:29,796 - quantization - INFO - Layer model.language_model.layers.7.mlp.down_proj: GPTQ Loss = 1960.0
+  [GPTQ] Done in 00:00:31  avg_loss=224568.0000
+────────────────────────────────────────────────────────────
+  Layer 8 / 32  (25.0%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:26:24  ETA: 01:19:12
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=6.06e-04
+  [Gumbel] Step 24/128  loss=4.94e-04
+  [Gumbel] Step 36/128  loss=4.76e-04
+  [Gumbel] Step 48/128  loss=4.36e-04
+  [Gumbel] Step 60/128  loss=4.54e-04
+2026-10-12 08:27:53,090 - quantization - INFO - Layer model.language_model.layers.7 - Epoch 1: Train Loss = 5.25e-04, Val Soft Loss = 4.16e-04, Val Hard Loss = 4.45e-04
+  [Gumbel] model.language_model.layers.7  Epoch 1/2
+  Phase elapsed: 00:01:22  ETA: 00:01:22
+  train_loss=5.25e-04  val_hard_loss=4.45e-04  epoch_time=80.6s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=3.99e-04
+  [Gumbel] Step 84/128  loss=4.28e-04
+  [Gumbel] Step 96/128  loss=4.71e-04
+  [Gumbel] Step 108/128  loss=4.68e-04
+  [Gumbel] Step 120/128  loss=4.44e-04
+  [Gumbel] Step 128/128  loss=4.43e-04
+2026-10-12 08:29:14,471 - quantization - INFO - Layer model.language_model.layers.7 - Epoch 2: Train Loss = 4.27e-04, Val Soft Loss = 4.40e-04, Val Hard Loss = 4.30e-04
+  [Gumbel] model.language_model.layers.7  Epoch 2/2
+  Phase elapsed: 00:02:44  ETA: 00:00:00
+  train_loss=4.27e-04  val_hard_loss=4.30e-04  epoch_time=81.4s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.7)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.7)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 8/32
+    sec/layer:  196.3s  (GPTQ 31.2s + Gumbel 164.4s)
+    avg sec/layer: 199.8s  est. remaining: 01:19:55
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.7
+2026-10-12 08:29:15,221 - quantization - INFO - Loaded quantized weights for model.language_model.layers.7 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.7)
+2026-10-12 08:29:33,843 - quantization - INFO - Moving to next layer: model.language_model.layers.8
+2026-10-12 08:29:33,974 - quantization - INFO - Starting quantization for layer: model.language_model.layers.8
+────────────────────────────────────────────────────────────
+  Layer 9 / 32  (28.1%)  |  Stage: GPTQ
+  Elapsed: 00:29:27  ETA: 01:15:17
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.8.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:29:52,056 - quantization - INFO - Layer model.language_model.layers.8.mlp.gate_proj: GPTQ Loss = 385024.0
+  [GPTQ] Linear 2/3: model.language_model.layers.8.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:29:55,680 - quantization - INFO - Layer model.language_model.layers.8.mlp.up_proj: GPTQ Loss = 274432.0
+  [GPTQ] Linear 3/3: model.language_model.layers.8.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 08:30:06,673 - quantization - INFO - Layer model.language_model.layers.8.mlp.down_proj: GPTQ Loss = 1872.0
+  [GPTQ] Done in 00:00:32  avg_loss=220442.6667
+────────────────────────────────────────────────────────────
+  Layer 9 / 32  (28.1%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:30:00  ETA: 01:16:42
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=6.21e-04
+  [Gumbel] Step 24/128  loss=5.13e-04
+  [Gumbel] Step 36/128  loss=5.11e-04
+  [Gumbel] Step 48/128  loss=4.44e-04
+  [Gumbel] Step 60/128  loss=3.99e-04
+2026-10-12 08:31:32,158 - quantization - INFO - Layer model.language_model.layers.8 - Epoch 1: Train Loss = 5.21e-04, Val Soft Loss = 4.11e-04, Val Hard Loss = 4.39e-04
+  [Gumbel] model.language_model.layers.8  Epoch 1/2
+  Phase elapsed: 00:01:25  ETA: 00:01:25
+  train_loss=5.21e-04  val_hard_loss=4.39e-04  epoch_time=82.8s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=3.95e-04
+  [Gumbel] Step 84/128  loss=4.04e-04
+  [Gumbel] Step 96/128  loss=4.30e-04
+  [Gumbel] Step 108/128  loss=4.05e-04
+  [Gumbel] Step 120/128  loss=4.39e-04
+  [Gumbel] Step 128/128  loss=4.78e-04
+2026-10-12 08:32:55,852 - quantization - INFO - Layer model.language_model.layers.8 - Epoch 2: Train Loss = 4.26e-04, Val Soft Loss = 4.34e-04, Val Hard Loss = 4.25e-04
+  [Gumbel] model.language_model.layers.8  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=4.26e-04  val_hard_loss=4.25e-04  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.8)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.8)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 9/32
+    sec/layer:  202.3s  (GPTQ 32.6s + Gumbel 169.2s)
+    avg sec/layer: 200.1s  est. remaining: 01:16:41
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.8
+2026-10-12 08:32:56,679 - quantization - INFO - Loaded quantized weights for model.language_model.layers.8 in 0.4s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.8)
+2026-10-12 08:33:16,083 - quantization - INFO - Moving to next layer: model.language_model.layers.9
+2026-10-12 08:33:16,237 - quantization - INFO - Starting quantization for layer: model.language_model.layers.9
+────────────────────────────────────────────────────────────
+  Layer 10 / 32  (31.2%)  |  Stage: GPTQ
+  Elapsed: 00:33:10  ETA: 01:12:58
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.9.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:33:34,216 - quantization - INFO - Layer model.language_model.layers.9.mlp.gate_proj: GPTQ Loss = 360448.0
+  [GPTQ] Linear 2/3: model.language_model.layers.9.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:33:37,694 - quantization - INFO - Layer model.language_model.layers.9.mlp.up_proj: GPTQ Loss = 282624.0
+  [GPTQ] Linear 3/3: model.language_model.layers.9.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 08:33:49,015 - quantization - INFO - Layer model.language_model.layers.9.mlp.down_proj: GPTQ Loss = 1936.0
+  [GPTQ] Done in 00:00:32  avg_loss=215002.6667
+────────────────────────────────────────────────────────────
+  Layer 10 / 32  (31.2%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:33:43  ETA: 01:14:10
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=6.18e-04
+  [Gumbel] Step 24/128  loss=5.54e-04
+  [Gumbel] Step 36/128  loss=4.47e-04
+  [Gumbel] Step 48/128  loss=4.35e-04
+  [Gumbel] Step 60/128  loss=4.29e-04
+2026-10-12 08:35:14,456 - quantization - INFO - Layer model.language_model.layers.9 - Epoch 1: Train Loss = 5.28e-04, Val Soft Loss = 4.17e-04, Val Hard Loss = 4.45e-04
+  [Gumbel] model.language_model.layers.9  Epoch 1/2
+  Phase elapsed: 00:01:25  ETA: 00:01:25
+  train_loss=5.28e-04  val_hard_loss=4.45e-04  epoch_time=82.9s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=4.18e-04
+  [Gumbel] Step 84/128  loss=4.46e-04
+  [Gumbel] Step 96/128  loss=4.09e-04
+  [Gumbel] Step 108/128  loss=4.45e-04
+  [Gumbel] Step 120/128  loss=4.35e-04
+  [Gumbel] Step 128/128  loss=4.39e-04
+2026-10-12 08:36:38,142 - quantization - INFO - Layer model.language_model.layers.9 - Epoch 2: Train Loss = 4.33e-04, Val Soft Loss = 4.42e-04, Val Hard Loss = 4.32e-04
+  [Gumbel] model.language_model.layers.9  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=4.33e-04  val_hard_loss=4.32e-04  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.9)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.9)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 10/32
+    sec/layer:  202.3s  (GPTQ 32.7s + Gumbel 169.2s)
+    avg sec/layer: 200.3s  est. remaining: 01:13:26
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.9
+2026-10-12 08:36:38,881 - quantization - INFO - Loaded quantized weights for model.language_model.layers.9 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.9)
+2026-10-12 08:36:58,291 - quantization - INFO - Moving to next layer: model.language_model.layers.10
+2026-10-12 08:36:58,465 - quantization - INFO - Starting quantization for layer: model.language_model.layers.10
+────────────────────────────────────────────────────────────
+  Layer 11 / 32  (34.4%)  |  Stage: GPTQ
+  Elapsed: 00:36:52  ETA: 01:10:23
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.10.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:37:16,444 - quantization - INFO - Layer model.language_model.layers.10.mlp.gate_proj: GPTQ Loss = 327680.0
+  [GPTQ] Linear 2/3: model.language_model.layers.10.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:37:19,861 - quantization - INFO - Layer model.language_model.layers.10.mlp.up_proj: GPTQ Loss = 290816.0
+  [GPTQ] Linear 3/3: model.language_model.layers.10.mlp.down_proj  Elapsed: 00:00:06
+2026-10-12 08:37:30,212 - quantization - INFO - Layer model.language_model.layers.10.mlp.down_proj: GPTQ Loss = 2048.0
+  [GPTQ] Done in 00:00:31  avg_loss=206848.0000
+────────────────────────────────────────────────────────────
+  Layer 11 / 32  (34.4%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:37:24  ETA: 01:11:24
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=6.30e-04
+  [Gumbel] Step 24/128  loss=5.96e-04
+  [Gumbel] Step 36/128  loss=5.35e-04
+  [Gumbel] Step 48/128  loss=4.71e-04
+  [Gumbel] Step 60/128  loss=4.46e-04
+2026-10-12 08:38:55,727 - quantization - INFO - Layer model.language_model.layers.10 - Epoch 1: Train Loss = 5.76e-04, Val Soft Loss = 4.46e-04, Val Hard Loss = 4.75e-04
+  [Gumbel] model.language_model.layers.10  Epoch 1/2
+  Phase elapsed: 00:01:25  ETA: 00:01:25
+  train_loss=5.76e-04  val_hard_loss=4.75e-04  epoch_time=82.9s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=4.36e-04
+  [Gumbel] Step 84/128  loss=4.50e-04
+  [Gumbel] Step 96/128  loss=4.88e-04
+  [Gumbel] Step 108/128  loss=4.69e-04
+  [Gumbel] Step 120/128  loss=4.99e-04
+  [Gumbel] Step 128/128  loss=4.65e-04
+2026-10-12 08:40:19,507 - quantization - INFO - Layer model.language_model.layers.10 - Epoch 2: Train Loss = 4.68e-04, Val Soft Loss = 4.70e-04, Val Hard Loss = 4.59e-04
+  [Gumbel] model.language_model.layers.10  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=4.68e-04  val_hard_loss=4.59e-04  epoch_time=83.8s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.10)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.10)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 11/32
+    sec/layer:  201.5s  (GPTQ 31.6s + Gumbel 169.2s)
+    avg sec/layer: 200.4s  est. remaining: 01:10:08
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.10
+2026-10-12 08:40:20,243 - quantization - INFO - Loaded quantized weights for model.language_model.layers.10 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.10)
+2026-10-12 08:40:38,971 - quantization - INFO - Moving to next layer: model.language_model.layers.11
+2026-10-12 08:40:39,324 - quantization - INFO - Starting quantization for layer: model.language_model.layers.11
+────────────────────────────────────────────────────────────
+  Layer 12 / 32  (37.5%)  |  Stage: GPTQ
+  Elapsed: 00:40:33  ETA: 01:07:35
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:11
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:10
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:03  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:10  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.11.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:40:56,844 - quantization - INFO - Layer model.language_model.layers.11.mlp.gate_proj: GPTQ Loss = 331776.0
+  [GPTQ] Linear 2/3: model.language_model.layers.11.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:41:00,501 - quantization - INFO - Layer model.language_model.layers.11.mlp.up_proj: GPTQ Loss = 305152.0
+  [GPTQ] Linear 3/3: model.language_model.layers.11.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 08:41:09,681 - quantization - INFO - Layer model.language_model.layers.11.mlp.down_proj: GPTQ Loss = 2352.0
+  [GPTQ] Done in 00:00:30  avg_loss=213093.3333
+────────────────────────────────────────────────────────────
+  Layer 12 / 32  (37.5%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:41:03  ETA: 01:08:26
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=7.42e-04
+  [Gumbel] Step 24/128  loss=6.38e-04
+  [Gumbel] Step 36/128  loss=5.65e-04
+  [Gumbel] Step 48/128  loss=4.81e-04
+  [Gumbel] Step 60/128  loss=5.77e-04
+2026-10-12 08:42:32,667 - quantization - INFO - Layer model.language_model.layers.11 - Epoch 1: Train Loss = 6.32e-04, Val Soft Loss = 4.95e-04, Val Hard Loss = 5.27e-04
+  [Gumbel] model.language_model.layers.11  Epoch 1/2
+  Phase elapsed: 00:01:22  ETA: 00:01:22
+  train_loss=6.32e-04  val_hard_loss=5.27e-04  epoch_time=80.7s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=5.65e-04
+  [Gumbel] Step 84/128  loss=5.15e-04
+  [Gumbel] Step 96/128  loss=4.51e-04
+  [Gumbel] Step 108/128  loss=5.78e-04
+  [Gumbel] Step 120/128  loss=5.05e-04
+  [Gumbel] Step 128/128  loss=5.35e-04
+2026-10-12 08:43:54,006 - quantization - INFO - Layer model.language_model.layers.11 - Epoch 2: Train Loss = 5.17e-04, Val Soft Loss = 5.25e-04, Val Hard Loss = 5.13e-04
+  [Gumbel] model.language_model.layers.11  Epoch 2/2
+  Phase elapsed: 00:02:43  ETA: 00:00:00
+  train_loss=5.17e-04  val_hard_loss=5.13e-04  epoch_time=81.3s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.11)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.11)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 12/32
+    sec/layer:  195.1s  (GPTQ 30.2s + Gumbel 164.4s)
+    avg sec/layer: 200.0s  est. remaining: 01:06:39
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.11
+2026-10-12 08:43:54,741 - quantization - INFO - Loaded quantized weights for model.language_model.layers.11 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.11)
+2026-10-12 08:44:13,150 - quantization - INFO - Moving to next layer: model.language_model.layers.12
+2026-10-12 08:44:13,330 - quantization - INFO - Starting quantization for layer: model.language_model.layers.12
+────────────────────────────────────────────────────────────
+  Layer 13 / 32  (40.6%)  |  Stage: GPTQ
+  Elapsed: 00:44:07  ETA: 01:04:28
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.12.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:44:31,347 - quantization - INFO - Layer model.language_model.layers.12.mlp.gate_proj: GPTQ Loss = 327680.0
+  [GPTQ] Linear 2/3: model.language_model.layers.12.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:44:34,883 - quantization - INFO - Layer model.language_model.layers.12.mlp.up_proj: GPTQ Loss = 309248.0
+  [GPTQ] Linear 3/3: model.language_model.layers.12.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 08:44:45,793 - quantization - INFO - Layer model.language_model.layers.12.mlp.down_proj: GPTQ Loss = 2432.0
+  [GPTQ] Done in 00:00:32  avg_loss=213120.0000
+────────────────────────────────────────────────────────────
+  Layer 13 / 32  (40.6%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:44:39  ETA: 01:05:16
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=7.18e-04
+  [Gumbel] Step 24/128  loss=6.13e-04
+  [Gumbel] Step 36/128  loss=6.05e-04
+  [Gumbel] Step 48/128  loss=5.32e-04
+  [Gumbel] Step 60/128  loss=5.23e-04
+2026-10-12 08:46:11,137 - quantization - INFO - Layer model.language_model.layers.12 - Epoch 1: Train Loss = 6.22e-04, Val Soft Loss = 4.91e-04, Val Hard Loss = 5.25e-04
+  [Gumbel] model.language_model.layers.12  Epoch 1/2
+  Phase elapsed: 00:01:25  ETA: 00:01:25
+  train_loss=6.22e-04  val_hard_loss=5.25e-04  epoch_time=82.8s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=5.06e-04
+  [Gumbel] Step 84/128  loss=5.03e-04
+  [Gumbel] Step 96/128  loss=5.20e-04
+  [Gumbel] Step 108/128  loss=5.26e-04
+  [Gumbel] Step 120/128  loss=5.83e-04
+  [Gumbel] Step 128/128  loss=5.09e-04
+2026-10-12 08:47:34,871 - quantization - INFO - Layer model.language_model.layers.12 - Epoch 2: Train Loss = 5.15e-04, Val Soft Loss = 5.22e-04, Val Hard Loss = 5.10e-04
+  [Gumbel] model.language_model.layers.12  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=5.15e-04  val_hard_loss=5.10e-04  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.12)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.12)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 13/32
+    sec/layer:  202.0s  (GPTQ 32.4s + Gumbel 169.1s)
+    avg sec/layer: 200.1s  est. remaining: 01:03:22
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.12
+2026-10-12 08:47:35,630 - quantization - INFO - Loaded quantized weights for model.language_model.layers.12 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.12)
+2026-10-12 08:47:55,042 - quantization - INFO - Moving to next layer: model.language_model.layers.13
+2026-10-12 08:47:55,202 - quantization - INFO - Starting quantization for layer: model.language_model.layers.13
+────────────────────────────────────────────────────────────
+  Layer 14 / 32  (43.8%)  |  Stage: GPTQ
+  Elapsed: 00:47:48  ETA: 01:01:28
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.13.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:48:13,311 - quantization - INFO - Layer model.language_model.layers.13.mlp.gate_proj: GPTQ Loss = 342016.0
+  [GPTQ] Linear 2/3: model.language_model.layers.13.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:48:17,162 - quantization - INFO - Layer model.language_model.layers.13.mlp.up_proj: GPTQ Loss = 317440.0
+  [GPTQ] Linear 3/3: model.language_model.layers.13.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 08:48:28,228 - quantization - INFO - Layer model.language_model.layers.13.mlp.down_proj: GPTQ Loss = 2496.0
+  [GPTQ] Done in 00:00:32  avg_loss=220650.6667
+────────────────────────────────────────────────────────────
+  Layer 14 / 32  (43.8%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:48:22  ETA: 01:02:11
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=7.31e-04
+  [Gumbel] Step 24/128  loss=5.72e-04
+  [Gumbel] Step 36/128  loss=6.14e-04
+  [Gumbel] Step 48/128  loss=5.76e-04
+  [Gumbel] Step 60/128  loss=4.94e-04
+2026-10-12 08:49:53,635 - quantization - INFO - Layer model.language_model.layers.13 - Epoch 1: Train Loss = 6.22e-04, Val Soft Loss = 4.91e-04, Val Hard Loss = 5.26e-04
+  [Gumbel] model.language_model.layers.13  Epoch 1/2
+  Phase elapsed: 00:01:25  ETA: 00:01:25
+  train_loss=6.22e-04  val_hard_loss=5.26e-04  epoch_time=82.9s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=4.80e-04
+  [Gumbel] Step 84/128  loss=4.81e-04
+  [Gumbel] Step 96/128  loss=5.64e-04
+  [Gumbel] Step 108/128  loss=5.74e-04
+  [Gumbel] Step 120/128  loss=5.56e-04
+  [Gumbel] Step 128/128  loss=5.40e-04
+2026-10-12 08:51:17,300 - quantization - INFO - Layer model.language_model.layers.13 - Epoch 2: Train Loss = 5.20e-04, Val Soft Loss = 5.23e-04, Val Hard Loss = 5.12e-04
+  [Gumbel] model.language_model.layers.13  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=5.20e-04  val_hard_loss=5.12e-04  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.13)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.13)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 14/32
+    sec/layer:  202.5s  (GPTQ 32.9s + Gumbel 169.1s)
+    avg sec/layer: 200.3s  est. remaining: 01:00:05
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.13
+2026-10-12 08:51:18,047 - quantization - INFO - Loaded quantized weights for model.language_model.layers.13 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.13)
+2026-10-12 08:51:37,387 - quantization - INFO - Moving to next layer: model.language_model.layers.14
+2026-10-12 08:51:37,547 - quantization - INFO - Starting quantization for layer: model.language_model.layers.14
+────────────────────────────────────────────────────────────
+  Layer 15 / 32  (46.9%)  |  Stage: GPTQ
+  Elapsed: 00:51:31  ETA: 00:58:23
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.14.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:51:55,533 - quantization - INFO - Layer model.language_model.layers.14.mlp.gate_proj: GPTQ Loss = 331776.0
+  [GPTQ] Linear 2/3: model.language_model.layers.14.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:51:59,013 - quantization - INFO - Layer model.language_model.layers.14.mlp.up_proj: GPTQ Loss = 327680.0
+  [GPTQ] Linear 3/3: model.language_model.layers.14.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 08:52:10,251 - quantization - INFO - Layer model.language_model.layers.14.mlp.down_proj: GPTQ Loss = 2704.0
+  [GPTQ] Done in 00:00:32  avg_loss=220720.0000
+────────────────────────────────────────────────────────────
+  Layer 15 / 32  (46.9%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:52:04  ETA: 00:59:01
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=8.20e-04
+  [Gumbel] Step 24/128  loss=6.45e-04
+  [Gumbel] Step 36/128  loss=6.12e-04
+  [Gumbel] Step 48/128  loss=5.68e-04
+  [Gumbel] Step 60/128  loss=5.44e-04
+2026-10-12 08:53:35,604 - quantization - INFO - Layer model.language_model.layers.14 - Epoch 1: Train Loss = 6.66e-04, Val Soft Loss = 5.20e-04, Val Hard Loss = 5.59e-04
+  [Gumbel] model.language_model.layers.14  Epoch 1/2
+  Phase elapsed: 00:01:24  ETA: 00:01:24
+  train_loss=6.66e-04  val_hard_loss=5.59e-04  epoch_time=82.8s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=5.72e-04
+  [Gumbel] Step 84/128  loss=5.57e-04
+  [Gumbel] Step 96/128  loss=5.39e-04
+  [Gumbel] Step 108/128  loss=5.33e-04
+  [Gumbel] Step 120/128  loss=5.49e-04
+  [Gumbel] Step 128/128  loss=6.21e-04
+2026-10-12 08:54:59,289 - quantization - INFO - Layer model.language_model.layers.14 - Epoch 2: Train Loss = 5.50e-04, Val Soft Loss = 5.55e-04, Val Hard Loss = 5.42e-04
+  [Gumbel] model.language_model.layers.14  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=5.50e-04  val_hard_loss=5.42e-04  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.14)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.14)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 15/32
+    sec/layer:  202.1s  (GPTQ 32.6s + Gumbel 169.0s)
+    avg sec/layer: 200.4s  est. remaining: 00:56:47
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.14
+2026-10-12 08:55:00,017 - quantization - INFO - Loaded quantized weights for model.language_model.layers.14 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.14)
+2026-10-12 08:55:19,505 - quantization - INFO - Moving to next layer: model.language_model.layers.15
+2026-10-12 08:55:19,656 - quantization - INFO - Starting quantization for layer: model.language_model.layers.15
+────────────────────────────────────────────────────────────
+  Layer 16 / 32  (50.0%)  |  Stage: GPTQ
+  Elapsed: 00:55:13  ETA: 00:55:13
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:11
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:10
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:03  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:06
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:10  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.15.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:55:37,058 - quantization - INFO - Layer model.language_model.layers.15.mlp.gate_proj: GPTQ Loss = 378880.0
+  [GPTQ] Linear 2/3: model.language_model.layers.15.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:55:40,466 - quantization - INFO - Layer model.language_model.layers.15.mlp.up_proj: GPTQ Loss = 374784.0
+  [GPTQ] Linear 3/3: model.language_model.layers.15.mlp.down_proj  Elapsed: 00:00:06
+2026-10-12 08:55:50,834 - quantization - INFO - Layer model.language_model.layers.15.mlp.down_proj: GPTQ Loss = 3808.0
+  [GPTQ] Done in 00:00:31  avg_loss=252490.6667
+────────────────────────────────────────────────────────────
+  Layer 16 / 32  (50.0%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:55:45  ETA: 00:55:45
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=1.06e-03
+  [Gumbel] Step 24/128  loss=1.03e-03
+  [Gumbel] Step 36/128  loss=7.70e-04
+  [Gumbel] Step 48/128  loss=7.80e-04
+  [Gumbel] Step 60/128  loss=8.29e-04
+2026-10-12 08:57:13,907 - quantization - INFO - Layer model.language_model.layers.15 - Epoch 1: Train Loss = 9.19e-04, Val Soft Loss = 7.28e-04, Val Hard Loss = 7.81e-04
+  [Gumbel] model.language_model.layers.15  Epoch 1/2
+  Phase elapsed: 00:01:22  ETA: 00:01:22
+  train_loss=9.19e-04  val_hard_loss=7.81e-04  epoch_time=80.6s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=7.41e-04
+  [Gumbel] Step 84/128  loss=8.39e-04
+  [Gumbel] Step 96/128  loss=7.40e-04
+  [Gumbel] Step 108/128  loss=7.48e-04
+  [Gumbel] Step 120/128  loss=7.46e-04
+  [Gumbel] Step 128/128  loss=8.81e-04
+2026-10-12 08:58:35,287 - quantization - INFO - Layer model.language_model.layers.15 - Epoch 2: Train Loss = 7.65e-04, Val Soft Loss = 7.77e-04, Val Hard Loss = 7.59e-04
+  [Gumbel] model.language_model.layers.15  Epoch 2/2
+  Phase elapsed: 00:02:44  ETA: 00:00:00
+  train_loss=7.65e-04  val_hard_loss=7.59e-04  epoch_time=81.4s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.15)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.15)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 16/32
+    sec/layer:  196.0s  (GPTQ 31.1s + Gumbel 164.4s)
+    avg sec/layer: 200.1s  est. remaining: 00:53:22
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.15
+2026-10-12 08:58:36,001 - quantization - INFO - Loaded quantized weights for model.language_model.layers.15 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.15)
+2026-10-12 08:58:54,523 - quantization - INFO - Moving to next layer: model.language_model.layers.16
+2026-10-12 08:58:54,679 - quantization - INFO - Starting quantization for layer: model.language_model.layers.16
+────────────────────────────────────────────────────────────
+  Layer 17 / 32  (53.1%)  |  Stage: GPTQ
+  Elapsed: 00:58:48  ETA: 00:51:53
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.16.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 08:59:12,532 - quantization - INFO - Layer model.language_model.layers.16.mlp.gate_proj: GPTQ Loss = 415744.0
+  [GPTQ] Linear 2/3: model.language_model.layers.16.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 08:59:15,986 - quantization - INFO - Layer model.language_model.layers.16.mlp.up_proj: GPTQ Loss = 395264.0
+  [GPTQ] Linear 3/3: model.language_model.layers.16.mlp.down_proj  Elapsed: 00:00:06
+2026-10-12 08:59:28,170 - quantization - INFO - Layer model.language_model.layers.16.mlp.down_proj: GPTQ Loss = 4608.0
+  [GPTQ] Done in 00:00:33  avg_loss=271872.0000
+────────────────────────────────────────────────────────────
+  Layer 17 / 32  (53.1%)  |  Stage: Gumbel-Softmax
+  Elapsed: 00:59:22  ETA: 00:52:23
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=1.39e-03
+  [Gumbel] Step 24/128  loss=1.06e-03
+  [Gumbel] Step 36/128  loss=9.45e-04
+  [Gumbel] Step 48/128  loss=9.44e-04
+  [Gumbel] Step 60/128  loss=8.68e-04
+2026-10-12 09:00:53,453 - quantization - INFO - Layer model.language_model.layers.16 - Epoch 1: Train Loss = 1.09e-03, Val Soft Loss = 8.57e-04, Val Hard Loss = 9.24e-04
+  [Gumbel] model.language_model.layers.16  Epoch 1/2
+  Phase elapsed: 00:01:24  ETA: 00:01:24
+  train_loss=1.09e-03  val_hard_loss=9.24e-04  epoch_time=82.7s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=8.90e-04
+  [Gumbel] Step 84/128  loss=9.23e-04
+  [Gumbel] Step 96/128  loss=8.75e-04
+  [Gumbel] Step 108/128  loss=9.57e-04
+  [Gumbel] Step 120/128  loss=1.01e-03
+  [Gumbel] Step 128/128  loss=1.01e-03
+2026-10-12 09:02:17,148 - quantization - INFO - Layer model.language_model.layers.16 - Epoch 2: Train Loss = 9.07e-04, Val Soft Loss = 9.18e-04, Val Hard Loss = 8.98e-04
+  [Gumbel] model.language_model.layers.16  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=9.07e-04  val_hard_loss=8.98e-04  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.16)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.16)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 17/32
+    sec/layer:  202.9s  (GPTQ 33.4s + Gumbel 169.0s)
+    avg sec/layer: 200.3s  est. remaining: 00:50:04
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.16
+2026-10-12 09:02:17,892 - quantization - INFO - Loaded quantized weights for model.language_model.layers.16 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.16)
+2026-10-12 09:02:37,423 - quantization - INFO - Moving to next layer: model.language_model.layers.17
+2026-10-12 09:02:37,581 - quantization - INFO - Starting quantization for layer: model.language_model.layers.17
+────────────────────────────────────────────────────────────
+  Layer 18 / 32  (56.2%)  |  Stage: GPTQ
+  Elapsed: 01:02:31  ETA: 00:48:37
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.17.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 09:02:55,479 - quantization - INFO - Layer model.language_model.layers.17.mlp.gate_proj: GPTQ Loss = 425984.0
+  [GPTQ] Linear 2/3: model.language_model.layers.17.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 09:02:58,865 - quantization - INFO - Layer model.language_model.layers.17.mlp.up_proj: GPTQ Loss = 419840.0
+  [GPTQ] Linear 3/3: model.language_model.layers.17.mlp.down_proj  Elapsed: 00:00:06
+2026-10-12 09:03:09,530 - quantization - INFO - Layer model.language_model.layers.17.mlp.down_proj: GPTQ Loss = 5472.0
+  [GPTQ] Done in 00:00:31  avg_loss=283765.3333
+────────────────────────────────────────────────────────────
+  Layer 18 / 32  (56.2%)  |  Stage: Gumbel-Softmax
+  Elapsed: 01:03:03  ETA: 00:49:02
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=1.54e-03
+  [Gumbel] Step 24/128  loss=1.27e-03
+  [Gumbel] Step 36/128  loss=1.12e-03
+  [Gumbel] Step 48/128  loss=1.10e-03
+  [Gumbel] Step 60/128  loss=1.03e-03
+2026-10-12 09:04:34,944 - quantization - INFO - Layer model.language_model.layers.17 - Epoch 1: Train Loss = 1.31e-03, Val Soft Loss = 1.02e-03, Val Hard Loss = 1.11e-03
+  [Gumbel] model.language_model.layers.17  Epoch 1/2
+  Phase elapsed: 00:01:25  ETA: 00:01:25
+  train_loss=1.31e-03  val_hard_loss=1.11e-03  epoch_time=82.8s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=1.04e-03
+  [Gumbel] Step 84/128  loss=1.07e-03
+  [Gumbel] Step 96/128  loss=1.11e-03
+  [Gumbel] Step 108/128  loss=1.15e-03
+  [Gumbel] Step 120/128  loss=1.13e-03
+  [Gumbel] Step 128/128  loss=1.12e-03
+2026-10-12 09:05:58,658 - quantization - INFO - Layer model.language_model.layers.17 - Epoch 2: Train Loss = 1.07e-03, Val Soft Loss = 1.10e-03, Val Hard Loss = 1.07e-03
+  [Gumbel] model.language_model.layers.17  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=1.07e-03  val_hard_loss=1.07e-03  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.17)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.17)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 18/32
+    sec/layer:  201.5s  (GPTQ 31.8s + Gumbel 169.1s)
+    avg sec/layer: 200.4s  est. remaining: 00:46:45
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.17
+2026-10-12 09:05:59,394 - quantization - INFO - Loaded quantized weights for model.language_model.layers.17 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.17)
+2026-10-12 09:06:18,763 - quantization - INFO - Moving to next layer: model.language_model.layers.18
+2026-10-12 09:06:18,920 - quantization - INFO - Starting quantization for layer: model.language_model.layers.18
+────────────────────────────────────────────────────────────
+  Layer 19 / 32  (59.4%)  |  Stage: GPTQ
+  Elapsed: 01:06:12  ETA: 00:45:18
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.18.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 09:06:36,847 - quantization - INFO - Layer model.language_model.layers.18.mlp.gate_proj: GPTQ Loss = 518144.0
+  [GPTQ] Linear 2/3: model.language_model.layers.18.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 09:06:40,305 - quantization - INFO - Layer model.language_model.layers.18.mlp.up_proj: GPTQ Loss = 466944.0
+  [GPTQ] Linear 3/3: model.language_model.layers.18.mlp.down_proj  Elapsed: 00:00:06
+2026-10-12 09:06:50,940 - quantization - INFO - Layer model.language_model.layers.18.mlp.down_proj: GPTQ Loss = 9152.0
+  [GPTQ] Done in 00:00:31  avg_loss=331413.3333
+────────────────────────────────────────────────────────────
+  Layer 19 / 32  (59.4%)  |  Stage: Gumbel-Softmax
+  Elapsed: 01:06:45  ETA: 00:45:40
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=2.62e-03
+  [Gumbel] Step 24/128  loss=2.06e-03
+  [Gumbel] Step 36/128  loss=1.95e-03
+  [Gumbel] Step 48/128  loss=1.75e-03
+  [Gumbel] Step 60/128  loss=1.61e-03
+2026-10-12 09:08:16,343 - quantization - INFO - Layer model.language_model.layers.18 - Epoch 1: Train Loss = 2.18e-03, Val Soft Loss = 1.69e-03, Val Hard Loss = 1.83e-03
+  [Gumbel] model.language_model.layers.18  Epoch 1/2
+  Phase elapsed: 00:01:24  ETA: 00:01:24
+  train_loss=2.18e-03  val_hard_loss=1.83e-03  epoch_time=82.8s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=1.66e-03
+  [Gumbel] Step 84/128  loss=1.72e-03
+  [Gumbel] Step 96/128  loss=1.70e-03
+  [Gumbel] Step 108/128  loss=1.71e-03
+  [Gumbel] Step 120/128  loss=1.74e-03
+  [Gumbel] Step 128/128  loss=1.76e-03
+2026-10-12 09:09:40,050 - quantization - INFO - Layer model.language_model.layers.18 - Epoch 2: Train Loss = 1.73e-03, Val Soft Loss = 1.81e-03, Val Hard Loss = 1.76e-03
+  [Gumbel] model.language_model.layers.18  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=1.73e-03  val_hard_loss=1.76e-03  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.18)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.18)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 19/32
+    sec/layer:  201.5s  (GPTQ 31.9s + Gumbel 169.1s)
+    avg sec/layer: 200.4s  est. remaining: 00:43:25
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.18
+2026-10-12 09:09:40,792 - quantization - INFO - Loaded quantized weights for model.language_model.layers.18 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.18)
+2026-10-12 09:10:00,158 - quantization - INFO - Moving to next layer: model.language_model.layers.19
+2026-10-12 09:10:00,309 - quantization - INFO - Starting quantization for layer: model.language_model.layers.19
+────────────────────────────────────────────────────────────
+  Layer 20 / 32  (62.5%)  |  Stage: GPTQ
+  Elapsed: 01:09:54  ETA: 00:41:56
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:11
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:10
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:03  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:06
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:10  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.19.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 09:10:17,676 - quantization - INFO - Layer model.language_model.layers.19.mlp.gate_proj: GPTQ Loss = 647168.0
+  [GPTQ] Linear 2/3: model.language_model.layers.19.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 09:10:21,078 - quantization - INFO - Layer model.language_model.layers.19.mlp.up_proj: GPTQ Loss = 585728.0
+  [GPTQ] Linear 3/3: model.language_model.layers.19.mlp.down_proj  Elapsed: 00:00:06
+2026-10-12 09:10:31,306 - quantization - INFO - Layer model.language_model.layers.19.mlp.down_proj: GPTQ Loss = 13568.0
+  [GPTQ] Done in 00:00:30  avg_loss=415488.0000
+────────────────────────────────────────────────────────────
+  Layer 20 / 32  (62.5%)  |  Stage: Gumbel-Softmax
+  Elapsed: 01:10:25  ETA: 00:42:15
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=4.02e-03
+  [Gumbel] Step 24/128  loss=3.30e-03
+  [Gumbel] Step 36/128  loss=2.94e-03
+  [Gumbel] Step 48/128  loss=2.51e-03
+  [Gumbel] Step 60/128  loss=2.52e-03
+2026-10-12 09:11:54,552 - quantization - INFO - Layer model.language_model.layers.19 - Epoch 1: Train Loss = 3.23e-03, Val Soft Loss = 2.58e-03, Val Hard Loss = 2.78e-03
+  [Gumbel] model.language_model.layers.19  Epoch 1/2
+  Phase elapsed: 00:01:22  ETA: 00:01:22
+  train_loss=3.23e-03  val_hard_loss=2.78e-03  epoch_time=80.7s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=2.41e-03
+  [Gumbel] Step 84/128  loss=2.40e-03
+  [Gumbel] Step 96/128  loss=2.52e-03
+  [Gumbel] Step 108/128  loss=2.59e-03
+  [Gumbel] Step 120/128  loss=2.81e-03
+  [Gumbel] Step 128/128  loss=2.88e-03
+2026-10-12 09:13:15,898 - quantization - INFO - Layer model.language_model.layers.19 - Epoch 2: Train Loss = 2.59e-03, Val Soft Loss = 2.76e-03, Val Hard Loss = 2.68e-03
+  [Gumbel] model.language_model.layers.19  Epoch 2/2
+  Phase elapsed: 00:02:44  ETA: 00:00:00
+  train_loss=2.59e-03  val_hard_loss=2.68e-03  epoch_time=81.3s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.19)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.19)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 20/32
+    sec/layer:  196.1s  (GPTQ 30.9s + Gumbel 164.5s)
+    avg sec/layer: 200.2s  est. remaining: 00:40:02
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.19
+2026-10-12 09:13:16,697 - quantization - INFO - Loaded quantized weights for model.language_model.layers.19 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.19)
+2026-10-12 09:13:35,231 - quantization - INFO - Moving to next layer: model.language_model.layers.20
+2026-10-12 09:13:35,384 - quantization - INFO - Starting quantization for layer: model.language_model.layers.20
+────────────────────────────────────────────────────────────
+  Layer 21 / 32  (65.6%)  |  Stage: GPTQ
+  Elapsed: 01:13:29  ETA: 00:38:29
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.20.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 09:13:53,584 - quantization - INFO - Layer model.language_model.layers.20.mlp.gate_proj: GPTQ Loss = 839680.0
+  [GPTQ] Linear 2/3: model.language_model.layers.20.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 09:13:57,186 - quantization - INFO - Layer model.language_model.layers.20.mlp.up_proj: GPTQ Loss = 565248.0
+  [GPTQ] Linear 3/3: model.language_model.layers.20.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 09:14:08,031 - quantization - INFO - Layer model.language_model.layers.20.mlp.down_proj: GPTQ Loss = 12416.0
+  [GPTQ] Done in 00:00:32  avg_loss=472448.0000
+────────────────────────────────────────────────────────────
+  Layer 21 / 32  (65.6%)  |  Stage: Gumbel-Softmax
+  Elapsed: 01:14:02  ETA: 00:38:46
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=3.53e-03
+  [Gumbel] Step 24/128  loss=3.00e-03
+  [Gumbel] Step 36/128  loss=2.67e-03
+  [Gumbel] Step 48/128  loss=2.30e-03
+  [Gumbel] Step 60/128  loss=2.08e-03
+2026-10-12 09:15:33,280 - quantization - INFO - Layer model.language_model.layers.20 - Epoch 1: Train Loss = 2.86e-03, Val Soft Loss = 2.31e-03, Val Hard Loss = 2.47e-03
+  [Gumbel] model.language_model.layers.20  Epoch 1/2
+  Phase elapsed: 00:01:24  ETA: 00:01:24
+  train_loss=2.86e-03  val_hard_loss=2.47e-03  epoch_time=82.7s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=2.11e-03
+  [Gumbel] Step 84/128  loss=2.21e-03
+  [Gumbel] Step 96/128  loss=2.14e-03
+  [Gumbel] Step 108/128  loss=2.45e-03
+  [Gumbel] Step 120/128  loss=2.33e-03
+  [Gumbel] Step 128/128  loss=2.47e-03
+2026-10-12 09:16:56,948 - quantization - INFO - Layer model.language_model.layers.20 - Epoch 2: Train Loss = 2.31e-03, Val Soft Loss = 2.46e-03, Val Hard Loss = 2.39e-03
+  [Gumbel] model.language_model.layers.20  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=2.31e-03  val_hard_loss=2.39e-03  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.20)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.20)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 21/32
+    sec/layer:  202.0s  (GPTQ 32.5s + Gumbel 169.0s)
+    avg sec/layer: 200.3s  est. remaining: 00:36:43
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.20
+2026-10-12 09:16:57,715 - quantization - INFO - Loaded quantized weights for model.language_model.layers.20 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.20)
+2026-10-12 09:17:17,399 - quantization - INFO - Moving to next layer: model.language_model.layers.21
+2026-10-12 09:17:17,557 - quantization - INFO - Starting quantization for layer: model.language_model.layers.21
+────────────────────────────────────────────────────────────
+  Layer 22 / 32  (68.8%)  |  Stage: GPTQ
+  Elapsed: 01:17:11  ETA: 00:35:05
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:14  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.21.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 09:17:35,579 - quantization - INFO - Layer model.language_model.layers.21.mlp.gate_proj: GPTQ Loss = 913408.0
+  [GPTQ] Linear 2/3: model.language_model.layers.21.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 09:17:39,009 - quantization - INFO - Layer model.language_model.layers.21.mlp.up_proj: GPTQ Loss = 585728.0
+  [GPTQ] Linear 3/3: model.language_model.layers.21.mlp.down_proj  Elapsed: 00:00:06
+2026-10-12 09:17:49,793 - quantization - INFO - Layer model.language_model.layers.21.mlp.down_proj: GPTQ Loss = 14400.0
+  [GPTQ] Done in 00:00:32  avg_loss=504512.0000
+────────────────────────────────────────────────────────────
+  Layer 22 / 32  (68.8%)  |  Stage: Gumbel-Softmax
+  Elapsed: 01:17:43  ETA: 00:35:19
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=3.74e-03
+  [Gumbel] Step 24/128  loss=3.32e-03
+  [Gumbel] Step 36/128  loss=2.87e-03
+  [Gumbel] Step 48/128  loss=2.69e-03
+  [Gumbel] Step 60/128  loss=2.57e-03
+2026-10-12 09:19:15,141 - quantization - INFO - Layer model.language_model.layers.21 - Epoch 1: Train Loss = 3.30e-03, Val Soft Loss = 2.63e-03, Val Hard Loss = 2.82e-03
+  [Gumbel] model.language_model.layers.21  Epoch 1/2
+  Phase elapsed: 00:01:24  ETA: 00:01:24
+  train_loss=3.30e-03  val_hard_loss=2.82e-03  epoch_time=82.8s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=2.62e-03
+  [Gumbel] Step 84/128  loss=2.38e-03
+  [Gumbel] Step 96/128  loss=2.70e-03
+  [Gumbel] Step 108/128  loss=2.79e-03
+  [Gumbel] Step 120/128  loss=2.52e-03
+  [Gumbel] Step 128/128  loss=2.72e-03
+2026-10-12 09:20:38,859 - quantization - INFO - Layer model.language_model.layers.21 - Epoch 2: Train Loss = 2.66e-03, Val Soft Loss = 2.80e-03, Val Hard Loss = 2.72e-03
+  [Gumbel] model.language_model.layers.21  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=2.66e-03  val_hard_loss=2.72e-03  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.21)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.21)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 22/32
+    sec/layer:  201.7s  (GPTQ 32.1s + Gumbel 169.1s)
+    avg sec/layer: 200.4s  est. remaining: 00:33:23
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.21
+2026-10-12 09:20:39,623 - quantization - INFO - Loaded quantized weights for model.language_model.layers.21 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.21)
+2026-10-12 09:20:59,150 - quantization - INFO - Moving to next layer: model.language_model.layers.22
+2026-10-12 09:20:59,315 - quantization - INFO - Starting quantization for layer: model.language_model.layers.22
+────────────────────────────────────────────────────────────
+  Layer 23 / 32  (71.9%)  |  Stage: GPTQ
+  Elapsed: 01:20:53  ETA: 00:31:39
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.22.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 09:21:17,304 - quantization - INFO - Layer model.language_model.layers.22.mlp.gate_proj: GPTQ Loss = 1236992.0
+  [GPTQ] Linear 2/3: model.language_model.layers.22.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 09:21:20,696 - quantization - INFO - Layer model.language_model.layers.22.mlp.up_proj: GPTQ Loss = 684032.0
+  [GPTQ] Linear 3/3: model.language_model.layers.22.mlp.down_proj  Elapsed: 00:00:06
+2026-10-12 09:21:31,119 - quantization - INFO - Layer model.language_model.layers.22.mlp.down_proj: GPTQ Loss = 20992.0
+  [GPTQ] Done in 00:00:31  avg_loss=647338.6667
+────────────────────────────────────────────────────────────
+  Layer 23 / 32  (71.9%)  |  Stage: Gumbel-Softmax
+  Elapsed: 01:21:25  ETA: 00:31:51
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=5.45e-03
+  [Gumbel] Step 24/128  loss=4.58e-03
+  [Gumbel] Step 36/128  loss=3.83e-03
+  [Gumbel] Step 48/128  loss=3.59e-03
+  [Gumbel] Step 60/128  loss=3.60e-03
+2026-10-12 09:22:56,552 - quantization - INFO - Layer model.language_model.layers.22 - Epoch 1: Train Loss = 4.71e-03, Val Soft Loss = 3.61e-03, Val Hard Loss = 3.90e-03
+  [Gumbel] model.language_model.layers.22  Epoch 1/2
+  Phase elapsed: 00:01:24  ETA: 00:01:24
+  train_loss=4.71e-03  val_hard_loss=3.90e-03  epoch_time=82.8s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=3.91e-03
+  [Gumbel] Step 84/128  loss=3.85e-03
+  [Gumbel] Step 96/128  loss=3.40e-03
+  [Gumbel] Step 108/128  loss=3.94e-03
+  [Gumbel] Step 120/128  loss=3.87e-03
+  [Gumbel] Step 128/128  loss=3.62e-03
+2026-10-12 09:24:20,287 - quantization - INFO - Layer model.language_model.layers.22 - Epoch 2: Train Loss = 3.70e-03, Val Soft Loss = 3.86e-03, Val Hard Loss = 3.74e-03
+  [Gumbel] model.language_model.layers.22  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=3.70e-03  val_hard_loss=3.74e-03  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.22)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.22)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 23/32
+    sec/layer:  201.4s  (GPTQ 31.7s + Gumbel 169.1s)
+    avg sec/layer: 200.4s  est. remaining: 00:30:03
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.22
+2026-10-12 09:24:21,050 - quantization - INFO - Loaded quantized weights for model.language_model.layers.22 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.22)
+2026-10-12 09:24:40,586 - quantization - INFO - Moving to next layer: model.language_model.layers.23
+2026-10-12 09:24:40,745 - quantization - INFO - Starting quantization for layer: model.language_model.layers.23
+────────────────────────────────────────────────────────────
+  Layer 24 / 32  (75.0%)  |  Stage: GPTQ
+  Elapsed: 01:24:34  ETA: 00:28:11
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:11
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:10
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:03  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:10  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.23.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 09:24:58,213 - quantization - INFO - Layer model.language_model.layers.23.mlp.gate_proj: GPTQ Loss = 1081344.0
+  [GPTQ] Linear 2/3: model.language_model.layers.23.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 09:25:01,884 - quantization - INFO - Layer model.language_model.layers.23.mlp.up_proj: GPTQ Loss = 684032.0
+  [GPTQ] Linear 3/3: model.language_model.layers.23.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 09:25:13,349 - quantization - INFO - Layer model.language_model.layers.23.mlp.down_proj: GPTQ Loss = 17920.0
+  [GPTQ] Done in 00:00:32  avg_loss=594432.0000
+────────────────────────────────────────────────────────────
+  Layer 24 / 32  (75.0%)  |  Stage: Gumbel-Softmax
+  Elapsed: 01:25:07  ETA: 00:28:22
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=4.52e-03
+  [Gumbel] Step 24/128  loss=4.17e-03
+  [Gumbel] Step 36/128  loss=3.74e-03
+  [Gumbel] Step 48/128  loss=3.16e-03
+  [Gumbel] Step 60/128  loss=3.51e-03
+2026-10-12 09:26:36,311 - quantization - INFO - Layer model.language_model.layers.23 - Epoch 1: Train Loss = 4.21e-03, Val Soft Loss = 3.36e-03, Val Hard Loss = 3.61e-03
+  [Gumbel] model.language_model.layers.23  Epoch 1/2
+  Phase elapsed: 00:01:22  ETA: 00:01:22
+  train_loss=4.21e-03  val_hard_loss=3.61e-03  epoch_time=80.6s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=3.40e-03
+  [Gumbel] Step 84/128  loss=3.64e-03
+  [Gumbel] Step 96/128  loss=2.98e-03
+  [Gumbel] Step 108/128  loss=3.32e-03
+  [Gumbel] Step 120/128  loss=3.47e-03
+  [Gumbel] Step 128/128  loss=3.18e-03
+2026-10-12 09:27:57,692 - quantization - INFO - Layer model.language_model.layers.23 - Epoch 2: Train Loss = 3.34e-03, Val Soft Loss = 3.58e-03, Val Hard Loss = 3.47e-03
+  [Gumbel] model.language_model.layers.23  Epoch 2/2
+  Phase elapsed: 00:02:44  ETA: 00:00:00
+  train_loss=3.34e-03  val_hard_loss=3.47e-03  epoch_time=81.4s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.23)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.23)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 24/32
+    sec/layer:  197.4s  (GPTQ 32.5s + Gumbel 164.4s)
+    avg sec/layer: 200.3s  est. remaining: 00:26:42
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.23
+2026-10-12 09:27:58,428 - quantization - INFO - Loaded quantized weights for model.language_model.layers.23 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.23)
+2026-10-12 09:28:16,947 - quantization - INFO - Moving to next layer: model.language_model.layers.24
+2026-10-12 09:28:17,110 - quantization - INFO - Starting quantization for layer: model.language_model.layers.24
+────────────────────────────────────────────────────────────
+  Layer 25 / 32  (78.1%)  |  Stage: GPTQ
+  Elapsed: 01:28:10  ETA: 00:24:41
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:14  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.24.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 09:28:35,154 - quantization - INFO - Layer model.language_model.layers.24.mlp.gate_proj: GPTQ Loss = 1146880.0
+  [GPTQ] Linear 2/3: model.language_model.layers.24.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 09:28:38,626 - quantization - INFO - Layer model.language_model.layers.24.mlp.up_proj: GPTQ Loss = 667648.0
+  [GPTQ] Linear 3/3: model.language_model.layers.24.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 09:28:49,548 - quantization - INFO - Layer model.language_model.layers.24.mlp.down_proj: GPTQ Loss = 14976.0
+  [GPTQ] Done in 00:00:32  avg_loss=609834.6667
+────────────────────────────────────────────────────────────
+  Layer 25 / 32  (78.1%)  |  Stage: Gumbel-Softmax
+  Elapsed: 01:28:43  ETA: 00:24:50
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=4.56e-03
+  [Gumbel] Step 24/128  loss=3.81e-03
+  [Gumbel] Step 36/128  loss=3.21e-03
+  [Gumbel] Step 48/128  loss=3.09e-03
+  [Gumbel] Step 60/128  loss=2.77e-03
+2026-10-12 09:30:14,912 - quantization - INFO - Layer model.language_model.layers.24 - Epoch 1: Train Loss = 3.60e-03, Val Soft Loss = 2.87e-03, Val Hard Loss = 3.07e-03
+  [Gumbel] model.language_model.layers.24  Epoch 1/2
+  Phase elapsed: 00:01:25  ETA: 00:01:25
+  train_loss=3.60e-03  val_hard_loss=3.07e-03  epoch_time=82.8s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=2.59e-03
+  [Gumbel] Step 84/128  loss=2.81e-03
+  [Gumbel] Step 96/128  loss=2.82e-03
+  [Gumbel] Step 108/128  loss=2.94e-03
+  [Gumbel] Step 120/128  loss=3.25e-03
+  [Gumbel] Step 128/128  loss=2.85e-03
+2026-10-12 09:31:38,647 - quantization - INFO - Layer model.language_model.layers.24 - Epoch 2: Train Loss = 2.84e-03, Val Soft Loss = 3.05e-03, Val Hard Loss = 2.95e-03
+  [Gumbel] model.language_model.layers.24  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=2.84e-03  val_hard_loss=2.95e-03  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.24)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.24)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 25/32
+    sec/layer:  202.0s  (GPTQ 32.3s + Gumbel 169.2s)
+    avg sec/layer: 200.3s  est. remaining: 00:23:22
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.24
+2026-10-12 09:31:39,396 - quantization - INFO - Loaded quantized weights for model.language_model.layers.24 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.24)
+2026-10-12 09:31:58,722 - quantization - INFO - Moving to next layer: model.language_model.layers.25
+2026-10-12 09:31:58,883 - quantization - INFO - Starting quantization for layer: model.language_model.layers.25
+────────────────────────────────────────────────────────────
+  Layer 26 / 32  (81.2%)  |  Stage: GPTQ
+  Elapsed: 01:31:52  ETA: 00:21:12
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:14  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.25.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 09:32:17,077 - quantization - INFO - Layer model.language_model.layers.25.mlp.gate_proj: GPTQ Loss = 1343488.0
+  [GPTQ] Linear 2/3: model.language_model.layers.25.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 09:32:20,478 - quantization - INFO - Layer model.language_model.layers.25.mlp.up_proj: GPTQ Loss = 720896.0
+  [GPTQ] Linear 3/3: model.language_model.layers.25.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 09:32:31,379 - quantization - INFO - Layer model.language_model.layers.25.mlp.down_proj: GPTQ Loss = 15872.0
+  [GPTQ] Done in 00:00:32  avg_loss=693418.6667
+────────────────────────────────────────────────────────────
+  Layer 26 / 32  (81.2%)  |  Stage: Gumbel-Softmax
+  Elapsed: 01:32:25  ETA: 00:21:19
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=4.68e-03
+  [Gumbel] Step 24/128  loss=3.69e-03
+  [Gumbel] Step 36/128  loss=3.28e-03
+  [Gumbel] Step 48/128  loss=3.30e-03
+  [Gumbel] Step 60/128  loss=3.12e-03
+2026-10-12 09:33:56,661 - quantization - INFO - Layer model.language_model.layers.25 - Epoch 1: Train Loss = 3.71e-03, Val Soft Loss = 3.02e-03, Val Hard Loss = 3.24e-03
+  [Gumbel] model.language_model.layers.25  Epoch 1/2
+  Phase elapsed: 00:01:24  ETA: 00:01:24
+  train_loss=3.71e-03  val_hard_loss=3.24e-03  epoch_time=82.8s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=2.87e-03
+  [Gumbel] Step 84/128  loss=2.64e-03
+  [Gumbel] Step 96/128  loss=2.86e-03
+  [Gumbel] Step 108/128  loss=2.81e-03
+  [Gumbel] Step 120/128  loss=2.96e-03
+  [Gumbel] Step 128/128  loss=2.83e-03
+2026-10-12 09:35:20,377 - quantization - INFO - Layer model.language_model.layers.25 - Epoch 2: Train Loss = 2.92e-03, Val Soft Loss = 3.21e-03, Val Hard Loss = 3.10e-03
+  [Gumbel] model.language_model.layers.25  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=2.92e-03  val_hard_loss=3.10e-03  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.25)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.25)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 26/32
+    sec/layer:  201.9s  (GPTQ 32.4s + Gumbel 169.1s)
+    avg sec/layer: 200.4s  est. remaining: 00:20:02
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.25
+2026-10-12 09:35:21,112 - quantization - INFO - Loaded quantized weights for model.language_model.layers.25 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.25)
+2026-10-12 09:35:40,585 - quantization - INFO - Moving to next layer: model.language_model.layers.26
+2026-10-12 09:35:40,741 - quantization - INFO - Starting quantization for layer: model.language_model.layers.26
+────────────────────────────────────────────────────────────
+  Layer 27 / 32  (84.4%)  |  Stage: GPTQ
+  Elapsed: 01:35:34  ETA: 00:17:41
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:14  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.26.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 09:35:58,779 - quantization - INFO - Layer model.language_model.layers.26.mlp.gate_proj: GPTQ Loss = 1597440.0
+  [GPTQ] Linear 2/3: model.language_model.layers.26.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 09:36:02,186 - quantization - INFO - Layer model.language_model.layers.26.mlp.up_proj: GPTQ Loss = 823296.0
+  [GPTQ] Linear 3/3: model.language_model.layers.26.mlp.down_proj  Elapsed: 00:00:06
+2026-10-12 09:36:13,498 - quantization - INFO - Layer model.language_model.layers.26.mlp.down_proj: GPTQ Loss = 22144.0
+  [GPTQ] Done in 00:00:32  avg_loss=814293.3333
+────────────────────────────────────────────────────────────
+  Layer 27 / 32  (84.4%)  |  Stage: Gumbel-Softmax
+  Elapsed: 01:36:07  ETA: 00:17:48
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=6.66e-03
+  [Gumbel] Step 24/128  loss=5.20e-03
+  [Gumbel] Step 36/128  loss=3.97e-03
+  [Gumbel] Step 48/128  loss=3.89e-03
+  [Gumbel] Step 60/128  loss=3.66e-03
+2026-10-12 09:37:38,862 - quantization - INFO - Layer model.language_model.layers.26 - Epoch 1: Train Loss = 5.26e-03, Val Soft Loss = 3.97e-03, Val Hard Loss = 4.28e-03
+  [Gumbel] model.language_model.layers.26  Epoch 1/2
+  Phase elapsed: 00:01:24  ETA: 00:01:24
+  train_loss=5.26e-03  val_hard_loss=4.28e-03  epoch_time=82.8s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=3.91e-03
+  [Gumbel] Step 84/128  loss=4.14e-03
+  [Gumbel] Step 96/128  loss=4.33e-03
+  [Gumbel] Step 108/128  loss=4.21e-03
+  [Gumbel] Step 120/128  loss=3.78e-03
+  [Gumbel] Step 128/128  loss=3.67e-03
+2026-10-12 09:39:02,587 - quantization - INFO - Layer model.language_model.layers.26 - Epoch 2: Train Loss = 3.82e-03, Val Soft Loss = 4.18e-03, Val Hard Loss = 4.05e-03
+  [Gumbel] model.language_model.layers.26  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=3.82e-03  val_hard_loss=4.05e-03  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.26)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.26)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 27/32
+    sec/layer:  202.3s  (GPTQ 32.7s + Gumbel 169.1s)
+    avg sec/layer: 200.5s  est. remaining: 00:16:42
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.26
+2026-10-12 09:39:03,329 - quantization - INFO - Loaded quantized weights for model.language_model.layers.26 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.26)
+2026-10-12 09:39:22,731 - quantization - INFO - Moving to next layer: model.language_model.layers.27
+2026-10-12 09:39:22,882 - quantization - INFO - Starting quantization for layer: model.language_model.layers.27
+────────────────────────────────────────────────────────────
+  Layer 28 / 32  (87.5%)  |  Stage: GPTQ
+  Elapsed: 01:39:16  ETA: 00:14:10
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:11
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:10
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:03  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:06
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:10  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.27.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 09:39:40,191 - quantization - INFO - Layer model.language_model.layers.27.mlp.gate_proj: GPTQ Loss = 1556480.0
+  [GPTQ] Linear 2/3: model.language_model.layers.27.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 09:39:43,645 - quantization - INFO - Layer model.language_model.layers.27.mlp.up_proj: GPTQ Loss = 831488.0
+  [GPTQ] Linear 3/3: model.language_model.layers.27.mlp.down_proj  Elapsed: 00:00:06
+2026-10-12 09:39:53,367 - quantization - INFO - Layer model.language_model.layers.27.mlp.down_proj: GPTQ Loss = 24704.0
+  [GPTQ] Done in 00:00:30  avg_loss=804224.0000
+────────────────────────────────────────────────────────────
+  Layer 28 / 32  (87.5%)  |  Stage: Gumbel-Softmax
+  Elapsed: 01:39:47  ETA: 00:14:15
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=7.18e-03
+  [Gumbel] Step 24/128  loss=5.71e-03
+  [Gumbel] Step 36/128  loss=4.49e-03
+  [Gumbel] Step 48/128  loss=4.57e-03
+  [Gumbel] Step 60/128  loss=4.08e-03
+2026-10-12 09:41:16,530 - quantization - INFO - Layer model.language_model.layers.27 - Epoch 1: Train Loss = 5.53e-03, Val Soft Loss = 4.50e-03, Val Hard Loss = 4.87e-03
+  [Gumbel] model.language_model.layers.27  Epoch 1/2
+  Phase elapsed: 00:01:22  ETA: 00:01:22
+  train_loss=5.53e-03  val_hard_loss=4.87e-03  epoch_time=80.7s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=3.95e-03
+  [Gumbel] Step 84/128  loss=3.81e-03
+  [Gumbel] Step 96/128  loss=4.21e-03
+  [Gumbel] Step 108/128  loss=4.49e-03
+  [Gumbel] Step 120/128  loss=4.49e-03
+  [Gumbel] Step 128/128  loss=4.58e-03
+2026-10-12 09:42:37,963 - quantization - INFO - Layer model.language_model.layers.27 - Epoch 2: Train Loss = 4.16e-03, Val Soft Loss = 4.76e-03, Val Hard Loss = 4.59e-03
+  [Gumbel] model.language_model.layers.27  Epoch 2/2
+  Phase elapsed: 00:02:44  ETA: 00:00:00
+  train_loss=4.16e-03  val_hard_loss=4.59e-03  epoch_time=81.4s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.27)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.27)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 28/32
+    sec/layer:  195.5s  (GPTQ 30.4s + Gumbel 164.5s)
+    avg sec/layer: 200.3s  est. remaining: 00:13:21
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.27
+2026-10-12 09:42:38,697 - quantization - INFO - Loaded quantized weights for model.language_model.layers.27 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.27)
+2026-10-12 09:42:57,277 - quantization - INFO - Moving to next layer: model.language_model.layers.28
+2026-10-12 09:42:57,428 - quantization - INFO - Starting quantization for layer: model.language_model.layers.28
+────────────────────────────────────────────────────────────
+  Layer 29 / 32  (90.6%)  |  Stage: GPTQ
+  Elapsed: 01:42:51  ETA: 00:10:38
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.28.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 09:43:15,438 - quantization - INFO - Layer model.language_model.layers.28.mlp.gate_proj: GPTQ Loss = 1515520.0
+  [GPTQ] Linear 2/3: model.language_model.layers.28.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 09:43:18,903 - quantization - INFO - Layer model.language_model.layers.28.mlp.up_proj: GPTQ Loss = 839680.0
+  [GPTQ] Linear 3/3: model.language_model.layers.28.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 09:43:29,752 - quantization - INFO - Layer model.language_model.layers.28.mlp.down_proj: GPTQ Loss = 30592.0
+  [GPTQ] Done in 00:00:32  avg_loss=795264.0000
+────────────────────────────────────────────────────────────
+  Layer 29 / 32  (90.6%)  |  Stage: Gumbel-Softmax
+  Elapsed: 01:43:23  ETA: 00:10:41
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=7.45e-03
+  [Gumbel] Step 24/128  loss=6.50e-03
+  [Gumbel] Step 36/128  loss=5.98e-03
+  [Gumbel] Step 48/128  loss=5.26e-03
+  [Gumbel] Step 60/128  loss=5.29e-03
+2026-10-12 09:44:55,111 - quantization - INFO - Layer model.language_model.layers.28 - Epoch 1: Train Loss = 6.46e-03, Val Soft Loss = 5.21e-03, Val Hard Loss = 5.59e-03
+  [Gumbel] model.language_model.layers.28  Epoch 1/2
+  Phase elapsed: 00:01:25  ETA: 00:01:25
+  train_loss=6.46e-03  val_hard_loss=5.59e-03  epoch_time=82.8s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=5.07e-03
+  [Gumbel] Step 84/128  loss=4.85e-03
+  [Gumbel] Step 96/128  loss=4.75e-03
+  [Gumbel] Step 108/128  loss=4.81e-03
+  [Gumbel] Step 120/128  loss=4.55e-03
+  [Gumbel] Step 128/128  loss=4.56e-03
+2026-10-12 09:46:18,907 - quantization - INFO - Layer model.language_model.layers.28 - Epoch 2: Train Loss = 4.89e-03, Val Soft Loss = 5.50e-03, Val Hard Loss = 5.30e-03
+  [Gumbel] model.language_model.layers.28  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=4.89e-03  val_hard_loss=5.30e-03  epoch_time=83.8s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.28)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.28)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 29/32
+    sec/layer:  201.9s  (GPTQ 32.2s + Gumbel 169.2s)
+    avg sec/layer: 200.4s  est. remaining: 00:10:01
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.28
+2026-10-12 09:46:19,650 - quantization - INFO - Loaded quantized weights for model.language_model.layers.28 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.28)
+2026-10-12 09:46:39,025 - quantization - INFO - Moving to next layer: model.language_model.layers.29
+2026-10-12 09:46:39,184 - quantization - INFO - Starting quantization for layer: model.language_model.layers.29
+────────────────────────────────────────────────────────────
+  Layer 30 / 32  (93.8%)  |  Stage: GPTQ
+  Elapsed: 01:46:32  ETA: 00:07:06
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.29.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 09:46:57,119 - quantization - INFO - Layer model.language_model.layers.29.mlp.gate_proj: GPTQ Loss = 1638400.0
+  [GPTQ] Linear 2/3: model.language_model.layers.29.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 09:47:00,516 - quantization - INFO - Layer model.language_model.layers.29.mlp.up_proj: GPTQ Loss = 929792.0
+  [GPTQ] Linear 3/3: model.language_model.layers.29.mlp.down_proj  Elapsed: 00:00:06
+2026-10-12 09:47:11,091 - quantization - INFO - Layer model.language_model.layers.29.mlp.down_proj: GPTQ Loss = 40704.0
+  [GPTQ] Done in 00:00:31  avg_loss=869632.0000
+────────────────────────────────────────────────────────────
+  Layer 30 / 32  (93.8%)  |  Stage: Gumbel-Softmax
+  Elapsed: 01:47:05  ETA: 00:07:08
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=1.06e-02
+  [Gumbel] Step 24/128  loss=7.97e-03
+  [Gumbel] Step 36/128  loss=7.45e-03
+  [Gumbel] Step 48/128  loss=7.13e-03
+  [Gumbel] Step 60/128  loss=6.61e-03
+2026-10-12 09:48:36,562 - quantization - INFO - Layer model.language_model.layers.29 - Epoch 1: Train Loss = 8.33e-03, Val Soft Loss = 6.81e-03, Val Hard Loss = 7.35e-03
+  [Gumbel] model.language_model.layers.29  Epoch 1/2
+  Phase elapsed: 00:01:25  ETA: 00:01:25
+  train_loss=8.33e-03  val_hard_loss=7.35e-03  epoch_time=82.8s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=5.69e-03
+  [Gumbel] Step 84/128  loss=6.26e-03
+  [Gumbel] Step 96/128  loss=6.16e-03
+  [Gumbel] Step 108/128  loss=6.21e-03
+  [Gumbel] Step 120/128  loss=6.07e-03
+  [Gumbel] Step 128/128  loss=6.65e-03
+2026-10-12 09:50:00,343 - quantization - INFO - Layer model.language_model.layers.29 - Epoch 2: Train Loss = 6.24e-03, Val Soft Loss = 7.19e-03, Val Hard Loss = 6.90e-03
+  [Gumbel] model.language_model.layers.29  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=6.24e-03  val_hard_loss=6.90e-03  epoch_time=83.8s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.29)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.29)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 30/32
+    sec/layer:  201.6s  (GPTQ 31.8s + Gumbel 169.2s)
+    avg sec/layer: 200.4s  est. remaining: 00:06:40
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.29
+2026-10-12 09:50:01,081 - quantization - INFO - Loaded quantized weights for model.language_model.layers.29 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.29)
+2026-10-12 09:50:20,564 - quantization - INFO - Moving to next layer: model.language_model.layers.30
+2026-10-12 09:50:20,724 - quantization - INFO - Starting quantization for layer: model.language_model.layers.30
+────────────────────────────────────────────────────────────
+  Layer 31 / 32  (96.9%)  |  Stage: GPTQ
+  Elapsed: 01:50:14  ETA: 00:03:33
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:12
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:11
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:04  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:11  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:14  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.30.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 09:50:38,821 - quantization - INFO - Layer model.language_model.layers.30.mlp.gate_proj: GPTQ Loss = 1474560.0
+  [GPTQ] Linear 2/3: model.language_model.layers.30.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 09:50:42,415 - quantization - INFO - Layer model.language_model.layers.30.mlp.up_proj: GPTQ Loss = 897024.0
+  [GPTQ] Linear 3/3: model.language_model.layers.30.mlp.down_proj  Elapsed: 00:00:07
+2026-10-12 09:50:53,719 - quantization - INFO - Layer model.language_model.layers.30.mlp.down_proj: GPTQ Loss = 51456.0
+  [GPTQ] Done in 00:00:32  avg_loss=807680.0000
+────────────────────────────────────────────────────────────
+  Layer 31 / 32  (96.9%)  |  Stage: Gumbel-Softmax
+  Elapsed: 01:50:47  ETA: 00:03:34
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=1.48e-02
+  [Gumbel] Step 24/128  loss=1.05e-02
+  [Gumbel] Step 36/128  loss=9.41e-03
+  [Gumbel] Step 48/128  loss=9.48e-03
+  [Gumbel] Step 60/128  loss=9.80e-03
+2026-10-12 09:52:19,048 - quantization - INFO - Layer model.language_model.layers.30 - Epoch 1: Train Loss = 1.15e-02, Val Soft Loss = 9.16e-03, Val Hard Loss = 9.82e-03
+  [Gumbel] model.language_model.layers.30  Epoch 1/2
+  Phase elapsed: 00:01:25  ETA: 00:01:25
+  train_loss=1.15e-02  val_hard_loss=9.82e-03  epoch_time=82.8s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=8.32e-03
+  [Gumbel] Step 84/128  loss=8.85e-03
+  [Gumbel] Step 96/128  loss=8.47e-03
+  [Gumbel] Step 108/128  loss=7.76e-03
+  [Gumbel] Step 120/128  loss=7.97e-03
+  [Gumbel] Step 128/128  loss=8.53e-03
+2026-10-12 09:53:42,805 - quantization - INFO - Layer model.language_model.layers.30 - Epoch 2: Train Loss = 8.57e-03, Val Soft Loss = 9.67e-03, Val Hard Loss = 9.24e-03
+  [Gumbel] model.language_model.layers.30  Epoch 2/2
+  Phase elapsed: 00:02:48  ETA: 00:00:00
+  train_loss=8.57e-03  val_hard_loss=9.24e-03  epoch_time=83.7s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.30)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.30)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 31/32
+    sec/layer:  202.5s  (GPTQ 32.9s + Gumbel 169.2s)
+    avg sec/layer: 200.5s  est. remaining: 00:03:20
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.30
+2026-10-12 09:53:43,549 - quantization - INFO - Loaded quantized weights for model.language_model.layers.30 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.30)
+2026-10-12 09:54:02,992 - quantization - INFO - Moving to next layer: model.language_model.layers.31
+2026-10-12 09:54:03,143 - quantization - INFO - Starting quantization for layer: model.language_model.layers.31
+────────────────────────────────────────────────────────────
+  Layer 32 / 32  (100.0%)  |  Stage: GPTQ
+  Elapsed: 01:53:56  ETA: 00:00:00
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:01  ETA: 00:00:11
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:02  ETA: 00:00:10
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:03  ETA: 00:00:09
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:05  ETA: 00:00:08
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:06  ETA: 00:00:07
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:08  ETA: 00:00:05
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:09  ETA: 00:00:04
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:10  ETA: 00:00:03
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:12  ETA: 00:00:01
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:13  ETA: 00:00:00
+  [GPTQ] Linear 1/3: model.language_model.layers.31.mlp.gate_proj  Elapsed: 00:00:00
+2026-10-12 09:54:20,579 - quantization - INFO - Layer model.language_model.layers.31.mlp.gate_proj: GPTQ Loss = 1269760.0
+  [GPTQ] Linear 2/3: model.language_model.layers.31.mlp.up_proj  Elapsed: 00:00:03
+2026-10-12 09:54:24,018 - quantization - INFO - Layer model.language_model.layers.31.mlp.up_proj: GPTQ Loss = 823296.0
+  [GPTQ] Linear 3/3: model.language_model.layers.31.mlp.down_proj  Elapsed: 00:00:06
+2026-10-12 09:54:34,288 - quantization - INFO - Layer model.language_model.layers.31.mlp.down_proj: GPTQ Loss = 116736.0
+  [GPTQ] Done in 00:00:31  avg_loss=736597.3333
+────────────────────────────────────────────────────────────
+  Layer 32 / 32  (100.0%)  |  Stage: Gumbel-Softmax
+  Elapsed: 01:54:28  ETA: 00:00:00
+────────────────────────────────────────────────────────────
+  [Gumbel] Step 12/128  loss=4.20e-02
+  [Gumbel] Step 24/128  loss=3.43e-02
+  [Gumbel] Step 36/128  loss=2.73e-02
+  [Gumbel] Step 48/128  loss=2.26e-02
+  [Gumbel] Step 60/128  loss=1.96e-02
+2026-10-12 09:55:57,530 - quantization - INFO - Layer model.language_model.layers.31 - Epoch 1: Train Loss = 3.28e-02, Val Soft Loss = 2.10e-02, Val Hard Loss = 2.28e-02
+  [Gumbel] model.language_model.layers.31  Epoch 1/2
+  Phase elapsed: 00:01:22  ETA: 00:01:22
+  train_loss=3.28e-02  val_hard_loss=2.28e-02  epoch_time=80.8s  temp=1.033  scale=298.4
+  [Gumbel] Step 72/128  loss=2.18e-02
+  [Gumbel] Step 84/128  loss=2.01e-02
+  [Gumbel] Step 96/128  loss=2.15e-02
+  [Gumbel] Step 108/128  loss=2.07e-02
+  [Gumbel] Step 120/128  loss=1.93e-02
+  [Gumbel] Step 128/128  loss=2.31e-02
+2026-10-12 09:57:19,007 - quantization - INFO - Layer model.language_model.layers.31 - Epoch 2: Train Loss = 2.05e-02, Val Soft Loss = 2.20e-02, Val Hard Loss = 2.07e-02
+  [Gumbel] model.language_model.layers.31  Epoch 2/2
+  Phase elapsed: 00:02:44  ETA: 00:00:00
+  train_loss=2.05e-02  val_hard_loss=2.07e-02  epoch_time=81.5s  temp=0.050  scale=500.0
+  [Pipeline] Writing quantized shard(s) to disk (model.language_model.layers.31)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.31)
+────────────────────────────────────────────────────────────
+  Throughput — Layer 32/32
+    sec/layer:  196.3s  (GPTQ 31.1s + Gumbel 164.7s)
+    avg sec/layer: 200.3s  est. remaining: 00:00:00
+────────────────────────────────────────────────────────────
+  [Pipeline] Reloading quantized weights from disk for model.language_model.layers.31
+2026-10-12 09:57:19,783 - quantization - INFO - Loaded quantized weights for model.language_model.layers.31 in 0.3s
+  [Pipeline] Propagating train/val activations through quantized layer
+  [Pipeline] Writing progress.json (resume state)
+  [Pipeline] Refreshing GPTQ calibration activation buffer through layer
+  [Pipeline] Offloading layer to meta (model.language_model.layers.31)
+2026-10-12 09:57:37,674 - quantization - INFO - Finished training all layers
+Total time: 7068.773617506027
+2026-10-12 09:57:40,675 - quantization - INFO - Training finished.
+  [Pipeline] Teardown: closing session (no post-training barriers)
+  [Pipeline] Cleanup complete.
+Model:        $HARWYN_WORK/models/qwen3.5-4b-h0
+Run ID:       20261012-075942_7acac9
+Run dir:      $HARWYN_WORK/gsq-runs/2bit/20261012-075942_7acac9
+Output dir:   $HARWYN_WORK/gsq-runs/2bit-ct
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+Base model:   $HARWYN_WORK/models/h0
+Layers:       32
+Shards:       33
+Collecting base model tensors...
+  Found 723 tensors
+Collecting quantized tensors...
+  Found 616 tensors
+  Overriding 328 base tensors with quantized versions
+  Dropping 96 base float weights replaced by packed-quantized versions
+Shard sizes:
+  shard 000: 1.805 GB
+  shard 001: 0.112 GB
+  shard 002: 0.112 GB
+  shard 003: 0.112 GB
+  shard 004: 0.102 GB
+  shard 005: 0.112 GB
+  shard 006: 0.112 GB
+  shard 007: 0.112 GB
+  shard 008: 0.102 GB
+  shard 009: 0.112 GB
+  shard 010: 0.112 GB
+  shard 011: 0.112 GB
+  shard 012: 0.102 GB
+  shard 013: 0.112 GB
+  shard 014: 0.112 GB
+  shard 015: 0.112 GB
+  shard 016: 0.102 GB
+  shard 017: 0.112 GB
+  shard 018: 0.112 GB
+  shard 019: 0.112 GB
+  shard 020: 0.102 GB
+  shard 021: 0.112 GB
+  shard 022: 0.112 GB
+  shard 023: 0.112 GB
+  shard 024: 0.102 GB
+  shard 025: 0.112 GB
+  shard 026: 0.112 GB
+  shard 027: 0.112 GB
+  shard 028: 0.102 GB
+  shard 029: 0.112 GB
+  shard 030: 0.112 GB
+  shard 031: 0.112 GB
+  shard 032: 0.102 GB
+Loading tensors...
+Writing 33 shards to $HARWYN_WORK/gsq-runs/2bit-ct...
+  model-00001-of-00033.safetensors: 299 tensors
+  model-00002-of-00033.safetensors: 20 tensors
+  model-00003-of-00033.safetensors: 20 tensors
+  model-00004-of-00033.safetensors: 20 tensors
+  model-00005-of-00033.safetensors: 17 tensors
+  model-00006-of-00033.safetensors: 20 tensors
+  model-00007-of-00033.safetensors: 20 tensors
+  model-00008-of-00033.safetensors: 20 tensors
+  model-00009-of-00033.safetensors: 17 tensors
+  model-00010-of-00033.safetensors: 20 tensors
+  model-00011-of-00033.safetensors: 20 tensors
+  model-00012-of-00033.safetensors: 20 tensors
+  model-00013-of-00033.safetensors: 17 tensors
+  model-00014-of-00033.safetensors: 20 tensors
+  model-00015-of-00033.safetensors: 20 tensors
+  model-00016-of-00033.safetensors: 20 tensors
+  model-00017-of-00033.safetensors: 17 tensors
+  model-00018-of-00033.safetensors: 20 tensors
+  model-00019-of-00033.safetensors: 20 tensors
+  model-00020-of-00033.safetensors: 20 tensors
+  model-00021-of-00033.safetensors: 17 tensors
+  model-00022-of-00033.safetensors: 20 tensors
+  model-00023-of-00033.safetensors: 20 tensors
+  model-00024-of-00033.safetensors: 20 tensors
+  model-00025-of-00033.safetensors: 17 tensors
+  model-00026-of-00033.safetensors: 20 tensors
+  model-00027-of-00033.safetensors: 20 tensors
+  model-00028-of-00033.safetensors: 20 tensors
+  model-00029-of-00033.safetensors: 17 tensors
+  model-00030-of-00033.safetensors: 20 tensors
+  model-00031-of-00033.safetensors: 20 tensors
+  model-00032-of-00033.safetensors: 20 tensors
+  model-00033-of-00033.safetensors: 17 tensors
+Copying config & tokenizer files...
+  tokenizer_config.json
+  merges.txt
+  tokenizer.json
+  config.json
+  vocab.json
+  generation_config.json
+  preprocessor_config.json
+Injecting quantization_config into config.json (group_size=128)...
+Done. Total model size: ~5.32 GB
+Output: $HARWYN_WORK/gsq-runs/2bit-ct
+2026-10-12 09:58:14,192 - INFO - Loading $HARWYN_WORK/gsq-runs/2bit-ct on CPU...
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+2026-10-12 09:58:23,780 - INFO - Decompressing compressed-tensors weights to dense...
+2026-10-12 09:58:36,110 - INFO -   wrote 50 layers
+2026-10-12 09:58:41,135 - INFO - Done. Wrote 96 layer files (0 with qparams sidecars), skipped 153 (matched exclude patterns) under $HARWYN_WORK/rco-db/h0/qwen3.5-4b-h0/4bit.

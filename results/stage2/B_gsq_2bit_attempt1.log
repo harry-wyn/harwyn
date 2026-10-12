@@ -1,0 +1,129 @@
+Run ID: 20261012-072535_dd07b3
+Checkpoints: $HARWYN_WORK/gsq-runs/2bit/20261012-072535_dd07b3
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Preprocessing 10000 OpenThoughts samples (chat template)...
+Tokenizing into 800 chunks of length 2048...
+Broadcasting 800 chunks to 1 ranks...
+Dataset ready.
+2026-10-12 07:26:21,285 - quantization - INFO - Loading weights for layer: model.language_model.layers.0
+2026-10-12 07:26:21,341 - quantization - INFO - Loading embedding weights
+2026-10-12 07:26:21,570 - quantization - INFO - Capturing GPTQ inputs (256 samples)
+  get_inputs: 6/32 batches
+  get_inputs: 12/32 batches
+  get_inputs: 18/32 batches
+  get_inputs: 24/32 batches
+  get_inputs: 30/32 batches
+2026-10-12 07:26:25,324 - quantization - INFO - Capturing train inputs (512 samples)
+  get_inputs: 12/64 batches
+  get_inputs: 24/64 batches
+  get_inputs: 36/64 batches
+  get_inputs: 48/64 batches
+  get_inputs: 60/64 batches
+2026-10-12 07:26:34,393 - quantization - INFO - Capturing val inputs (32 samples)
+  get_inputs: 1/4 batches
+  get_inputs: 2/4 batches
+  get_inputs: 3/4 batches
+  get_inputs: 4/4 batches
+2026-10-12 07:26:35,265 - quantization - INFO - Offloading embedding to meta
+2026-10-12 07:26:35,269 - quantization - INFO - Starting quantization for layer: model.language_model.layers.0
+────────────────────────────────────────────────────────────
+  Layer 1 / 32  (3.1%)  |  Stage: GPTQ
+  Elapsed: 00:00:00  ETA: 00:00:00
+────────────────────────────────────────────────────────────
+  [GPTQ] Calibration: 25/256  (10%)  Elapsed: 00:00:37  ETA: 00:05:43
+  [GPTQ] Calibration: 50/256  (20%)  Elapsed: 00:00:37  ETA: 00:02:35
+  [GPTQ] Calibration: 75/256  (29%)  Elapsed: 00:00:38  ETA: 00:01:32
+  [GPTQ] Calibration: 100/256  (39%)  Elapsed: 00:00:39  ETA: 00:01:00
+  [GPTQ] Calibration: 125/256  (49%)  Elapsed: 00:00:39  ETA: 00:00:41
+  [GPTQ] Calibration: 150/256  (59%)  Elapsed: 00:00:40  ETA: 00:00:28
+  [GPTQ] Calibration: 175/256  (68%)  Elapsed: 00:00:41  ETA: 00:00:18
+  [GPTQ] Calibration: 200/256  (78%)  Elapsed: 00:00:41  ETA: 00:00:11
+  [GPTQ] Calibration: 225/256  (88%)  Elapsed: 00:00:42  ETA: 00:00:05
+  [GPTQ] Calibration: 250/256  (98%)  Elapsed: 00:00:42  ETA: 00:00:01
+  [GPTQ] Linear 1/3: model.language_model.layers.0.linear_attn.in_proj_qkv  Elapsed: 00:00:00
+2026-10-12 07:27:22,250 - quantization - INFO - Layer model.language_model.layers.0.linear_attn.in_proj_qkv: GPTQ Loss = 839680.0
+2026-10-12 07:31:06,531 - quantization - INFO - Layer model.language_model.layers.0.linear_attn.in_proj_qkv: Train Loss = 679936.000
+  [GPTQ] Linear 2/3: model.language_model.layers.0.linear_attn.in_proj_z  Elapsed: 00:03:48
+2026-10-12 07:31:09,099 - quantization - INFO - Layer model.language_model.layers.0.linear_attn.in_proj_z: GPTQ Loss = 473088.0
+  [GPTQ] Linear 3/3: model.language_model.layers.0.linear_attn.out_proj  Elapsed: 00:03:50
+2026-10-12 07:31:12,845 - quantization - INFO - Layer model.language_model.layers.0.linear_attn.out_proj: GPTQ Loss = 524.0
+  [Gumbel] Step 12/192  loss=1.37e-04
+  [Gumbel] Step 24/192  loss=9.10e-05
+  [Gumbel] Step 36/192  loss=6.40e-05
+  [Gumbel] Step 48/192  loss=4.79e-05
+  [Gumbel] Step 60/192  loss=3.37e-05
+2026-10-12 07:32:40,922 - quantization - INFO - Layer model.language_model.layers.0 - Epoch 1: Train Loss = 8.75e-05, Val Soft Loss = 3.31e-05, Val Hard Loss = 4.57e-05
+  [Gumbel] model.language_model.layers.0  Epoch 1/3
+  Phase elapsed: 00:01:27  ETA: 00:02:55
+  train_loss=8.75e-05  val_hard_loss=4.57e-05  epoch_time=74.7s  temp=1.357  scale=231.9
+  [Gumbel] Step 72/192  loss=2.88e-05
+  [Gumbel] Step 84/192  loss=2.15e-05
+  [Gumbel] Step 96/192  loss=2.74e-05
+  [Gumbel] Step 108/192  loss=2.13e-05
+  [Gumbel] Step 120/192  loss=2.07e-05
+2026-10-12 07:33:12,571 - quantization - INFO - Layer model.language_model.layers.0 - Epoch 2: Train Loss = 2.50e-05, Val Soft Loss = 2.35e-05, Val Hard Loss = 2.79e-05
+  [Gumbel] model.language_model.layers.0  Epoch 2/3
+  Phase elapsed: 00:01:59  ETA: 00:00:59
+  train_loss=2.50e-05  val_hard_loss=2.79e-05  epoch_time=31.6s  temp=0.703  scale=366.0
+  [Gumbel] Step 132/192  loss=1.90e-05
+  [Gumbel] Step 144/192  loss=2.42e-05
+  [Gumbel] Step 156/192  loss=2.15e-05
+  [Gumbel] Step 168/192  loss=2.44e-05
+  [Gumbel] Step 180/192  loss=2.18e-05
+  [Gumbel] Step 192/192  loss=2.93e-05
+2026-10-12 07:33:44,502 - quantization - INFO - Layer model.language_model.layers.0 - Epoch 3: Train Loss = 2.36e-05, Val Soft Loss = 2.65e-05, Val Hard Loss = 2.47e-05
+  [Gumbel] model.language_model.layers.0  Epoch 3/3
+  Phase elapsed: 00:02:31  ETA: 00:00:00
+  train_loss=2.36e-05  val_hard_loss=2.47e-05  epoch_time=31.9s  temp=0.050  scale=500.0
+  [Pipeline] Applying quantized attention weights in-place (model.language_model.layers.0)
+  [Pipeline] Finished writing layer checkpoint (model.language_model.layers.0)
+2026-10-12 07:33:44,696 - quantization - ERROR - Training failed.
+Traceback (most recent call last):
+  File "$HARWYN_WORK/GSQ/main.py", line 647, in main
+    train_all_layers(model, train_loader, val_loader, gpt_loader, logger, config,
+  File "$HARWYN_WORK/GSQ/main.py", line 279, in train_all_layers
+    model.save_attention_to_disc(f"{model.layer_prefix}.{count-1}.self_attn")
+  File "$HARWYN_WORK/GSQ/src/models/qwen35.py", line 269, in save_attention_to_disc
+    compressed = self.compressor.compress_weight(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'PackedQuantizationCompressor' object has no attribute 'compress_weight'
+2026-10-12 07:33:46,776 - quantization - ERROR - Tearing down after training failure (see exception log above).
+  [Pipeline] Teardown: closing session (no post-training barriers)
+  [Pipeline] Cleanup complete.
+E1012 07:33:47.140000 17896 <path> failed (exitcode: 1) local_rank: 0 (pid: 17916) of binary: $HARWYN_WORK/GSQ/.venv/bin/python
+Traceback (most recent call last):
+  File "$HARWYN_WORK/GSQ/.venv/bin/torchrun", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "$HARWYN_WORK/GSQ/.venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/GSQ/.venv/lib/python3.12/site-packages/torch/distributed/run.py", line 990, in main
+    run(args)
+  File "$HARWYN_WORK/GSQ/.venv/lib/python3.12/site-packages/torch/distributed/run.py", line 981, in run
+    elastic_launch(
+  File "$HARWYN_WORK/GSQ/.venv/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 170, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/GSQ/.venv/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 317, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+main.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-10-12_07:33:47
+  host      : <host>
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 17916)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

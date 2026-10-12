@@ -155,3 +155,95 @@ remaining refusals are left for the stage 4 SFT data to remove.
   search with `n_trials = 100` (that's where trials 44–48 came from). Fix: `heretic_pick.py` writes the
   export settings (`n_trials` = trials already run, `trial_index`, merge, save) into the study's
   stored settings, then a plain `checkpoint_action = "continue"` runs zero trials and exports.
+
+## Stage 2: draft GSQ + RCO quantisation of h0 (2026-10-11 → 12)
+
+**Budget: 3.0 bits/weight average.** The 4B could afford ~5–6 bpw with almost no loss, but 6-bit
+quantisation leaves QAT nothing to recover, so the rehearsal would test nothing. 3.0 bpw matches the
+likely harwyn-27b budget, where ISTA's own Qwen3.8-27B GSQ-RCO results show 3.0–3.5 bpw is close to
+lossless and 2.5 bpw costs ~9 points on LiveCodeBench:
+
+| bpw | Qwen3.8-27B GPQA-D | LiveCodeBench v6 |
+|---|---|---|
+| 16 | 89.9 | 85.7 |
+| 3.5 | 89.4 | 85.7 |
+| 3.0 | 88.9 | 84.6 |
+| 2.75 | 86.4 | 82.3 |
+| 2.5 | 84.9 | 76.6 |
+
+**vLLM support.** vLLM 0.31's compressed-tensors loader accepts every weight width 2–8 per layer:
+Marlin runs 4/8-bit, Humming (`humming-kernels`, same library GSQ ships a converter for) runs
+2/3/5/6/7-bit on sm75+, so the L4 can serve the mixed checkpoint.
+
+**Pipeline** ([`evals/stage2.sh`](evals/stage2.sh), resumable per phase):
+1. **A, GPTQ database** (RCO `run_quantize.py`): all 200 quantisable Linears (MLP, full attention,
+   Gated DeltaNet `in_proj_qkv`/`in_proj_z`/`out_proj`; `in_proj_a/b`, embeddings and `lm_head` stay
+   bf16) at 2–8 bits, symmetric, group 128, calibrated on 1M FineWeb-Edu tokens. ~70 min on the L4.
+2. **B, GSQ** at 2 and 3 bits on the MLPs, replacing those database entries (GPTQ originals backed up).
+3. **C, RCO search** for an exact 3.0 bpw average, calibrated on `evol_codealpaca` (code) since
+   coding is the target.
+4. **D, build** the packed compressed-tensors checkpoint and a fake-quant bf16 copy (the QAT reference).
+5. **E, evals** in vLLM against h0.
+
+### Incidents
+- **RCO's NCCL barrier segfaults on a single GPU** (torch 2.11/cu126 here): `run_quantize.py` always
+  starts NCCL and calls `dist.barrier()`. [`patches/rco-single-gpu.patch`](patches/rco-single-gpu.patch)
+  skips distributed init for one rank and guards the two bare barriers.
+- **RCO's transformers pin (5.7.0) can't build Qwen3.5 from its config**; 5.8.1 (GSQ's) can, and loads
+  the real checkpoint with zero missing/unexpected keys.
+- **RCO's database has an extra level**: `<save_dir>/<model name>/<calibration bits>bit/<layer>/<bw>.pth`.
+- **Preemptible GPUs.** Phase A was reclaimed at 168/200 layers; `run_quantize.py` can't resume.
+  [`patches/rco-resume.patch`](patches/rco-resume.patch) skips layers whose every width is already saved
+  and installs their saved calibration-width weights so later layers calibrate on identical
+  activations. A later preemption auto-restarted the machine from an older storage snapshot (losing
+  ~12 min of work and leaving the GPU idle), so the rest of stage 2 ran on a non-preemptible GPU.
+- **GSQ's dense Qwen3.5 attention path is broken** at its own locked dependencies: with `self_attn: true`
+  it calls `PackedQuantizationCompressor.compress_weight`, which compressed-tensors 0.15.0.1 (GSQ's lock)
+  no longer has. It was also the slow part (3.7 min/layer of the 7.5). GSQ therefore runs on the MLPs
+  only (64% of quantised parameters, 2 epochs; layer 0's loss had flattened by epoch 2), and attention /
+  GDN projections use RCO's GPTQ entries at every width.
+- **RCO's checkpoint import writes every Linear**, compressed or not, so GSQ's bf16 attention copies would
+  have overwritten 2-bit GPTQ entries; the import excludes `self_attn`/`linear_attn`.
+- **RCO's importer dropped GSQ's integer codes.** GSQ writes symmetric weights with no zero-point tensor,
+  and RCO's importer only extracted codes when one existed. Its first pass wrote GSQ's weights for the
+  search but kept GPTQ's codes for packing (a 0.26 max mismatch on one 2-bit MLP), so the shipped
+  checkpoint would silently have differed from what the search chose and QAT targets. GSQ also stores
+  2/3-bit codes in a 4-bit container, which would have been packed and served as 4-bit and broken the
+  3.0 bpw budget. [`patches/rco-split-symmetric.patch`](patches/rco-split-symmetric.patch) uses the
+  implicit symmetric zero point (2^(bits−1), RCO's own convention) and re-expresses codes at the slot's
+  true width. After re-import, every checked tensor reconstructs its stored weights exactly at 2 bits.
+- **RCO's search didn't fit a 24 GB GPU + 60 GB RAM machine at 4B** (it was built for large nodes),
+  and was OOM-killed twice, silently: the platform puts each command in a memory cgroup with
+  `memory.oom.group`, so the kill took the whole stage script with it and no exit hook ran.
+  - The KL objective caches **full-vocabulary** reference log-probs on the CPU: 256 × 2,047 × 248,320
+    values in fp16 ≈ 260 GB for Qwen3.5's vocabulary. Switched to `--objective ce` (cross-entropy on the
+    calibration set's answer tokens), which needs no cache. A top-k reference cache would restore KL;
+    worth patching for harwyn-27b.
+  - One bf16 delta per candidate width per layer is ~7 GB/width at 4B: too big for the GPU, and the
+    default RAM weight cache would duplicate it. Used `--weightstore-cache off --cpu-deltas` and
+    candidate widths {2, 3, 4, 6, 8} (~36 GB in RAM) instead of 2–8.
+  - To keep the PCIe-streamed search near schedule: 120 steps × 2 Gumbel samples (paper: 200 × 4).
+- **RCO's gradient search doesn't fit a 24 GB GPU at 4B even with CPU deltas.** Plain autograd keeps every
+  layer's GPU copy of its candidate deltas alive until backward (CUDA OOM at 2,048 and 1,024 tokens).
+  [`patches/rco-streamed-deltas.patch`](patches/rco-streamed-deltas.patch) adds a custom autograd function
+  that streams the deltas from RAM in forward *and* backward, so autograd stores none
+  ([`patches/test_rco_streamed_deltas.py`](patches/test_rco_streamed_deltas.py) checks it against plain
+  autograd: identical loss, gradients within fp32 accumulation error). With it the forward fits, but the
+  first backward still OOMed inside the Gated DeltaNet kernel (Triton) at 1,024 tokens; a 512-token run is
+  the next attempt. An 80 GB GPU (the plan for the 27B) avoids all of this.
+
+### Finding: RCO's sensitivity initialisation alone is degenerate
+With zero optimisation steps, RCO's sensitivity-based initial allocation hits the budget exactly
+(3.001 bpw) but splits the model bimodally: **all 96 MLPs and 72 attention/GDN projections at 2 bits,
+30 attention/GDN projections at 8 bits** (a few tensors at 3). RCO's own check of that assignment against
+the bf16 model gives NLL 10.2 and KL 4.65 nats on code answers, i.e. badly broken (uniform guessing is
+ln 248,320 ≈ 12.4), so it was not evaluated further. The per-tensor delta norms that drive the
+initialisation favour spending bits on small, sensitive attention tensors and starve the MLPs; the
+gradient search exists to correct exactly this. Files: [`results/stage2/sensinit/`](results/stage2/sensinit/).
+
+### Status (2026-10-12, 17:30)
+Done: GPTQ database (2–8 bits, all 200 tensors), GSQ 2- and 3-bit MLPs imported with exact codes, the
+memory and import fixes above. **Paused: GPU time ran out** before the bit-allocation
+search could finish, so there is no harwyn-4b-q3 checkpoint or stage 2 eval yet. Next: the 512-token
+search run; fallback is uniform 3-bit (GSQ MLPs + GPTQ attention, `run_build_checkpoint.py --uniform-bw 3`).
+GSQ per-layer losses for both widths are in `results/stage2/B_gsq_*bit.log`.

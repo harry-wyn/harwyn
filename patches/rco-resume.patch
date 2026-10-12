@@ -1,0 +1,23 @@
+diff --git i/src/quant/quantizer.py w/src/quant/quantizer.py
+index fbfaf33..e432568 100644
+--- i/src/quant/quantizer.py
++++ w/src/quant/quantizer.py
+@@ -146,6 +146,18 @@ class Quantizer:
+ 
+     def _quant_group(self, handles: Dict[str, FastOBQ], bitwidth_options: List[int], calibration_bitwidth: int):
+         for handle_name, handle in handles.items():
++            # harwyn patch: resume. A layer whose every bitwidth is already saved is not re-quantized;
++            # its calibration-bitwidth weights are installed so later blocks see the same activations.
++            done_dir = os.path.join(self.save_dir, handle_name)
++            if all(
++                os.path.exists(os.path.join(done_dir, f"{int(b)}.pth"))
++                and os.path.exists(os.path.join(done_dir, f"{int(b)}_qparams.pt"))
++                for b in bitwidth_options
++            ):
++                w = torch.load(os.path.join(done_dir, f"{int(calibration_bitwidth)}.pth"), map_location=handle.layer.weight.device)
++                handle.layer.weight.data.copy_(w.to(handle.layer.weight.dtype))
++                handle.reset()
++                continue
+ 
+             if self.verbose:
+                 dist_utils.print_on_main(f"Quantizing {handle_name}")

@@ -1,0 +1,28 @@
+2026-10-12 13:23:27,115 - INFO - CUDA devices: 1
+2026-10-12 13:23:27,412 - INFO -   GPU 0: NVIDIA L4 (23.7 GB)
+2026-10-12 13:23:27,412 - INFO - Loading model...
+2026-10-12 13:24:26,280 - INFO - Loading model from $HARWYN_WORK/models/qwen3.5-4b-h0
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+2026-10-12 13:24:34,583 - INFO - Model loaded: Qwen3_5ForCausalLM, dtype=torch.bfloat16
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+2026-10-12 13:24:36,284 - INFO - Loading calibration data...
+2026-10-12 13:24:36,346 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-10-12 13:24:36,347 - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-10-12 13:24:36,352 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/theblackcat102/evol-codealpaca-v1/c75242318519b5470635e84064baed7c78594020/README.md?%2Fdatasets%2Ftheblackcat102%2Fevol-codealpaca-v1%2Fresolve%2Fmain%2FREADME.md=&etag=%22ff502d99b8546e221d9aa2541e2a59e0f3f7a8c1%22 "HTTP/1.1 200 OK"
+2026-10-12 13:24:36,376 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/evol-codealpaca-v1.py "HTTP/1.1 404 Not Found"
+2026-10-12 13:24:36,451 - INFO - HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/theblackcat102/evol-codealpaca-v1/theblackcat102/evol-codealpaca-v1.py "HTTP/1.1 404 Not Found"
+2026-10-12 13:24:36,476 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/revision/c75242318519b5470635e84064baed7c78594020 "HTTP/1.1 200 OK"
+2026-10-12 13:24:36,504 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/.huggingface.yaml "HTTP/1.1 404 Not Found"
+2026-10-12 13:24:36,556 - INFO - HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=theblackcat102/evol-codealpaca-v1 "HTTP/1.1 200 OK"
+2026-10-12 13:24:36,586 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/tree/c75242318519b5470635e84064baed7c78594020/data?recursive=true&expand=false "HTTP/1.1 404 Not Found"
+2026-10-12 13:24:36,616 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/tree/c75242318519b5470635e84064baed7c78594020?recursive=false&expand=false "HTTP/1.1 200 OK"
+2026-10-12 13:24:36,667 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/dataset_infos.json "HTTP/1.1 404 Not Found"
+2026-10-12 13:24:37,890 - INFO - Loaded 256 sequences of length 2048 from evol_codealpaca (avg answer tokens: 384)
+2026-10-12 13:24:37,900 - INFO - WeightStore initialized in LAZY mode from $HARWYN_WORK/rco-db/h0/qwen3.5-4b-h0/4bit (cache=False)
+2026-10-12 13:24:37,974 - INFO - Indexed 1400 weight files across 200 layers
+2026-10-12 13:24:37,975 - INFO - Layers: 200, Groups: 200
+2026-10-12 13:24:37,975 - INFO - Bitwidths: [2, 3, 4, 6, 8], Target: 3.0
+2026-10-12 13:24:38,034 - INFO - Computing reference log-probabilities...

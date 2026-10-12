@@ -1,0 +1,104 @@
+2026-10-12 15:54:03,624 - INFO - CUDA devices: 1
+2026-10-12 15:54:03,773 - INFO -   GPU 0: NVIDIA L4 (23.7 GB)
+2026-10-12 15:54:03,774 - INFO - Loading model...
+2026-10-12 15:55:13,943 - INFO - Loading model from $HARWYN_WORK/models/qwen3.5-4b-h0
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+2026-10-12 15:55:24,996 - INFO - Model loaded: Qwen3_5ForCausalLM, dtype=torch.bfloat16
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+2026-10-12 15:55:26,899 - INFO - Loading calibration data...
+2026-10-12 15:55:26,962 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-10-12 15:55:26,962 - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-10-12 15:55:26,967 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/theblackcat102/evol-codealpaca-v1/c75242318519b5470635e84064baed7c78594020/README.md?%2Fdatasets%2Ftheblackcat102%2Fevol-codealpaca-v1%2Fresolve%2Fmain%2FREADME.md=&etag=%22ff502d99b8546e221d9aa2541e2a59e0f3f7a8c1%22 "HTTP/1.1 200 OK"
+2026-10-12 15:55:26,992 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/evol-codealpaca-v1.py "HTTP/1.1 404 Not Found"
+2026-10-12 15:55:27,061 - INFO - HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/theblackcat102/evol-codealpaca-v1/theblackcat102/evol-codealpaca-v1.py "HTTP/1.1 404 Not Found"
+2026-10-12 15:55:27,092 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/revision/c75242318519b5470635e84064baed7c78594020 "HTTP/1.1 200 OK"
+2026-10-12 15:55:27,121 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/.huggingface.yaml "HTTP/1.1 404 Not Found"
+2026-10-12 15:55:27,168 - INFO - HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=theblackcat102/evol-codealpaca-v1 "HTTP/1.1 200 OK"
+2026-10-12 15:55:27,197 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/tree/c75242318519b5470635e84064baed7c78594020/data?recursive=true&expand=false "HTTP/1.1 404 Not Found"
+2026-10-12 15:55:27,231 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/tree/c75242318519b5470635e84064baed7c78594020?recursive=false&expand=false "HTTP/1.1 200 OK"
+2026-10-12 15:55:27,274 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/dataset_infos.json "HTTP/1.1 404 Not Found"
+2026-10-12 15:55:28,484 - INFO - Loaded 256 sequences of length 1024 from evol_codealpaca (avg answer tokens: 375)
+2026-10-12 15:55:28,494 - INFO - WeightStore initialized in LAZY mode from $HARWYN_WORK/rco-db/h0/qwen3.5-4b-h0/4bit (cache=False)
+2026-10-12 15:55:28,576 - INFO - Indexed 1400 weight files across 200 layers
+2026-10-12 15:55:28,579 - INFO - Layers: 200, Groups: 200
+2026-10-12 15:55:28,579 - INFO - Bitwidths: [2, 3, 4, 6, 8], Target: 3.0
+2026-10-12 15:55:28,612 - INFO - Setting up interpolated model (5 bitwidths)...
+2026-10-12 15:55:28,612 - INFO -   Control device: cuda:0
+2026-10-12 15:55:28,612 - INFO -   Input device:   cuda:0
+2026-10-12 15:56:52,644 - INFO - Ready: 200 groups, 200 layers, 5 bitwidths (ref=8)
+2026-10-12 15:56:52,644 - INFO - Layer devices: ['cuda:0']
+2026-10-12 15:56:52,644 - INFO - Skipping gradient sanity check (cpu_deltas mode)
+2026-10-12 15:57:16,608 - INFO - Sensitivity init: E[bits]=3.0000 (target=3.0)
+2026-10-12 15:57:16,608 - INFO - ============================================================
+2026-10-12 15:57:16,608 - INFO - PROJECTED GUMBEL-SOFTMAX OPTIMIZATION
+2026-10-12 15:57:16,608 - INFO - ============================================================
+2026-10-12 15:57:16,608 - INFO - Mini-batching: 1/256 batches per step
+2026-10-12 15:57:16,608 - INFO - Projected Gumbel-softmax: tau 1.0 -> 0.01, 2 sample(s)/step, lr=0.1
+2026-10-12 15:57:16,608 - INFO - Target: 3.0 bits, 200 groups, 5 bitwidths [2, 3, 4, 6, 8]
+2026-10-12 15:57:16,609 - INFO - No budget penalty. Gradient projection + post-step correction.
+2026-10-12 15:57:16,609 - INFO - Input device: cuda:0
+Traceback (most recent call last):
+  File "$HARWYN_WORK/RCO/rco_search_quant.py", line 411, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "$HARWYN_WORK/RCO/rco_search_quant.py", line 293, in main
+    prob_dict, history = optimize_projected_gumbel(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/RCO/src/search/quant.py", line 731, in optimize_projected_gumbel
+    scaled.backward()
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/_tensor.py", line 631, in backward
+    torch.autograd.backward(
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/autograd/__init__.py", line 381, in backward
+    _engine_run_backward(
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/autograd/graph.py", line 869, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/autograd/function.py", line 317, in apply
+    return user_fn(self, *args)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/fla/utils/_decorators.py", line 152, in wrapper
+    return fn(*processed_args, **processed_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/amp/autocast_mode.py", line 527, in decorate_bwd
+    return bwd(*args, **kwargs)  # pyrefly: ignore [not-callable]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/fla/ops/gated_delta_rule/chunk.py", line 384, in backward
+    dq = l2norm_bwd(q, q_rstd, dq)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/_dynamo/eval_frame.py", line 1263, in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/fla/ops/backends/__init__.py", line 214, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/fla/modules/l2norm.py", line 229, in l2norm_bwd
+    l2norm_bwd_kernel[grid](
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/triton/runtime/jit.py", line 370, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/fla/ops/utils/cache.py", line 378, in run
+    return super().run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 238, in run
+    used_cached_result = self.check_disk_cache(key, pruned_configs, benchmark)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 202, in check_disk_cache
+    bench_fn()
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 229, in benchmark
+    timings = {config: self._bench(*args, config=config, **kwargs) for config in pruned_configs}
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 164, in _bench
+    return self.do_bench(kernel_call, quantiles=(0.5, 0.2, 0.8))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/triton/testing.py", line 149, in do_bench
+    fn()
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/triton/runtime/autotuner.py", line 150, in kernel_call
+    self.fn.run(
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/triton/runtime/jit.py", line 744, in run
+    kernel.run(grid_0, grid_1, grid_2, stream, kernel.function, kernel.packed_metadata, launch_metadata,
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/triton/backends/nvidia/driver.py", line 713, in __call__
+    self.launch(gridX, gridY, gridZ, stream, function, self.launch_cooperative_grid, self.launch_pdl,
+RuntimeError: Triton Error [CUDA]: out of memory

@@ -1,0 +1,31 @@
+2026-10-12 12:29:12,964 - INFO - CUDA devices: 1
+2026-10-12 12:29:13,097 - INFO -   GPU 0: NVIDIA L4 (23.7 GB)
+2026-10-12 12:29:13,098 - INFO - Loading model...
+2026-10-12 12:29:16,808 - INFO - Loading model from $HARWYN_WORK/models/qwen3.5-4b-h0
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+2026-10-12 12:29:22,502 - INFO - Model loaded: Qwen3_5ForCausalLM, dtype=torch.bfloat16
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+2026-10-12 12:29:24,200 - INFO - Loading calibration data...
+2026-10-12 12:29:24,241 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-10-12 12:29:24,241 - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-10-12 12:29:24,246 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/theblackcat102/evol-codealpaca-v1/c75242318519b5470635e84064baed7c78594020/README.md?%2Fdatasets%2Ftheblackcat102%2Fevol-codealpaca-v1%2Fresolve%2Fmain%2FREADME.md=&etag=%22ff502d99b8546e221d9aa2541e2a59e0f3f7a8c1%22 "HTTP/1.1 200 OK"
+2026-10-12 12:29:24,252 - INFO - HTTP Request: GET https://huggingface.co/api/resolve-cache/datasets/theblackcat102/evol-codealpaca-v1/c75242318519b5470635e84064baed7c78594020/README.md?%2Fdatasets%2Ftheblackcat102%2Fevol-codealpaca-v1%2Fresolve%2Fmain%2FREADME.md=&etag=%22ff502d99b8546e221d9aa2541e2a59e0f3f7a8c1%22 "HTTP/1.1 200 OK"
+2026-10-12 12:29:24,267 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/evol-codealpaca-v1.py "HTTP/1.1 404 Not Found"
+2026-10-12 12:29:24,296 - INFO - HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/theblackcat102/evol-codealpaca-v1/theblackcat102/evol-codealpaca-v1.py "HTTP/1.1 404 Not Found"
+2026-10-12 12:29:24,314 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/revision/c75242318519b5470635e84064baed7c78594020 "HTTP/1.1 200 OK"
+2026-10-12 12:29:24,328 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/.huggingface.yaml "HTTP/1.1 404 Not Found"
+2026-10-12 12:29:24,372 - INFO - HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=theblackcat102/evol-codealpaca-v1 "HTTP/1.1 200 OK"
+2026-10-12 12:29:24,391 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/tree/c75242318519b5470635e84064baed7c78594020/data?recursive=true&expand=false "HTTP/1.1 404 Not Found"
+2026-10-12 12:29:24,413 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/tree/c75242318519b5470635e84064baed7c78594020?recursive=false&expand=false "HTTP/1.1 200 OK"
+2026-10-12 12:29:24,452 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/dataset_infos.json "HTTP/1.1 404 Not Found"
+2026-10-12 12:29:24,497 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/train.jsonl "HTTP/1.1 302 Found"
+2026-10-12 12:29:24,555 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/xet-read-token/c75242318519b5470635e84064baed7c78594020 "HTTP/1.1 200 OK"
+2026-10-12 12:29:27,517 - INFO - Loaded 256 sequences of length 2048 from evol_codealpaca (avg answer tokens: 384)
+2026-10-12 12:29:27,527 - INFO - WeightStore initialized in LAZY mode from $HARWYN_WORK/rco-db/h0/qwen3.5-4b-h0/4bit (cache=True)
+2026-10-12 12:29:27,561 - INFO - Indexed 1400 weight files across 200 layers
+2026-10-12 12:29:27,563 - INFO - Layers: 200, Groups: 200
+2026-10-12 12:29:27,563 - INFO - Bitwidths: [2, 3, 4, 5, 6, 7, 8], Target: 3.0
+2026-10-12 12:31:43,532 - INFO - Computing reference log-probabilities...

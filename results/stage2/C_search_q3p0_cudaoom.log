@@ -1,0 +1,137 @@
+2026-10-12 13:52:44,031 - INFO - CUDA devices: 1
+2026-10-12 13:52:44,154 - INFO -   GPU 0: NVIDIA L4 (23.7 GB)
+2026-10-12 13:52:44,154 - INFO - Loading model...
+2026-10-12 13:54:11,600 - INFO - Loading model from $HARWYN_WORK/models/qwen3.5-4b-h0
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+2026-10-12 13:54:20,722 - INFO - Model loaded: Qwen3_5ForCausalLM, dtype=torch.bfloat16
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+2026-10-12 13:54:22,580 - INFO - Loading calibration data...
+2026-10-12 13:54:22,660 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-10-12 13:54:22,666 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/theblackcat102/evol-codealpaca-v1/c75242318519b5470635e84064baed7c78594020/README.md?%2Fdatasets%2Ftheblackcat102%2Fevol-codealpaca-v1%2Fresolve%2Fmain%2FREADME.md=&etag=%22ff502d99b8546e221d9aa2541e2a59e0f3f7a8c1%22 "HTTP/1.1 200 OK"
+2026-10-12 13:54:22,691 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/evol-codealpaca-v1.py "HTTP/1.1 404 Not Found"
+2026-10-12 13:54:22,754 - INFO - HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/theblackcat102/evol-codealpaca-v1/theblackcat102/evol-codealpaca-v1.py "HTTP/1.1 404 Not Found"
+2026-10-12 13:54:22,784 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/revision/c75242318519b5470635e84064baed7c78594020 "HTTP/1.1 200 OK"
+2026-10-12 13:54:22,809 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/.huggingface.yaml "HTTP/1.1 404 Not Found"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-10-12 13:54:22,809 - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-10-12 13:54:22,858 - INFO - HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=theblackcat102/evol-codealpaca-v1 "HTTP/1.1 200 OK"
+2026-10-12 13:54:22,887 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/tree/c75242318519b5470635e84064baed7c78594020/data?recursive=true&expand=false "HTTP/1.1 404 Not Found"
+2026-10-12 13:54:22,918 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/tree/c75242318519b5470635e84064baed7c78594020?recursive=false&expand=false "HTTP/1.1 200 OK"
+2026-10-12 13:54:22,965 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/dataset_infos.json "HTTP/1.1 404 Not Found"
+2026-10-12 13:54:24,211 - INFO - Loaded 256 sequences of length 2048 from evol_codealpaca (avg answer tokens: 384)
+2026-10-12 13:54:24,221 - INFO - WeightStore initialized in LAZY mode from $HARWYN_WORK/rco-db/h0/qwen3.5-4b-h0/4bit (cache=False)
+2026-10-12 13:54:24,301 - INFO - Indexed 1400 weight files across 200 layers
+2026-10-12 13:54:24,303 - INFO - Layers: 200, Groups: 200
+2026-10-12 13:54:24,303 - INFO - Bitwidths: [2, 3, 4, 6, 8], Target: 3.0
+2026-10-12 13:54:24,361 - INFO - Setting up interpolated model (5 bitwidths)...
+2026-10-12 13:54:24,361 - INFO -   Control device: cuda:0
+2026-10-12 13:54:24,361 - INFO -   Input device:   cuda:0
+2026-10-12 13:55:39,431 - INFO - Ready: 200 groups, 200 layers, 5 bitwidths (ref=8)
+2026-10-12 13:55:39,431 - INFO - Layer devices: ['cuda:0']
+2026-10-12 13:55:39,431 - INFO - Skipping gradient sanity check (cpu_deltas mode)
+2026-10-12 13:56:01,658 - INFO - Sensitivity init: E[bits]=3.0000 (target=3.0)
+2026-10-12 13:56:01,658 - INFO - ============================================================
+2026-10-12 13:56:01,658 - INFO - PROJECTED GUMBEL-SOFTMAX OPTIMIZATION
+2026-10-12 13:56:01,658 - INFO - ============================================================
+2026-10-12 13:56:01,658 - INFO - Mini-batching: 1/256 batches per step
+2026-10-12 13:56:01,658 - INFO - Projected Gumbel-softmax: tau 1.0 -> 0.01, 2 sample(s)/step, lr=0.1
+2026-10-12 13:56:01,658 - INFO - Target: 3.0 bits, 200 groups, 5 bitwidths [2, 3, 4, 6, 8]
+2026-10-12 13:56:01,658 - INFO - No budget penalty. Gradient projection + post-step correction.
+2026-10-12 13:56:01,658 - INFO - Input device: cuda:0
+Traceback (most recent call last):
+  File "$HARWYN_WORK/RCO/rco_search_quant.py", line 411, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "$HARWYN_WORK/RCO/rco_search_quant.py", line 293, in main
+    prob_dict, history = optimize_projected_gumbel(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/RCO/src/search/quant.py", line 700, in optimize_projected_gumbel
+    loss = compute_objective(
+           ^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/RCO/src/metrics.py", line 139, in compute_objective
+    return compute_ce_loss(model, input_ids, mask=mask)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/RCO/src/metrics.py", line 120, in compute_ce_loss
+    outputs = model(input_ids=input_ids)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/transformers/utils/generic.py", line 900, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 1753, in forward
+    outputs: BaseModelOutputWithPast = self.model(
+                                       ^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/transformers/utils/generic.py", line 976, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/transformers/utils/output_capturing.py", line 248, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 1286, in forward
+    hidden_states = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/transformers/modeling_layers.py", line 93, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 791, in forward
+    hidden_states = self.mlp(hidden_states)
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 718, in forward
+    down_proj = self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))
+                                           ^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/modules/linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+                           ^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/utils/parametrize.py", line 421, in get_parametrized
+    return parametrization()
+           ^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/utils/parametrize.py", line 312, in forward
+    x = self[0](self.original)
+        ^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/.venv-rco/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HARWYN_WORK/RCO/src/search/quant.py", line 114, in forward
+    result = result + probs[i] * delta
+             ~~~~~~~^~~~~~~~~~~~~~~~~~
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 46.00 MiB. GPU 0 has a total capacity of 22.03 GiB of which 41.12 MiB is free. Including non-PyTorch memory, this process has 21.99 GiB memory in use. Of the allocated memory 21.46 GiB is allocated by PyTorch, and 311.15 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)

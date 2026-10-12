@@ -1,0 +1,65 @@
+2026-10-12 14:48:56,445 - INFO - CUDA devices: 1
+2026-10-12 14:48:56,639 - INFO -   GPU 0: NVIDIA L4 (23.7 GB)
+2026-10-12 14:48:56,639 - INFO - Loading model...
+2026-10-12 14:50:19,318 - INFO - Loading model from $HARWYN_WORK/models/qwen3.5-4b-h0
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+2026-10-12 14:50:28,609 - INFO - Model loaded: Qwen3_5ForCausalLM, dtype=torch.bfloat16
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+2026-10-12 14:50:30,508 - INFO - Loading calibration data...
+2026-10-12 14:50:30,568 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-10-12 14:50:30,568 - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-10-12 14:50:30,573 - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/theblackcat102/evol-codealpaca-v1/c75242318519b5470635e84064baed7c78594020/README.md?%2Fdatasets%2Ftheblackcat102%2Fevol-codealpaca-v1%2Fresolve%2Fmain%2FREADME.md=&etag=%22ff502d99b8546e221d9aa2541e2a59e0f3f7a8c1%22 "HTTP/1.1 200 OK"
+2026-10-12 14:50:30,599 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/evol-codealpaca-v1.py "HTTP/1.1 404 Not Found"
+2026-10-12 14:50:30,665 - INFO - HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/theblackcat102/evol-codealpaca-v1/theblackcat102/evol-codealpaca-v1.py "HTTP/1.1 404 Not Found"
+2026-10-12 14:50:30,706 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/revision/c75242318519b5470635e84064baed7c78594020 "HTTP/1.1 200 OK"
+2026-10-12 14:50:30,737 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/.huggingface.yaml "HTTP/1.1 404 Not Found"
+2026-10-12 14:50:30,855 - INFO - HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=theblackcat102/evol-codealpaca-v1 "HTTP/1.1 200 OK"
+2026-10-12 14:50:30,885 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/tree/c75242318519b5470635e84064baed7c78594020/data?recursive=true&expand=false "HTTP/1.1 404 Not Found"
+2026-10-12 14:50:30,926 - INFO - HTTP Request: GET https://huggingface.co/api/datasets/theblackcat102/evol-codealpaca-v1/tree/c75242318519b5470635e84064baed7c78594020?recursive=false&expand=false "HTTP/1.1 200 OK"
+2026-10-12 14:50:30,974 - INFO - HTTP Request: HEAD https://huggingface.co/datasets/theblackcat102/evol-codealpaca-v1/resolve/c75242318519b5470635e84064baed7c78594020/dataset_infos.json "HTTP/1.1 404 Not Found"
+2026-10-12 14:50:32,192 - INFO - Loaded 256 sequences of length 1024 from evol_codealpaca (avg answer tokens: 375)
+2026-10-12 14:50:32,203 - INFO - WeightStore initialized in LAZY mode from $HARWYN_WORK/rco-db/h0/qwen3.5-4b-h0/4bit (cache=False)
+2026-10-12 14:50:32,273 - INFO - Indexed 1400 weight files across 200 layers
+2026-10-12 14:50:32,275 - INFO - Layers: 200, Groups: 200
+2026-10-12 14:50:32,276 - INFO - Bitwidths: [2, 3, 4, 6, 8], Target: 3.0
+2026-10-12 14:50:32,307 - INFO - Setting up interpolated model (5 bitwidths)...
+2026-10-12 14:50:32,307 - INFO -   Control device: cuda:0
+2026-10-12 14:50:32,307 - INFO -   Input device:   cuda:0
+2026-10-12 14:51:56,279 - INFO - Ready: 200 groups, 200 layers, 5 bitwidths (ref=8)
+2026-10-12 14:51:56,280 - INFO - Layer devices: ['cuda:0']
+2026-10-12 14:51:56,280 - INFO - Skipping gradient sanity check (cpu_deltas mode)
+2026-10-12 14:52:17,796 - INFO - Sensitivity init: E[bits]=3.0000 (target=3.0)
+2026-10-12 14:52:17,796 - INFO - ============================================================
+2026-10-12 14:52:17,797 - INFO - PROJECTED GUMBEL-SOFTMAX OPTIMIZATION
+2026-10-12 14:52:17,797 - INFO - ============================================================
+2026-10-12 14:52:17,797 - INFO - Mini-batching: 1/256 batches per step
+2026-10-12 14:52:17,797 - INFO - Projected Gumbel-softmax: tau 1.0 -> 0.01, 2 sample(s)/step, lr=0.1
+2026-10-12 14:52:17,797 - INFO - Target: 3.0 bits, 200 groups, 5 bitwidths [2, 3, 4, 6, 8]
+2026-10-12 14:52:17,797 - INFO - No budget penalty. Gradient projection + post-step correction.
+2026-10-12 14:52:17,797 - INFO - Input device: cuda:0
+2026-10-12 14:52:17,810 - INFO - Optimization done in 0.0s
+2026-10-12 14:52:19,690 - INFO - Interpolated model cleaned up
+2026-10-12 14:52:22,762 - INFO -   2-bit: 168 layers
+2026-10-12 14:52:22,762 - INFO -   3-bit: 2 layers
+2026-10-12 14:52:22,762 - INFO -   8-bit: 30 layers
+2026-10-12 14:52:22,762 - INFO - Actual avg bits: 3.001 (target: 3.0)
+2026-10-12 14:52:23,014 - INFO - Loading model from $HARWYN_WORK/models/qwen3.5-4b-h0
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+2026-10-12 14:52:25,925 - INFO - Model loaded: Qwen3_5ForCausalLM, dtype=torch.bfloat16
+2026-10-12 14:52:25,925 - INFO - Evaluating final assignment...
+2026-10-12 14:53:48,237 - INFO - Metrics: NLL=10.2048, KL=4.648409
+2026-10-12 14:53:48,239 - INFO - Config saved to $HARWYN_WORK/rco-db/h0/qwen3.5-4b-h0/4bit/projected_gumbel_ce_bw2-3-4-6-8_target3.0_evol_codealpaca_256s_grpnogrp.txt
+2026-10-12 14:53:48,242 - INFO - JSON saved to $HARWYN_WORK/rco-db/h0/qwen3.5-4b-h0/4bit/projected_gumbel_ce_bw2-3-4-6-8_target3.0_evol_codealpaca_256s_grpnogrp.json
+2026-10-12 14:53:48,242 - INFO - ============================================================
+2026-10-12 14:53:48,242 - INFO - SUMMARY
+2026-10-12 14:53:48,242 - INFO - ============================================================
+2026-10-12 14:53:48,242 - INFO - Bitwidths:   [2, 3, 4, 6, 8]
+2026-10-12 14:53:48,242 - INFO - Target bits: 3.0
+2026-10-12 14:53:48,242 - INFO - Actual bits: 3.001
+2026-10-12 14:53:48,242 - INFO - NLL:         10.2048
+2026-10-12 14:53:48,242 - INFO - KL:          4.648409
+2026-10-12 14:53:48,242 - INFO - Time:        0.0s
+2026-10-12 14:53:48,242 - INFO - Output:      $HARWYN_WORK/rco-db/h0/qwen3.5-4b-h0/4bit/projected_gumbel_ce_bw2-3-4-6-8_target3.0_evol_codealpaca_256s_grpnogrp.txt

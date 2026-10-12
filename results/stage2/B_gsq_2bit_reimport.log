@@ -1,0 +1,7 @@
+2026-10-12 10:05:04,984 - INFO - Loading $HARWYN_WORK/gsq-runs/2bit-ct on CPU...
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+2026-10-12 10:05:22,217 - INFO - Decompressing compressed-tensors weights to dense...
+2026-10-12 10:05:38,190 - INFO -   wrote 50 layers
+2026-10-12 10:05:44,633 - INFO - Done. Wrote 96 layer files (96 with qparams sidecars), skipped 153 (matched exclude patterns) under $HARWYN_WORK/rco-db/h0/qwen3.5-4b-h0/4bit.

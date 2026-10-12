@@ -23,5 +23,27 @@ VIRTUAL_ENV=$W/.venv-heretic uv pip install \
 # Heretic's pyproject points torch at the CPU wheel index; replace it with the CUDA build from PyPI.
 VIRTUAL_ENV=$W/.venv-heretic uv pip install --reinstall torch torchvision --index-url https://pypi.org/simple
 
+# Stage 2: GSQ (per-tensor low-bit quantisation) and RCO (bit allocation under a size budget).
+# Each has its own lockfile/pins; flash-linear-attention keeps Qwen3.5's Gated DeltaNet layers fast.
+[ -d "$W/GSQ" ] || git clone https://github.com/IST-DASLab/GSQ "$W/GSQ"
+git -C "$W/GSQ" checkout -q 03fc164
+(cd "$W/GSQ" && uv sync)   # flash-attn build skipped: not needed
+VIRTUAL_ENV=$W/GSQ/.venv uv pip install flash-linear-attention
+[ -d "$W/RCO" ] || git clone https://github.com/IST-DASLab/RCO "$W/RCO"
+git -C "$W/RCO" checkout -q 9a1e09c
+# Patches (see LOG.md): rco-single-gpu skips NCCL init on 1 GPU (its barrier segfaults here);
+# rco-resume makes run_quantize skip layers already in the database (preemptible GPUs);
+# rco-split-symmetric imports GSQ's symmetric low-bit codes; rco-streamed-deltas fits the search in 24 GB.
+for p in "$(cd "$(dirname "$0")" && pwd)"/patches/rco-*.patch; do
+  git -C "$W/RCO" apply --check "$p" 2>/dev/null && git -C "$W/RCO" apply "$p"
+done
+venv rco
+VIRTUAL_ENV=$W/.venv-rco uv pip install -r "$W/RCO/requirements.txt" flash-linear-attention \
+  --extra-index-url https://download.pytorch.org/whl/cu126 --index-strategy unsafe-best-match
+# RCO pins transformers 5.7 for an MoE code path; 5.7 can't build Qwen3.5 from its config, 5.8.1 can.
+VIRTUAL_ENV=$W/.venv-rco uv pip install transformers==5.8.1
+# Humming kernels let vLLM serve 2/3/5/6/7-bit compressed-tensors weights (Marlin covers 4/8).
+VIRTUAL_ENV=$W/.venv-eval uv pip install humming-kernels
+
 HF_HUB_ENABLE_HF_TRANSFER=1 "$W/.venv-eval/bin/hf" download "$BASE_MODEL" --local-dir "$W/models/base"
 echo "done: base model in $W/models/base"

@@ -1,0 +1,45 @@
+diff --git i/src/search/quant.py w/src/search/quant.py
+index 3bb14c6..eec16e3 100644
+--- i/src/search/quant.py
++++ w/src/search/quant.py
+@@ -76,6 +76,31 @@ def build_ref_batches(calibration_data, ref_log_probs, batch_size):
+ # ----------------------------------------------------------------------------
+ 
+ 
++class _StreamedMix(torch.autograd.Function):
++    """harwyn patch: W + sum_i probs[i] * delta_i with CPU-resident deltas streamed to the GPU in both
++    forward and backward. Plain autograd keeps every layer's GPU delta copies alive until backward
++    (~36 GB for a 4B model with 5 candidate widths), which OOMs a 24 GB GPU; this stores none."""
++
++    @staticmethod
++    def forward(ctx, W, probs, owner):
++        out = W.clone()
++        for i, d in enumerate(owner._delta_list):
++            out += probs[i].to(W.dtype) * d.to(device=W.device, dtype=W.dtype, non_blocking=True)
++        ctx.owner = owner
++        ctx.save_for_backward(probs)
++        return out
++
++    @staticmethod
++    def backward(ctx, grad_out):
++        (probs,) = ctx.saved_tensors
++        g = grad_out.float()
++        # probs has one entry per width; the reference width has no delta, so its gradient is 0
++        grad_probs = torch.zeros_like(probs, dtype=torch.float32)
++        for i, d in enumerate(ctx.owner._delta_list):
++            grad_probs[i] = (g * d.to(device=g.device, dtype=torch.float32, non_blocking=True)).sum()
++        return grad_out, grad_probs.to(probs.dtype), None
++
++
+ class WeightInterpolation(nn.Module):
+     """
+     Softmax interpolation across pre-quantized weight versions.
+@@ -103,6 +128,8 @@ class WeightInterpolation(nn.Module):
+             probs = override[self.group_idx].to(W.device)
+         else:
+             probs = torch.softmax(self.alpha[self.group_idx].to(W.device), dim=0)
++        if self.cpu_deltas and torch.is_grad_enabled():
++            return _StreamedMix.apply(W, probs, self)
+         result = W
+         for i in range(self.n_deltas):
+             if self.cpu_deltas:

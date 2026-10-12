@@ -1,0 +1,66 @@
+diff --git i/run_split_checkpoint.py w/run_split_checkpoint.py
+index 0966cea..6ccf307 100755
+--- i/run_split_checkpoint.py
++++ w/run_split_checkpoint.py
+@@ -58,10 +58,14 @@ def _extract_qparams_from_ct_module(module: nn.Module) -> Optional[dict]:
+     before saving. The dequant formula scale * (qweight - zeros) is
+     invariant under this shift.
+     """
+-    needed = ("weight_packed", "weight_scale", "weight_zero_point",
+-              "weight_shape", "quantization_scheme")
++    needed = ("weight_packed", "weight_scale", "weight_shape", "quantization_scheme")
+     if not all(hasattr(module, a) for a in needed):
+         return None
++    # harwyn patch: symmetric checkpoints (e.g. GSQ's) carry no weight_zero_point; their implicit zero
++    # point is 0 in the signed domain, i.e. 2**(bits-1) after the shift below (RCO's own sym convention).
++    has_zp = hasattr(module, "weight_zero_point") and module.weight_zero_point is not None
++    if not has_zp and not module.quantization_scheme.weights.symmetric:
++        return None
+ 
+     from compressed_tensors.compressors import unpack_from_int32
+ 
+@@ -72,19 +76,20 @@ def _extract_qparams_from_ct_module(module: nn.Module) -> Optional[dict]:
+ 
+     packed = module.weight_packed.detach()
+     scale = module.weight_scale.detach()
+-    zp = module.weight_zero_point.detach()
+     shape = tuple(int(x) for x in module.weight_shape.detach().tolist())
+     n_groups = scale.shape[1] if scale.dim() > 1 else 1
+ 
+     codes = unpack_from_int32(packed, num_bits=bits,
+                               shape=torch.Size(shape), packed_dim=1)
+-    zeros = unpack_from_int32(zp, num_bits=bits,
+-                              shape=torch.Size((shape[0], n_groups)),
+-                              packed_dim=0)
+-
+     offset = 1 << (bits - 1)
+     qweight = (codes.to(torch.int16) + offset).to(torch.uint8)
+-    zeros_u = (zeros.to(torch.int16) + offset).to(scale.dtype)
++    if has_zp:
++        zeros = unpack_from_int32(module.weight_zero_point.detach(), num_bits=bits,
++                                  shape=torch.Size((shape[0], n_groups)),
++                                  packed_dim=0)
++        zeros_u = (zeros.to(torch.int16) + offset).to(scale.dtype)
++    else:
++        zeros_u = torch.full((shape[0], n_groups), float(offset), dtype=scale.dtype)
+ 
+     dtype_str = "bfloat16"
+     if hasattr(module, "weight") and isinstance(module.weight, torch.Tensor):
+@@ -208,6 +213,17 @@ def main(argv=None) -> int:
+         qp = qparams_by_layer.get(name)
+         if qp is not None:
+             qp["dtype"] = str(dtype).replace("torch.", "")
++            # harwyn patch: GSQ stores 2/3-bit codes in a uint4 container (compressed-tensors has no
++            # uint2/uint3 pack). Re-express symmetric codes at the slot's width when they fit, so the
++            # packed checkpoint really stores args.bitwidth bits, as RCO's budget assumes.
++            if qp["sym"] and qp["bits"] > args.bitwidth:
++                old, new = 1 << (qp["bits"] - 1), 1 << (args.bitwidth - 1)
++                signed = qp["qweight"].to(torch.int16) - old
++                if signed.min() < -new or signed.max() > new - 1:
++                    raise ValueError(f"{name}: codes don't fit {args.bitwidth} bits")
++                qp["qweight"] = (signed + new).to(torch.uint8)
++                qp["zeros"] = torch.full_like(qp["zeros"], float(new))
++                qp["bits"] = int(args.bitwidth)
+             torch.save(qp, qp_out)
+             n_qparams += 1
+ 
