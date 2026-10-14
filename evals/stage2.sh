@@ -103,7 +103,11 @@ if ! done_ D$TAG; then
     dst=$Q; [ $fmt = fake-quant ] && dst=$QFQ
     (cd $W/RCO && $RP run_build_checkpoint.py quant --model $M --config $OUT/assignment_$TAG.json \
       --layer-dir $LD --output $dst --format $fmt --group-size 128 --symmetric) >> $OUT/D_build_$TAG.log 2>&1
-    for f in $M/*.json $M/*.jinja $M/*.txt; do   # processor/template files vLLM wants
+    # RCO's config targets every Linear by default; the bf16 GDN gates (in_proj_a/b, fused by vLLM) must be ignored
+    $RP -c "import json,sys; p=sys.argv[1]+'/config.json'; c=json.load(open(p)); q=c.get('quantization_config')
+if q: q['ignore']=sorted(set(q['ignore']+['re:.*in_proj_a\$','re:.*in_proj_b\$'])); json.dump(c,open(p,'w'),indent=2)" $dst
+    for f in $M/*.json $M/*.jinja $M/*.txt; do   # processor/template files vLLM wants (not the weight index)
+      [[ $f == *.index.json ]] && continue
       [ -e "$f" ] && [ ! -e "$dst/$(basename "$f")" ] && cp "$f" $dst/ || true
     done
   done
@@ -118,7 +122,9 @@ if ! done_ E$TAG; then
   vllm serve $Q --served-model-name m --port 8000 --max-model-len 40960 --language-model-only \
     --reasoning-parser qwen3 --gpu-memory-utilization 0.92 \
     --override-generation-config '{"max_new_tokens": 8192}' > $R/vllm.log 2>&1 &
-  until curl -sf localhost:8000/health >/dev/null; do sleep 5; done
+  V=$!
+  # give up if the server dies (a dead vLLM once left this loop polling for 5 h)
+  until curl -sf localhost:8000/health >/dev/null; do sleep 5; kill -0 $V 2>/dev/null || { echo "vllm died"; exit 1; }; done
   python gen.py $R humaneval > $R/gen_humaneval.log 2>&1 & A=$!
   LIMIT=99 python gen.py $R gpqa > $R/gen_gpqa.log 2>&1 & B=$!
   lm_eval --model local-completions \

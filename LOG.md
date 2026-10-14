@@ -241,9 +241,35 @@ ln 248,320 ≈ 12.4), so it was not evaluated further. The per-tensor delta norm
 initialisation favour spending bits on small, sensitive attention tensors and starve the MLPs; the
 gradient search exists to correct exactly this. Files: [`results/stage2/sensinit/`](results/stage2/sensinit/).
 
-### Status (2026-10-12, 17:30)
-Done: GPTQ database (2–8 bits, all 200 tensors), GSQ 2- and 3-bit MLPs imported with exact codes, the
-memory and import fixes above. **Paused: GPU time ran out** before the bit-allocation
-search could finish, so there is no harwyn-4b-q3 checkpoint or stage 2 eval yet. Next: the 512-token
-search run; fallback is uniform 3-bit (GSQ MLPs + GPTQ attention, `run_build_checkpoint.py --uniform-bw 3`).
-GSQ per-layer losses for both widths are in `results/stage2/B_gsq_*bit.log`.
+### Search, build and results (2026-10-13/14, on a 48 GB A40, then an RTX 4090 for evals)
+- **The gradient search fits on 48 GB** with the streamed-deltas patch (1,024-token calibration, CE
+  objective, 100 steps × 2 Gumbel samples). It allocated exactly 3.002 bpw: **109 tensors at 2 bits,
+  33 at 3, 16 at 4, 3 at 6, 39 at 8.** RCO's own check vs h0 improved from KL 4.65 (sensitivity init)
+  to **KL 1.17**, NLL 2.59 on code answers: better, but still a large divergence.
+- **Serving the packed checkpoint in vLLM 0.31 failed**, three separate problems: (1) the merged-weight
+  index from h0 was copied into the single-file checkpoint (fixed in `stage2.sh`); (2) RCO's config
+  targets every Linear by default, so the bf16 GDN gates must be ignored (fixed); (3) RCO saves the
+  model as text-only `Qwen3_5ForCausalLM`, whose vLLM loader still failed on a fused layer
+  (`MergedColumnParallelLinear ... has no attribute 'data'`). Separately, vLLM fuses `gate/up`,
+  `q/k/v` and `in_proj_qkv/z`, so each fused group must share a width; 27 groups didn't (equalising them
+  to their max gives 3.34 bpw: `results/stage2/assignment_q3p0_fused.json`). For the 27B, the search
+  must tie these groups (RCO's `--layer-groups`).
+- **Evaluated via a fake-quant copy** ([`evals/fakequant_from_db.py`](evals/fakequant_from_db.py)): h0's
+  exact files with every quantised tensor replaced by its database weight at the assigned width.
+  Numerically the same as the packed model, and it's the QAT reference.
+
+| Benchmark (8k budget) | Base | h0 (bf16) | **h0 at 3.0 bpw (GSQ+RCO)** |
+|---|---|---|---|
+| HumanEval+ | 76.8% | 77.4% | **0.0%** |
+| GPQA Diamond, first 99 | 11/99 | 7/99 | **2/99** |
+| RULER 32k, 25/task | 98/100/88/99 (50/task) | 100/100/92/100 | **20/0/0/16** |
+
+**At 3.0 bpw the 4B model collapses**: 41.5% of HumanEval answers ran to the 8k limit and none passed.
+This matches the general rule that small models degrade far faster at low bit widths than large ones
+(ISTA's Qwen3.8-27B is near-lossless at 3.0 bpw), and RCO's KL of 1.17 already said so. It is also
+the strongest possible baseline for the QAT experiment: stage 4 now has a large, measurable gap to
+recover at 3.0 bpw. Two caveats: the search ran a shortened schedule, and no all-8-bit sanity run was
+done to rule out a pipeline error (that's the first check for next time, ~$0.30).
+
+GPU spend for stage 2 on the second host: $3.70 (including ~5 h of idle GPU from a wait loop that
+didn't notice the server had died; the loop now exits).

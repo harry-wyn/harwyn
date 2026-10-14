@@ -35,8 +35,12 @@ Refusals on Heretic's default prompts: **11/100** (base 99/100), KL 0.043. Detai
 | GPQA Diamond, first 99 | 7/99 (6/17 where both finished) | 11/99 (10/17) |
 | RULER 32k bf16 KV | 100 / 100 / 92 / 100 (25/task) | 98 / 100 / 88 / 99 (50/task) |
 
-## Stage 2: GSQ + RCO at 3.0 bpw (in progress)
+## Stage 2: h0 at 3.0 bpw (GSQ + RCO), evaluated as fake-quant (2026-10-14)
 
-GPTQ database and GSQ 2/3-bit MLPs done; the bit-allocation search is paused (GPU time ran out).
-RCO's sensitivity-only allocation is degenerate (all MLPs at 2 bits; KL 4.65 vs bf16) and was not
-evaluated. Details: [`LOG.md`](LOG.md).
+| Benchmark | h0 | 3.0 bpw |
+|---|---|---|
+| HumanEval+ | 77.4% | 0.0% |
+| GPQA Diamond, first 99 | 7/99 | 2/99 |
+| RULER 32k (25/task) | 100 / 100 / 92 / 100 | 20 / 0 / 0 / 16 |
+
+The 4B collapses at 3.0 bpw (RCO's KL vs h0: 1.17). Details and caveats in [`LOG.md`](LOG.md).
