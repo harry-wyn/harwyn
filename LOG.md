@@ -280,3 +280,39 @@ MLP `gate_proj`/`up_proj` at 6 bits, everything else at 8 (Unsloth-Dynamic-style
 Evaluated as fake-quant: **HumanEval+ 76.2% (plain 80.5%), GPQA 11/99, RULER 32k 100/100/96/100**, all
 within noise of h0. This also confirms the 3.0 bpw collapse was the bit width, not the pipeline. This
 bit map is the QAT target for the training stages.
+
+## Stage 4: QAT SFT (2026-10-14)
+
+### Data: `data/build_sft.py` → `sft_v1.jsonl`, 5,232 examples, 31.2M tokens
+Agentic coding and tool calling first; every example rendered with Qwen3.5's own chat template
+(tool calls as structured `tool_calls`), ≤ 16,384 tokens, refusals dropped, 13-gram decontaminated
+against HumanEval+ prompts and GPQA Diamond questions.
+
+| Source | Examples | Tokens | Notes |
+|---|---|---|---|
+| nvidia/Open-SWE-Traces v1.1 (openhands) | 651 | 8.37M | resolved trajectories only; most traces exceed 16k |
+| openbmb/UltraData-SFT-Agent-2609 Code-Agent | 467 | 5.58M | |
+| openbmb/UltraData-SFT-Agent-2609 Tool-Use | 2,000 | 6.22M | read as raw JSONL: per-row tool schemas break `datasets`' cast |
+| TIGER-Lab/SWE-QA-Pro-SFT-Trajectories | 324 | 3.97M | its `tool_call`/`tool_response` roles mapped to standard tool calls |
+| mindchain/mimo-v2.6-distill-qwen9b-webdev-full | 90 | 0.72M | UI/web design; score ≥ 0.85 (the set only has 107 rows) |
+| nvidia/OpenCodeReasoning split_0 | 700 | 5.47M | |
+| HuggingFaceTB/smoltalk (all, minus apigen) | 1,000 | 0.90M | general replay against forgetting |
+
+Considered and not used: harvardMadsys/freeinference_agentic_trace (serving telemetry, no message
+text released); a small gated cyber-security Q&A set (off-target for this stage). UI design gets
+another pass in GRPO (render + judge rewards).
+
+### Trainer: `train/train_qat.py`
+- LoRA r32 (α = 2r) on all 200 quantised Linears. Every forward fake-quantises the **merged**
+  W + BA to that tensor's width from `assignment_q7.json` (symmetric, group 128, STE), so training
+  sees the weights that ship. The export writes those on-grid merged weights into an h0-layout
+  checkpoint (`evals/fakequant_from_db.py` now also takes a `.pt` dict).
+- KV QAT for vLLM's `int4_per_token_head`: on the 8 full-attention layers, K (after RoPE) and V are
+  rotated by a fixed randomized Hadamard transform, quantised to asymmetric int4 with one scale and
+  zero-point per (token, head), and rotated back (STE). The rotation signs are not vLLM's exact ones;
+  the error statistics are what matter.
+- Loss on assistant tokens only (incl. tool calls), chunked cross-entropy over the 248k vocabulary
+  (full 16k × 248k logits would be ~16 GB). LR 1e-4, cosine, 20 warmup steps, 16 sequences/step.
+- Throughput on one A100 80GB: ~2,900 tok/s with fla's Gated DeltaNet kernels (the conv falls back
+  to torch; causal-conv1d didn't build against torch's CUDA 13). To save compute this run trains
+  **0.65 epoch** (the first 65% of the shuffled mix, 212 steps, ~20M tokens).
