@@ -44,3 +44,5 @@ Refusals on Heretic's default prompts: **11/100** (base 99/100), KL 0.043. Detai
 | RULER 32k (25/task) | 100 / 100 / 92 / 100 | 20 / 0 / 0 / 16 |
 
 The 4B collapses at 3.0 bpw (RCO's KL vs h0: 1.17). Details and caveats in [`LOG.md`](LOG.md).
+
+**Chosen instead: ~7.15 bpw** (MLP gate/up 6-bit, rest 8-bit): HumanEval+ 76.2%, GPQA 11/99, RULER 100/100/96/100. Near-lossless.

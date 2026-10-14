@@ -273,3 +273,10 @@ done to rule out a pipeline error (that's the first check for next time, ~$0.30)
 
 GPU spend for stage 2 on the second host: $3.70 (including ~5 h of idle GPU from a wait loop that
 didn't notice the server had died; the loop now exits).
+
+### Decision: near-lossless ~7.15 bpw instead of 3.0 (2026-10-14)
+MLP `gate_proj`/`up_proj` at 6 bits, everything else at 8 (Unsloth-Dynamic-style: attention, GDN and
+`down_proj` stay high), built from the same database ([`results/stage2/assignment_q7.json`](results/stage2/assignment_q7.json)).
+Evaluated as fake-quant: **HumanEval+ 76.2% (plain 80.5%), GPQA 11/99, RULER 32k 100/100/96/100**, all
+within noise of h0. This also confirms the 3.0 bpw collapse was the bit width, not the pipeline. This
+bit map is the QAT target for the training stages.
