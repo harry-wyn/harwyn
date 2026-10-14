@@ -170,6 +170,7 @@ TRL `GRPOTrainer` with vLLM rollouts (`int4_per_token_head` on), group size 4–
 Rewards: **coding**, hidden unit tests in a sandbox (pass rate); **web design**, HTML parses and
 renders in Playwright, no console errors, plus a VLM judge score; **concise reasoning**, penalty per
 reasoning token over budget, *correct answers only*.
+Prompt sources to evaluate: [XiaomiMiMo/MiMo-V2.6-RL-oss](https://huggingface.co/datasets/XiaomiMiMo/MiMo-V2.6-RL-oss).
 
 ### 6. Long-context QAT
 Same QAT setup as stage 4 at 32k (fall back to 16k if it OOMs). Gradient checkpointing, batch 1,

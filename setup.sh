@@ -44,6 +44,9 @@ VIRTUAL_ENV=$W/.venv-rco uv pip install -r "$W/RCO/requirements.txt" flash-linea
 VIRTUAL_ENV=$W/.venv-rco uv pip install transformers==5.8.1
 # Humming kernels let vLLM serve 2/3/5/6/7-bit compressed-tensors weights (Marlin covers 4/8).
 VIRTUAL_ENV=$W/.venv-eval uv pip install humming-kernels
+# Stage 4+ training (train/train_qat.py)
+venv train
+VIRTUAL_ENV=$W/.venv-train uv pip install torch==2.11.0 transformers==5.8.1 flash-linear-attention==0.5.2 safetensors datasets
 
 HF_HUB_ENABLE_HF_TRANSFER=1 "$W/.venv-eval/bin/hf" download "$BASE_MODEL" --local-dir "$W/models/base"
 echo "done: base model in $W/models/base"

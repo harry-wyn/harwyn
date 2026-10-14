@@ -3,6 +3,7 @@ serves it like the bf16 model) whose quantised Linears are replaced by the RCO d
 weights at the width ASSIGNMENT gives each tensor. Numerically identical to the packed checkpoint
 (which dequantises to bf16 for the matmul anyway); doubles as the QAT reference.
 usage: python fakequant_from_db.py SRC LAYER_DIR ASSIGNMENT_JSON OUT
+   LAYER_DIR may instead be a .pt dict {name: tensor} (train/train_qat.py merged_fq.pt, already on-grid).
 """
 import json
 import shutil
@@ -20,12 +21,13 @@ for f in src.iterdir():
         shutil.copy(f, out / f.name)
 
 done = 0
+trained = torch.load(layer_dir, map_location="cpu") if layer_dir.suffix == ".pt" else None
 for shard in sorted(src.glob("*.safetensors")):
     t = load_file(shard)
     for k in t:
         name = k.replace("model.language_model.", "model.").removesuffix(".weight")
         if k.endswith(".weight") and name in a:
-            w = torch.load(layer_dir / name / f"{a[name]}.pth", map_location="cpu")
+            w = trained[name] if trained is not None else torch.load(layer_dir / name / f"{a[name]}.pth", map_location="cpu")
             assert w.shape == t[k].shape, (k, w.shape, t[k].shape)
             t[k] = w.to(t[k].dtype).contiguous()
             done += 1
