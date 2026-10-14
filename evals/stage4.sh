@@ -4,6 +4,7 @@
 #   F  write the trained weights into a fake-quant copy of h0 (same layout as the stage-2 q7 eval model)
 #   E  HumanEval+, GPQA Diamond first 99, RULER 32k 25/task; served with --kv-cache-dtype int4_per_token_head
 # Each phase writes a .done marker and is skipped on rerun (T also resumes from its checkpoint).
+#   EPOCHS  fraction of data/sft_v1.jsonl to train on (default 1; the first run used 0.65 to save compute)
 #   HARWYN_WORK  work dir (required); expects models/h0, data/sft_v1.jsonl, .venv-train, .venv-eval
 set -euo pipefail
 W=${HARWYN_WORK:?set HARWYN_WORK}
@@ -19,7 +20,7 @@ mark() { touch $OUT/.done_$1; echo "$(date +%T) phase $1 done"; }
 if ! done_ T; then
   echo "$(date +%T) T: QAT SFT"
   PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True $W/.venv-train/bin/python $REPO/train/train_qat.py \
-    $W/models/h0 $W/data/sft_v1.jsonl $A $RUN --max-len 16384 --rank 32 --lr 1e-4 --accum 16 --epochs 1 \
+    $W/models/h0 $W/data/sft_v1.jsonl $A $RUN --max-len 16384 --rank 32 --lr 1e-4 --accum 16 --epochs ${EPOCHS:-1} \
     >> $OUT/T_train.log 2>&1
   mark T
 fi
