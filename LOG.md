@@ -350,3 +350,24 @@ Stage 4 showed it hides real ability: run 2 passes 89.5% of the HumanEval+ probl
 and every loss is an answer cut off at 8k (21/164). From now on the default is the model card's
 32,768 tokens (`MAX_TOKENS` in `evals/gen.py` and the stage scripts; `MAX_TOKENS=8192` reproduces
 the old numbers). Earlier stages will be re-scored at 32k so the table stays comparable.
+
+## Stage 5: rejection-sampling SFT (RFT) (2026-10-15)
+Goal: cut the runaway thinking that cost stage 4 its HumanEval points (every lost answer had hit the
+budget) by training on the model's own shortest correct solutions. `evals/stage5.sh`, `data/rft_gen.py`.
+
+**Generation (the "before" measurement).** The stage-4 model, served in its deployment format (q7
+weights, int4 KV), attempted 2,400 KodCode-Light-RL problems (13-gram decontaminated against
+HumanEval+) 4 times each at the card's coding sampling, 8k thinking cap. Every attempt ran against the
+problem's pytest file. Of 9,600 attempts **63.2% passed**, **14.7% ran out of budget**; **1,886 problems
+(78.6%)** had at least one passing answer that finished, and the shortest one was kept. Training set:
+those 1,886 + 600 agentic/tool-use rows replayed from `sft_v1`. The 8k cap here is a data filter
+(only concise correct answers become training targets), not an eval budget.
+
+**Training.** Continued the stage-4 LoRA at half the LR (5e-5), 1 epoch, 155 steps, same QAT setup.
+LoRA change between checkpoints shrank as the LR decayed (‖Δ‖ 1.29 for steps 50→100, 0.30 for
+100→155). Weights: release `stage5-rft` (steps 50/100/155).
+
+**Not yet benchmarked.** The A100 40GB was slower than estimated, so training ended just before the
+instance's hard 3.5 h cap, and evals were deliberately skipped rather than started and cut off. The
+training-loss log and the generated dataset were on the instance and were not copied off in time
+(the weights were); the generation statistics above were read live during the run. Spend: $3.56.
