@@ -19,7 +19,8 @@ M=$W/models/harwyn-4b-rft-q7-fq
 OUT=$W/results/stage5; mkdir -p $OUT
 done_() { [ -f $OUT/.done_$1 ]; }
 mark() { touch $OUT/.done_$1; echo "$(date +%T) phase $1 done"; }
-serve() {  # serve MODEL LOG
+serve() {  # serve MODEL LOG (venv bin on PATH: vLLM JIT-compiles kernels with its ninja)
+  export PATH=$W/.venv-eval/bin:$PATH
   $W/.venv-eval/bin/vllm serve $1 --served-model-name m --port 8000 --max-model-len 40960 --language-model-only \
     --reasoning-parser qwen3 --gpu-memory-utilization 0.92 --kv-cache-dtype int4_per_token_head \
     --override-generation-config "{\"max_new_tokens\": ${MAX_TOKENS:-32768}}" > $2 2>&1 &
