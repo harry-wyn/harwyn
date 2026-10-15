@@ -46,3 +46,13 @@ Refusals on Heretic's default prompts: **11/100** (base 99/100), KL 0.043. Detai
 The 4B collapses at 3.0 bpw (RCO's KL vs h0: 1.17). Details and caveats in [`LOG.md`](LOG.md).
 
 **Chosen instead: ~7.15 bpw** (MLP gate/up 6-bit, rest 8-bit): HumanEval+ 76.2%, GPQA 11/99, RULER 100/100/96/100. Near-lossless.
+
+## Stage 4: QAT SFT (harwyn-4b-sft, served at ~7.15 bpw with int4 KV)
+0.65 epoch of `sft_v1` (212 steps, ~20M tokens). Train loss by quarter: 0.511 → 0.460 → 0.448 → 0.434.
+
+| Benchmark (8k budget) | h0 bf16 | h0 q7 (bf16 KV) | **harwyn-4b-sft q7 + int4 KV** |
+|---|---|---|---|
+| HumanEval+ | 77.4% | 76.2% | **80.5%** |
+| HumanEval (plain) | — | 80.5% | **88.4%** |
+| GPQA Diamond, first 99 | 7/99 | 11/99 | **18/99** (36% hit the 8k limit) |
+| RULER 32k, 25/task (mk1/mk2/mk3/mv) | 100/100/92/100 | 100/100/96/100 | **100/100/100/100** |

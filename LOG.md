@@ -316,3 +316,21 @@ another pass in GRPO (render + judge rewards).
 - Throughput on one A100 80GB: ~2,900 tok/s with fla's Gated DeltaNet kernels (the conv falls back
   to torch; causal-conv1d didn't build against torch's CUDA 13). To save compute this run trains
   **0.65 epoch** (the first 65% of the shuffled mix, 212 steps, ~20M tokens).
+
+### Results (2026-10-14)
+Train loss fell 0.511 → 0.434 (quarter means; last step 0.348) with no instability. Evaluated on vLLM as
+fake-quant q7 **with `--kv-cache-dtype int4_per_token_head`**, i.e. exactly the deployment format:
+HumanEval+ **80.5%** (q7 baseline 76.2%), plain HumanEval **88.4%** (80.5%), GPQA first 99 **18/99**
+(11/99), RULER 32k **100/100/100/100** (100/100/96/100 with bf16 KV). Every metric is up, and
+long-context retrieval held under int4 KV. GPQA is small-n (±4 questions is noise) and 36% of its
+answers still hit the 8k budget, which the GRPO length reward targets.
+
+### Incident: lost weights and idle GPU
+The training was relaunched from an interactive shell after a dependency fix, which doesn't inherit
+the container's environment, so the end-of-run upload failed to authenticate and the self-delete had
+no instance id. The GPU then sat idle for ~9 h until the host's balance ran out and the instance was
+reclaimed, taking `lora.pt`/`merged_fq.pt` with it. All logs and eval outputs were saved first
+(`results/stage4/`). Total spend for stage 4: $14.19 (~$4.50 of useful work). Fix: relaunches now
+re-export the environment explicitly, and the watcher alerts on "stage done but no upload" instead
+of waiting for the upload marker. Reproducing the weights = rerunning `evals/stage4.sh` with
+`EPOCHS=0.65` (~2 h on one A100).
