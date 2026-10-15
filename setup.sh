@@ -47,6 +47,8 @@ VIRTUAL_ENV=$W/.venv-eval uv pip install humming-kernels
 # Stage 4+ training (train/train_qat.py)
 venv train
 VIRTUAL_ENV=$W/.venv-train uv pip install torch==2.11.0 transformers==5.8.1 flash-linear-attention==0.5.2 safetensors datasets
+# Stage 5 runs generated code against unit tests
+VIRTUAL_ENV=$W/.venv-eval uv pip install pytest
 
 HF_HUB_ENABLE_HF_TRANSFER=1 "$W/.venv-eval/bin/hf" download "$BASE_MODEL" --local-dir "$W/models/base"
 echo "done: base model in $W/models/base"

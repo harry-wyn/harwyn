@@ -28,6 +28,8 @@ p.add_argument("--max-steps", type=int, default=0); p.add_argument("--max-len", 
 p.add_argument("--rank", type=int, default=32); p.add_argument("--lr", type=float, default=1e-4)
 p.add_argument("--accum", type=int, default=16); p.add_argument("--epochs", type=float, default=1.0)
 p.add_argument("--no-kv-qat", action="store_true")
+p.add_argument("--init", help="start from a LoRA state dict (e.g. the stage-4 final lora_step212.pt)")
+p.add_argument("--export-only", action="store_true", help="with --init: skip training, just write merged_fq.pt")
 args = p.parse_args()
 SAVE_EVERY, GROUP = 50, 128
 dev = "cuda" if torch.cuda.is_available() else "cpu"
@@ -137,7 +139,7 @@ def encode(ex):
     return ids, labels
 
 
-rows = [json.loads(l) for l in open(args.data)]
+rows = [json.loads(l) for l in open(args.data)] if not args.export_only else [None]
 random.Random(0).shuffle(rows)
 total_micro = int(len(rows) * args.epochs)
 total_steps = args.max_steps or max(1, total_micro // args.accum)
@@ -147,6 +149,13 @@ os.makedirs(args.out, exist_ok=True)
 ck = os.path.join(args.out, "lora.pt")
 step = 0
 lora_named = {n: p for n, p in model.named_parameters() if p.requires_grad}
+if args.init and not os.path.exists(ck):
+    init = torch.load(args.init, map_location=dev)
+    for n, p in lora_named.items():
+        p.data.copy_(init[n])
+    print("initialised from", args.init, flush=True)
+if args.export_only:
+    total_steps = step
 if os.path.exists(ck):
     st = torch.load(ck, map_location=dev)
     for n, p in lora_named.items():
