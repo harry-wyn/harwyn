@@ -16,7 +16,7 @@ serve() {  # $1 = kv-cache dtype; extra args after. Reuses a server that's alrea
   if curl -sf localhost:8000/health >/dev/null; then VLLM=$(pgrep -f "vllm serve" | head -1); return; fi
   vllm serve $MODEL --served-model-name m --port 8000 --max-model-len 40960 --language-model-only \
     --reasoning-parser qwen3 --enable-auto-tool-choice --tool-call-parser qwen3_coder \
-    --gpu-memory-utilization 0.92 --override-generation-config '{"max_new_tokens": 8192}' \
+    --gpu-memory-utilization 0.92 --override-generation-config "{\"max_new_tokens\": ${MAX_TOKENS:-32768}}" \
     --kv-cache-dtype "$@" > $OUT/vllm_$1.log 2>&1 &
   VLLM=$!
   until curl -sf localhost:8000/health >/dev/null; do sleep 5; kill -0 $VLLM || { echo "vllm died"; exit 1; }; done

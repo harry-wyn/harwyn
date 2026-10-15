@@ -121,7 +121,7 @@ if ! done_ E$TAG; then
   echo "$(date +%T) E: serve $Q"
   vllm serve $Q --served-model-name m --port 8000 --max-model-len 40960 --language-model-only \
     --reasoning-parser qwen3 --gpu-memory-utilization 0.92 \
-    --override-generation-config '{"max_new_tokens": 8192}' > $R/vllm.log 2>&1 &
+    --override-generation-config "{\"max_new_tokens\": ${MAX_TOKENS:-32768}}" > $R/vllm.log 2>&1 &
   V=$!
   # give up if the server dies (a dead vLLM once left this loop polling for 5 h)
   until curl -sf localhost:8000/health >/dev/null; do sleep 5; kill -0 $V 2>/dev/null || { echo "vllm died"; exit 1; }; done

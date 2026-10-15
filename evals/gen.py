@@ -18,29 +18,32 @@ GENERAL = dict(temperature=1.0, top_p=0.95, presence_penalty=1.5, extra_body={"t
 CODING = dict(temperature=0.6, top_p=0.95, presence_penalty=0.0, extra_body={"top_k": 20})
 MATH_SUFFIX = "\nPlease reason step by step, and put your final answer within \\boxed{}."
 MC_SUFFIX = '\nPlease show your choice in the `answer` field with only the choice letter, e.g., `"answer": "C"`.'
+# Output budget: the Qwen3.5 card's recommended 32,768 tokens (fits --max-model-len 40960 with the prompt).
+# Results before 2026-10-15 used a fixed 8,192-token budget; MAX_TOKENS=8192 reproduces them.
+MAX_TOKENS = int(os.environ.get("MAX_TOKENS", 32768))
 CODE_PROMPT = ("Complete the following Python function. Return the full function (with imports) "
                "in a single ```python code block.\n\n```python\n{}```")
 
 
 def math500():
     for r in load_dataset("HuggingFaceH4/MATH-500", split="test"):
-        yield r["unique_id"], r["problem"] + MATH_SUFFIX, GENERAL, 8192
+        yield r["unique_id"], r["problem"] + MATH_SUFFIX, GENERAL, MAX_TOKENS
 
 
 def gpqa():
     for i, r in enumerate(load_dataset("fingertap/GPQA-Diamond", split="test")):
-        yield str(i), r["question"] + MC_SUFFIX, GENERAL, 8192
+        yield str(i), r["question"] + MC_SUFFIX, GENERAL, MAX_TOKENS
 
 
 def humaneval():
     from evalplus.data import get_human_eval_plus
     for tid, p in get_human_eval_plus().items():
-        yield tid, CODE_PROMPT.format(p["prompt"]), CODING, 8192
+        yield tid, CODE_PROMPT.format(p["prompt"]), CODING, MAX_TOKENS
 
 
 def ifeval():
     for r in load_dataset("google/IFEval", split="train"):
-        yield str(r["key"]), r["prompt"], GENERAL, 8192
+        yield str(r["key"]), r["prompt"], GENERAL, MAX_TOKENS
 
 
 BENCHES = dict(math500=math500, gpqa=gpqa, humaneval=humaneval, ifeval=ifeval)

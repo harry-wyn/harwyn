@@ -343,3 +343,10 @@ before anything else ran. Results at q7 + int4 KV: HumanEval+ 78.0% (plain 82.3%
 because more answers ran into the 8k budget (12.8% vs 5.5%), i.e. sampling + thinking length, which
 is what GRPO's length reward targets. Both runs beat the q7 baseline (76.2% / 80.5% / 11 / 100,100,96,100).
 Cost of the rerun: ~2.5 h on one A100.
+
+### Change: output budget 8k → 32k (2026-10-15)
+All earlier numbers used a fixed 8,192-token output budget, chosen at stage 0 to keep evaluation cheap.
+Stage 4 showed it hides real ability: run 2 passes 89.5% of the HumanEval+ problems it finishes,
+and every loss is an answer cut off at 8k (21/164). From now on the default is the model card's
+32,768 tokens (`MAX_TOKENS` in `evals/gen.py` and the stage scripts; `MAX_TOKENS=8192` reproduces
+the old numbers). Earlier stages will be re-scored at 32k so the table stays comparable.

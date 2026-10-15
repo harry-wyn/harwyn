@@ -41,7 +41,7 @@ cd $EVALS
 echo "$(date +%T) serve h0"
 vllm serve $H0 --served-model-name m --port 8000 --max-model-len 40960 --language-model-only \
   --reasoning-parser qwen3 --gpu-memory-utilization 0.92 \
-  --override-generation-config '{"max_new_tokens": 8192}' > $OUT/vllm.log 2>&1 &
+  --override-generation-config "{\"max_new_tokens\": ${MAX_TOKENS:-32768}}" > $OUT/vllm.log 2>&1 &
 until curl -sf localhost:8000/health >/dev/null; do sleep 5; done
 echo "$(date +%T) evals"
 python gen.py $OUT humaneval > $OUT/gen_humaneval.log 2>&1 & A=$!

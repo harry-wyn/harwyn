@@ -38,7 +38,7 @@ if ! done_ E; then
   echo "$(date +%T) E: serve $M"
   vllm serve $M --served-model-name m --port 8000 --max-model-len 40960 --language-model-only \
     --reasoning-parser qwen3 --gpu-memory-utilization 0.92 --kv-cache-dtype int4_per_token_head \
-    --override-generation-config '{"max_new_tokens": 8192}' > $R/vllm.log 2>&1 &
+    --override-generation-config "{\"max_new_tokens\": ${MAX_TOKENS:-32768}}" > $R/vllm.log 2>&1 &
   V=$!
   until curl -sf localhost:8000/health >/dev/null; do sleep 5; kill -0 $V 2>/dev/null || { echo "vllm died"; exit 1; }; done
   python gen.py $R humaneval > $R/gen_humaneval.log 2>&1 & P1=$!
