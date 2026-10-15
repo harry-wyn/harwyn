@@ -225,3 +225,14 @@ including what went wrong, is in [`LOG.md`](LOG.md).
 
 ## License
 [Apache-2.0](LICENSE), the same licence as the Qwen3.5 base weights.
+
+## Download the models
+Every stage's weights are attached to a GitHub release (files over 2 GB are split; each release
+lists the rejoin command and SHA-256 sums). The base model is
+[Qwen/Qwen3.5-4B](https://huggingface.co/Qwen/Qwen3.5-4B) and is not re-uploaded.
+
+| Stage | Release | What it is |
+|---|---|---|
+| 1 | [`stage1-h0`](https://github.com/harry-wyn/harwyn/releases/tag/stage1-h0) | Heretic-abliterated base (trial 3), bf16 |
+| 2 | [`stage2-q7`](https://github.com/harry-wyn/harwyn/releases/tag/stage2-q7) | h0 at ~7.15 bpw (6-bit MLP gate/up, 8-bit rest), fake-quant |
+| 4 | [`stage4-sft`](https://github.com/harry-wyn/harwyn/releases/tag/stage4-sft) | QAT SFT LoRA, all checkpoints (step 212 = final) + eval outputs |
