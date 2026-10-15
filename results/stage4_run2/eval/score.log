@@ -1,0 +1,5 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+| Benchmark | Score | n | Mean output tokens | Hit max_tokens |
+|---|---|---|---|---|
+| gpqa | 18.2% | 99 | 5816 | 41.4% |
+| humaneval | 78.0% (plain HumanEval 82.3%) | 164 | 2304 | 12.8% |

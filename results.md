@@ -56,3 +56,8 @@ The 4B collapses at 3.0 bpw (RCO's KL vs h0: 1.17). Details and caveats in [`LOG
 | HumanEval (plain) | — | 80.5% | **88.4%** |
 | GPQA Diamond, first 99 | 7/99 | 11/99 | **18/99** (36% hit the 8k limit) |
 | RULER 32k, 25/task (mk1/mk2/mk3/mv) | 100/100/92/100 | 100/100/96/100 | **100/100/100/100** |
+
+**Rerun (same data, seed and settings; the first run's weights were lost):** train loss matched run 1 to
+3 decimals throughout. HumanEval+ **78.0%** (plain 82.3%), GPQA **18/99**, RULER **100/100/100/100**.
+Run-to-run spread on HumanEval+ is ±2.5 pts, mostly from answers hitting the 8k budget (12.8% vs 5.5%).
+Run 2 is the one kept (`results/stage4_run2/`).

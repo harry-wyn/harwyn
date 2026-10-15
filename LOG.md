@@ -334,3 +334,12 @@ reclaimed, taking `lora.pt`/`merged_fq.pt` with it. All logs and eval outputs we
 re-export the environment explicitly, and the watcher alerts on "stage done but no upload" instead
 of waiting for the upload marker. Reproducing the weights = rerunning `evals/stage4.sh` with
 `EPOCHS=0.65` (~2 h on one A100).
+
+### Rerun (2026-10-15)
+Same script, data, shuffle seed and hyper-parameters. Loss curves matched run 1 to three decimals.
+Weights were copied off the GPU host at every checkpoint (steps 50/100/150/200/212, sha256-verified)
+before anything else ran. Results at q7 + int4 KV: HumanEval+ 78.0% (plain 82.3%), GPQA 18/99, RULER
+100/100/100/100. vs run 1 (80.5% / 88.4% / 18 / 100s): GPQA and RULER identical; HumanEval moved
+because more answers ran into the 8k budget (12.8% vs 5.5%), i.e. sampling + thinking length, which
+is what GRPO's length reward targets. Both runs beat the q7 baseline (76.2% / 80.5% / 11 / 100,100,96,100).
+Cost of the rerun: ~2.5 h on one A100.
