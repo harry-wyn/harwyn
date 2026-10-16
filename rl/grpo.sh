@@ -12,7 +12,12 @@ REPO=$(cd "$(dirname "$0")/.." && pwd)
 A=$REPO/results/stage2/assignment_q7.json
 TP=$W/.venv-train/bin/python
 RUN=$W/runs/grpo_v1; OUT=$W/results/stage6; mkdir -p $RUN $OUT
-ITERS=${ITERS:-24}; TASKS_PER_ITER=${TASKS_PER_ITER:-16}; GROUP=${GROUP:-8}
+ITERS=${ITERS:-36}; TASKS_PER_ITER=${TASKS_PER_ITER:-16}; GROUP=${GROUP:-8}
+# LR schedule over iterations: constant 2e-5 for the first LR_FROM-1 (the run's first iterations), then cosine
+# from LR_MAX down to LR_MIN at ITERS: big steps while there's a lot to learn, small ones to settle.
+LR_MAX=${LR_MAX:-5e-5}; LR_MIN=${LR_MIN:-5e-6}; LR_FROM=${LR_FROM:-4}
+lr_for() { python3 -c "import math,sys; i,a,b,f,n=int(sys.argv[1]),float(sys.argv[2]),float(sys.argv[3]),int(sys.argv[4]),int(sys.argv[5])
+print(2e-5 if i<f else b+0.5*(a-b)*(1+math.cos(math.pi*min(1,(i-f)/max(1,n-f)))))" $1 $LR_MAX $LR_MIN $LR_FROM $ITERS; }
 export PATH=$W/.venv-eval/bin:$PATH WEB_ROOTFS=$W/fs/web SANDBOX_ROOT=$W/sandbox
 
 serve() {  # serve MODEL LOG
@@ -33,7 +38,7 @@ if [ ! -f $RUN/merged_fq.pt ]; then
   $TP $REPO/train/train_qat.py $W/models/h0 none $A $RUN/init --init $W/runs/rft_v1/lora_step155.pt --export-only > $OUT/init.log 2>&1
   cp $RUN/init/merged_fq.pt $RUN/merged_fq.pt
 fi
-[ -f $OUT/log.tsv ] || printf "iter\ttime\tcode_reward\twebdev_reward\tinformative_rows\tmean_turns\tmean_tokens\n" > $OUT/log.tsv
+[ -f $OUT/log.tsv ] || printf "iter\ttime\tcode_reward\twebdev_reward\tinformative_rows\tmean_turns\tmean_tokens\tlr\n" > $OUT/log.tsv
 
 for it in $(seq 1 $ITERS); do
   [ -f $W/STOP ] && { echo "STOP file, ending"; break; }
@@ -47,7 +52,7 @@ for it in $(seq 1 $ITERS); do
   n=$(wc -l < $OUT/train_it$it.jsonl)
   if [ "$n" -ge 4 ]; then
     PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True $TP $REPO/train/train_qat.py $W/models/h0 $OUT/train_it$it.jsonl $A $RUN \
-      --init $W/runs/rft_v1/lora_step155.pt --advantage --constant-lr --lr 2e-5 --accum $(( (n + 1) / 2 )) \
+      --init $W/runs/rft_v1/lora_step155.pt --advantage --constant-lr --lr $(lr_for $it) --accum $(( (n + 1) / 2 )) \
       --more-steps 2 --max-len 24576 >> $OUT/train.log 2>&1
     $TP -c "import torch; st=torch.load('$RUN/lora.pt', map_location='cpu'); torch.save(st['lora'], '$RUN/lora_it$it.pt')"
   fi
@@ -55,7 +60,7 @@ for it in $(seq 1 $ITERS); do
   wr=$(grep -oP "webdev: .*mean_reward=\K[0-9.]+" $OUT/rollout_it$it.log || echo NA)
   mt=$(grep -oP "mean_turns=\K[0-9.]+" $OUT/rollout_it$it.log || echo NA)
   mk=$(grep -oP "mean_tokens=\K[0-9.]+" $OUT/rollout_it$it.log || echo NA)
-  printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\n" $it $(date +%T) $cr $wr $n $mt $mk >> $OUT/log.tsv
+  printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" $it $(date +%T) $cr $wr $n $mt $mk $(lr_for $it) >> $OUT/log.tsv
   gzip -f $OUT/rollouts_it$it.jsonl; rm -f $OUT/train_it$it.jsonl
   touch $OUT/.done_it$it
 done

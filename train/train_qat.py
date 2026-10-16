@@ -167,6 +167,9 @@ if os.path.exists(ck):
     print("resumed at step", step, flush=True)
 if args.more_steps:
     total_steps = step + args.more_steps
+    for g in opt.param_groups:  # RL iterations set their own LR (schedule lives in rl/grpo.sh), not the saved one
+        g["lr"] = args.lr
+    sched.base_lrs = [args.lr] * len(opt.param_groups)
 
 def _ce_sum(h, y):
     return F.cross_entropy(model.lm_head(h).float(), y, ignore_index=-100, reduction="sum")
