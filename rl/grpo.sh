@@ -16,7 +16,7 @@ ITERS=${ITERS:-24}; TASKS_PER_ITER=${TASKS_PER_ITER:-16}; GROUP=${GROUP:-8}
 export PATH=$W/.venv-eval/bin:$PATH WEB_ROOTFS=$W/fs/web SANDBOX_ROOT=$W/sandbox
 
 serve() {  # serve MODEL LOG
-  vllm serve $1 --served-model-name m --port 8000 --max-model-len 32768 --language-model-only \
+  vllm serve $1 --served-model-name m --port 8000 --max-model-len 40960 --language-model-only \
     --reasoning-parser qwen3 --enable-auto-tool-choice --tool-call-parser qwen3_coder \
     --gpu-memory-utilization 0.90 --kv-cache-dtype int4_per_token_head > $2 2>&1 &
   V=$!
@@ -47,7 +47,7 @@ for it in $(seq 1 $ITERS); do
   if [ "$n" -ge 4 ]; then
     PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True $TP $REPO/train/train_qat.py $W/models/h0 $OUT/train_it$it.jsonl $A $RUN \
       --init $W/runs/rft_v1/lora_step155.pt --advantage --constant-lr --lr 2e-5 --accum $(( (n + 1) / 2 )) \
-      --more-steps 2 --max-len 24576 >> $OUT/train.log 2>&1
+      --more-steps 2 --max-len 32768 >> $OUT/train.log 2>&1
     $TP -c "import torch; st=torch.load('$RUN/lora.pt', map_location='cpu'); torch.save(st['lora'], '$RUN/lora_it$it.pt')"
   fi
   cr=$(grep -oP "code: .*mean_reward=\K[0-9.]+" $OUT/rollout_it$it.log || echo NA)

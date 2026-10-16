@@ -30,7 +30,7 @@ SB = os.environ.get("SANDBOX_ROOT", "/sandbox")
 WEB_ROOTFS = os.environ.get("WEB_ROOTFS", "/workspace/fs/web")
 PROOT = os.environ.get("PROOT", os.path.expanduser("~/.udocker/bin/proot-x86_64-4_8_0"))
 JUDGE_MODEL = os.environ.get("JUDGE_MODEL", "gemini-3.8-flash")
-MAX_TURNS, TURN_TOKENS, EPISODE_TOKENS = 12, 4096, 24000
+MAX_TURNS, TURN_TOKENS, EPISODE_TOKENS = 12, 12288, 28000
 SAMPLING = dict(temperature=1.0, top_p=0.95, extra_body={"top_k": 20})   # Qwen3.5 card, thinking mode
 
 TOOLS = [
@@ -93,6 +93,8 @@ def run_tool(name, args, cwd):
                 return open(p).read()[-8000:]
             except Exception as e:
                 return f"error: {e}"
+        if not str(args.get("content", "")):
+            return "error: write_file received no content (the call was probably cut off). Write a shorter file, or split it."
         os.makedirs(os.path.dirname(p), exist_ok=True)
         open(p, "w").write(str(args.get("content", "")))
         chown(p)
@@ -156,7 +158,7 @@ async def episode(client, task, idx, k):
     prompt = (CODE_TASK.format(q=task["question"], decl=task["decl"]) if task["kind"] == "code"
               else WEB_TASK.format(q=task["question"]))
     msgs = [{"role": "system", "content": SYSTEM}, {"role": "user", "content": prompt}]
-    used, turns, submitted = 0, 0, False
+    used, turns, submitted, finishes = 0, 0, False, []
     for turns in range(1, MAX_TURNS + 1):
         try:
             r = await client.chat.completions.create(model="m", messages=msgs, tools=TOOLS,
@@ -166,6 +168,7 @@ async def episode(client, task, idx, k):
         c = r.choices[0]
         used += r.usage.completion_tokens
         m = {"role": "assistant", "content": c.message.content or ""}
+        finishes.append(c.finish_reason)
         rc = getattr(c.message, "reasoning_content", None) or getattr(c.message, "reasoning", None)
         if rc:
             m["reasoning_content"] = rc
@@ -201,7 +204,7 @@ async def episode(client, task, idx, k):
                 a = {}
             tc["function"]["arguments"] = a if isinstance(a, dict) else {}
     res = {"task_id": task["task_id"], "kind": task["kind"], "group": idx, "reward": reward, "info": info,
-           "turns": turns, "tokens": used, "submitted": submitted, "messages": msgs, "tools": TOOLS}
+           "turns": turns, "tokens": used, "submitted": submitted, "finishes": finishes, "messages": msgs, "tools": TOOLS}
     shutil.rmtree(cwd, ignore_errors=True)
     return res
 
