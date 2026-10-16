@@ -18,8 +18,8 @@ export PATH=$W/.venv-eval/bin:$PATH WEB_ROOTFS=$W/fs/web SANDBOX_ROOT=$W/sandbox
 serve() {  # serve MODEL LOG
   vllm serve $1 --served-model-name m --port 8000 --max-model-len 40960 --language-model-only \
     --reasoning-parser qwen3 --enable-auto-tool-choice --tool-call-parser qwen3_coder \
-    --gpu-memory-utilization 0.90 --kv-cache-dtype int4_per_token_head \
-    --max-num-batched-tokens 65536 --max-num-seqs 128 > $2 2>&1 &
+    --gpu-memory-utilization 0.85 --kv-cache-dtype int4_per_token_head \
+    --max-num-batched-tokens 16384 --max-num-seqs 64 > $2 2>&1 &
   V=$!
   until curl -sf localhost:8000/health >/dev/null; do sleep 5; kill -0 $V 2>/dev/null || { echo "vllm died"; exit 1; }; done
 }
