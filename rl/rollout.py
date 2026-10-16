@@ -172,7 +172,7 @@ async def episode(client, task, idx, k):
         calls = c.message.tool_calls or []
         if calls:
             m["tool_calls"] = [{"type": "function", "id": tc.id, "function": {"name": tc.function.name,
-                                "arguments": json.loads(tc.function.arguments or "{}")}} for tc in calls]
+                                "arguments": tc.function.arguments or "{}"}} for tc in calls]   # API wants a JSON string
         msgs.append(m)
         if c.finish_reason == "length" or not calls:
             break
@@ -180,7 +180,11 @@ async def episode(client, task, idx, k):
             if tc["function"]["name"] == "submit":
                 submitted = True
                 continue
-            out = await asyncio.to_thread(run_tool, tc["function"]["name"], tc["function"]["arguments"], cwd)
+            try:
+                args = json.loads(tc["function"]["arguments"])
+            except Exception:
+                args = {}
+            out = await asyncio.to_thread(run_tool, tc["function"]["name"], args if isinstance(args, dict) else {}, cwd)
             msgs.append({"role": "tool", "tool_call_id": tc["id"], "content": out})
         if submitted or used >= EPISODE_TOKENS:
             break
@@ -189,6 +193,13 @@ async def episode(client, task, idx, k):
     else:
         png = await asyncio.to_thread(screenshot, cwd)
         reward, info = (await asyncio.to_thread(judge, task["question"], png)) if png else (0.0, "no render")
+    for m in msgs:  # the chat template (training) wants arguments as dicts
+        for tc in m.get("tool_calls", []):
+            try:
+                a = json.loads(tc["function"]["arguments"])
+            except Exception:
+                a = {}
+            tc["function"]["arguments"] = a if isinstance(a, dict) else {}
     res = {"task_id": task["task_id"], "kind": task["kind"], "group": idx, "reward": reward, "info": info,
            "turns": turns, "tokens": used, "submitted": submitted, "messages": msgs, "tools": TOOLS}
     shutil.rmtree(cwd, ignore_errors=True)
