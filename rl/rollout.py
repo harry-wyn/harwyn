@@ -57,6 +57,54 @@ RUBRIC = ("You are grading a website built from this brief:\n---\n{brief}\n---\n
           'Reply with JSON only: {{"score": <integer 0-10>, "reason": "<one sentence>"}}')
 
 
+_TOK = None
+
+
+def render(msgs):
+    """Prompt text exactly as the trainer renders it (same chat template, same tools), plus the generation prompt."""
+    global _TOK
+    if _TOK is None:
+        from transformers import AutoTokenizer
+        _TOK = AutoTokenizer.from_pretrained(os.environ.get("POLICY_DIR", "/workspace/models/policy"))
+    return _TOK.apply_chat_template(msgs, tools=TOOLS, tokenize=False, add_generation_prompt=True)
+
+
+def parse(text):
+    """Split a raw completion (after the template's '<think>\\n') into reasoning, content and tool calls.
+    Linear scan for <tool_call><function=NAME><parameter=K>V</parameter>...</function></tool_call>."""
+    if "</think>" in text:
+        reasoning, rest = text.split("</think>", 1)
+    else:
+        reasoning, rest = text, ""
+    calls, content, i = [], [], 0
+    while True:
+        a = rest.find("<tool_call>", i)
+        if a < 0:
+            content.append(rest[i:]); break
+        content.append(rest[i:a])
+        b = rest.find("</tool_call>", a)
+        block = rest[a + 11: b if b >= 0 else len(rest)]
+        i = len(rest) if b < 0 else b + 12
+        f = block.find("<function=")
+        if f < 0:
+            continue
+        name = block[f + 10: block.find(">", f)].strip()
+        args, j = {}, 0
+        while True:
+            k = block.find("<parameter=", j)
+            if k < 0:
+                break
+            ke = block.find(">", k)
+            v_end = block.find("</parameter>", ke)
+            v = block[ke + 1: v_end if v_end >= 0 else len(block)]
+            if v.startswith("\n"): v = v[1:]
+            if v.endswith("\n"): v = v[:-1]
+            args[block[k + 11: ke].strip()] = v
+            j = len(block) if v_end < 0 else v_end + 12
+        calls.append({"name": name, "arguments": args})
+    return reasoning.strip("\n"), "".join(content).strip(), calls
+
+
 def chown(p):
     if os.geteuid() == 0:
         os.chown(p, 65534, 65534)
@@ -176,21 +224,21 @@ async def episode(client, task, idx, k):
     used, turns, submitted, finishes = 0, 0, False, []
     for turns in range(1, MAX_TURNS + 1):
         try:
-            r = await client.chat.completions.create(model="m", messages=msgs, tools=TOOLS,
-                                                     max_tokens=min(TURN_TOKENS, EPISODE_TOKENS - used), **SAMPLING)
+            prompt = await asyncio.to_thread(render, msgs)
+            r = await client.completions.create(model="m", prompt=prompt, max_tokens=min(TURN_TOKENS, EPISODE_TOKENS - used),
+                                                **SAMPLING)
         except Exception as e:
             return {"error": repr(e)[:300]}
         c = r.choices[0]
         used += r.usage.completion_tokens
-        m = {"role": "assistant", "content": c.message.content or ""}
+        reasoning, content, calls = parse(c.text)
         finishes.append(c.finish_reason)
-        rc = getattr(c.message, "reasoning_content", None) or getattr(c.message, "reasoning", None)
-        if rc:
-            m["reasoning_content"] = rc
-        calls = c.message.tool_calls or []
+        m = {"role": "assistant", "content": content}
+        if reasoning:
+            m["reasoning_content"] = reasoning
         if calls:
-            m["tool_calls"] = [{"type": "function", "id": tc.id, "function": {"name": tc.function.name,
-                                "arguments": tc.function.arguments or "{}"}} for tc in calls]   # API wants a JSON string
+            m["tool_calls"] = [{"type": "function", "id": f"call_{turns}_{n}", "function": {"name": tc["name"], "arguments": tc["arguments"]}}
+                               for n, tc in enumerate(calls)]
         msgs.append(m)
         if c.finish_reason == "length" or not calls:
             break
@@ -198,11 +246,7 @@ async def episode(client, task, idx, k):
             if tc["function"]["name"] == "submit":
                 submitted = True
                 continue
-            try:
-                args = json.loads(tc["function"]["arguments"])
-            except Exception:
-                args = {}
-            out = await asyncio.to_thread(run_tool, tc["function"]["name"], args if isinstance(args, dict) else {}, cwd)
+            out = await asyncio.to_thread(run_tool, tc["function"]["name"], tc["function"]["arguments"], cwd)
             msgs.append({"role": "tool", "tool_call_id": tc["id"], "content": out})
         if submitted or used >= EPISODE_TOKENS:
             break
@@ -211,13 +255,6 @@ async def episode(client, task, idx, k):
     else:
         png = await asyncio.to_thread(screenshot, cwd)
         reward, info = (await asyncio.to_thread(judge, task["question"], png)) if png else (0.0, "no render")
-    for m in msgs:  # the chat template (training) wants arguments as dicts
-        for tc in m.get("tool_calls", []):
-            try:
-                a = json.loads(tc["function"]["arguments"])
-            except Exception:
-                a = {}
-            tc["function"]["arguments"] = a if isinstance(a, dict) else {}
     res = {"task_id": task["task_id"], "kind": task["kind"], "group": idx, "reward": reward, "info": info,
            "turns": turns, "tokens": used, "submitted": submitted, "finishes": finishes, "messages": msgs, "tools": TOOLS}
     shutil.rmtree(cwd, ignore_errors=True)
