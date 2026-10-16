@@ -67,12 +67,24 @@ def _drop():  # run tool commands as the unprivileged user nobody (uid/gid 65534
 
 
 def sh(cmd, cwd, timeout=60):
-    try:
-        r = subprocess.run(["bash", "-c", cmd], cwd=cwd, preexec_fn=_drop if os.geteuid() == 0 else None, capture_output=True,
-                           text=True, timeout=timeout, env={"PATH": os.environ.get("SANDBOX_PATH", "/usr/local/bin:/usr/bin:/bin"), "HOME": cwd})
-        out = (r.stdout + r.stderr)
-    except subprocess.TimeoutExpired:
-        out = f"[timed out after {timeout}s]"
+    # own session, so anything the command leaves running in the background (dev servers...) is killed with it
+    # output goes to a file, and we wait for the command itself: a backgrounded server can't hold us up
+    import tempfile
+    with tempfile.TemporaryFile() as f:
+        p = subprocess.Popen(["bash", "-c", cmd], cwd=cwd, preexec_fn=_drop if os.geteuid() == 0 else None,
+                             start_new_session=True, stdout=f, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
+                             env={"PATH": os.environ.get("SANDBOX_PATH", "/usr/local/bin:/usr/bin:/bin"), "HOME": cwd})
+        try:
+            p.wait(timeout=timeout); note = ""
+        except subprocess.TimeoutExpired:
+            note = f"\n[timed out after {timeout}s]"
+        finally:
+            try:
+                os.killpg(p.pid, 9)
+            except ProcessLookupError:
+                pass
+            p.wait()
+        f.seek(0); out = f.read().decode(errors="replace") + note
     return out[-4000:] if len(out) > 4000 else out
 
 
