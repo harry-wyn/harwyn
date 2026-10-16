@@ -59,13 +59,16 @@ RUBRIC = ("You are grading a website built from this brief:\n---\n{brief}\n---\n
 
 def chown(p):
     if os.geteuid() == 0:
-        shutil.chown(p, "nobody")
+        os.chown(p, 65534, 65534)
+
+
+def _drop():  # run tool commands as the unprivileged user nobody (uid/gid 65534)
+    os.setgroups([]); os.setgid(65534); os.setuid(65534)
 
 
 def sh(cmd, cwd, timeout=60):
     try:
-        pre = ["runuser", "-u", "nobody", "--"] if os.geteuid() == 0 else []
-        r = subprocess.run(pre + ["bash", "-c", cmd], cwd=cwd, capture_output=True,
+        r = subprocess.run(["bash", "-c", cmd], cwd=cwd, preexec_fn=_drop if os.geteuid() == 0 else None, capture_output=True,
                            text=True, timeout=timeout, env={"PATH": os.environ.get("SANDBOX_PATH", "/usr/local/bin:/usr/bin:/bin"), "HOME": cwd})
         out = (r.stdout + r.stderr)
     except subprocess.TimeoutExpired:
@@ -202,7 +205,10 @@ async def main():
 
     async def one(t, i, k):
         async with sem:
-            return await episode(client, t, i, k)
+            try:
+                return await episode(client, t, i, k)
+            except Exception as e:  # one broken episode must not sink the batch
+                return {"task_id": t["task_id"], "kind": t["kind"], "group": i, "error": repr(e)[:300]}
 
     res = await asyncio.gather(*(one(t, i, k) for i, t in enumerate(pick) for k in range(GROUP)))
     with open(OUT, "w") as f:
