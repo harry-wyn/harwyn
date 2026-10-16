@@ -30,6 +30,9 @@ p.add_argument("--accum", type=int, default=16); p.add_argument("--epochs", type
 p.add_argument("--no-kv-qat", action="store_true")
 p.add_argument("--init", help="start from a LoRA state dict (e.g. the stage-4 final lora_step212.pt)")
 p.add_argument("--export-only", action="store_true", help="with --init: skip training, just write merged_fq.pt")
+p.add_argument("--constant-lr", action="store_true", help="no warmup/decay (RL iterations)")
+p.add_argument("--more-steps", type=int, default=0, help="resume OUT_DIR and run this many more optimiser steps")
+p.add_argument("--advantage", action="store_true", help="GRPO: weight each row's mean token loss by its `advantage` field")
 args = p.parse_args()
 SAVE_EVERY, GROUP = 50, 128
 dev = "cuda" if torch.cuda.is_available() else "cpu"
@@ -144,7 +147,7 @@ random.Random(0).shuffle(rows)
 total_micro = int(len(rows) * args.epochs)
 total_steps = args.max_steps or max(1, total_micro // args.accum)
 opt = torch.optim.AdamW(params, lr=args.lr, weight_decay=0.0)
-sched = torch.optim.lr_scheduler.LambdaLR(opt, lambda s: min(1, (s + 1) / 20) * 0.5 * (1 + math.cos(math.pi * min(s, total_steps) / total_steps)))
+sched = torch.optim.lr_scheduler.LambdaLR(opt, (lambda s: 1.0) if args.constant_lr else (lambda s: min(1, (s + 1) / 20) * 0.5 * (1 + math.cos(math.pi * min(s, total_steps) / total_steps))))
 os.makedirs(args.out, exist_ok=True)
 ck = os.path.join(args.out, "lora.pt")
 step = 0
@@ -162,6 +165,8 @@ if os.path.exists(ck):
         p.data.copy_(st["lora"][n])
     opt.load_state_dict(st["opt"]); sched.load_state_dict(st["sched"]); step = st["step"]
     print("resumed at step", step, flush=True)
+if args.more_steps:
+    total_steps = step + args.more_steps
 
 def _ce_sum(h, y):
     return F.cross_entropy(model.lm_head(h).float(), y, ignore_index=-100, reduction="sum")
@@ -175,15 +180,17 @@ def chunked_loss(h, y, chunk=2048):
 
 
 model.train()
-t0, toks, micro = time.time(), 0, step * args.accum
+t0, toks, micro = time.time(), 0, (0 if args.more_steps else step * args.accum)
 while step < total_steps:
     loss_acc = 0.0
     for _ in range(args.accum):
-        ids, labels = encode(rows[micro % len(rows)]); micro += 1
+        ex = rows[micro % len(rows)]; micro += 1
+        ids, labels = encode(ex)
         if all(l == -100 for l in labels):
             continue
         x = torch.tensor([ids], device=dev); y = torch.tensor(labels[1:] + [-100], device=dev)
-        loss = chunked_loss(model.model(input_ids=x).last_hidden_state[0], y) / args.accum
+        w = float(ex.get("advantage", 1.0)) if args.advantage else 1.0
+        loss = chunked_loss(model.model(input_ids=x).last_hidden_state[0], y) * w / args.accum
         loss.backward(); loss_acc += loss.item(); toks += len(ids)
     torch.nn.utils.clip_grad_norm_(params, 1.0)
     opt.step(); sched.step(); opt.zero_grad(set_to_none=True); step += 1
