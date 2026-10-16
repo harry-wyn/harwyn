@@ -118,13 +118,16 @@ def code_reward(task, cwd):
 
 def screenshot(cwd):
     shot = f"{cwd}/.shot.png"
+    port = random.randint(20000, 60000)
     if not os.path.exists(f"{cwd}/index.html"):
         return None
     cmd = [PROOT, "-0", "-r", WEB_ROOTFS, "-b", "/proc", "-b", "/dev", "-b", "/sys", "-b", "/etc/resolv.conf",
            "-b", f"{cwd}:/workspace", "-w", "/workspace", "/usr/bin/env", "-i", "HOME=/root",
            "PATH=/usr/local/bin:/usr/bin:/bin", "PLAYWRIGHT_BROWSERS_PATH=/ms-playwright", "/bin/bash", "-c",
-           "timeout 60 playwright screenshot --browser chromium --viewport-size=1280,800 --wait-for-timeout 1500 "
-           "--full-page file:///workspace/index.html /workspace/.shot.png"]
+           # served over loopback HTTP: React/ES-module pages render blank from file:// (browsers block them)
+           f"node -e \"require('http').createServer((q,s)=>require('fs').readFile('/workspace'+(q.url.split('?')[0]=='/'?'/index.html':q.url.split('?')[0]),(e,d)=>{{s.writeHead(e?404:200);s.end(d)}})).listen({port},'127.0.0.1')\" & "
+           f"sleep 1; timeout 60 playwright screenshot --browser chromium --viewport-size=1280,800 --wait-for-timeout 3000 "
+           f"--full-page http://127.0.0.1:{port}/index.html /workspace/.shot.png; kill %1"]
     try:
         subprocess.run(cmd, capture_output=True, timeout=90, env={**os.environ, "PROOT_NO_SECCOMP": "1"})
     except subprocess.TimeoutExpired:

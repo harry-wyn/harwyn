@@ -47,7 +47,7 @@ for it in $(seq 1 $ITERS); do
   if [ "$n" -ge 4 ]; then
     PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True $TP $REPO/train/train_qat.py $W/models/h0 $OUT/train_it$it.jsonl $A $RUN \
       --init $W/runs/rft_v1/lora_step155.pt --advantage --constant-lr --lr 2e-5 --accum $(( (n + 1) / 2 )) \
-      --more-steps 2 --max-len 32768 >> $OUT/train.log 2>&1
+      --more-steps 2 --max-len 24576 >> $OUT/train.log 2>&1
     $TP -c "import torch; st=torch.load('$RUN/lora.pt', map_location='cpu'); torch.save(st['lora'], '$RUN/lora_it$it.pt')"
   fi
   cr=$(grep -oP "code: .*mean_reward=\K[0-9.]+" $OUT/rollout_it$it.log || echo NA)
