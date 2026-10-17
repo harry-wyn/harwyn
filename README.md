@@ -250,3 +250,26 @@ told to answer (the runaway-reasoning fix from REPORT.md §9; `HARWYN_THINK_BUDG
 
 **On a GPU (vLLM, the deployment format the model was trained for):** merge with `export/merge_lora.py`,
 then `vllm serve <dir> --kv-cache-dtype int4_per_token_head --reasoning-parser qwen3`.
+
+**In an agent harness.** Any OpenAI-compatible harness works against `http://127.0.0.1:8080/v1`. For
+[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (`npx @deepseek-ai/dsh web`), add this to
+`~/.dsh/profiles/web/cordis.patch.yml` (no API key needed):
+
+```yaml
+- id: llm-pi-ai
+  config:
+    providers:
+      harwyn:
+        displayName: harwyn-4b (local)
+        api: openai-completions
+        baseURL: http://127.0.0.1:8080/v1
+        compat:
+          thinkingFormat: deepseek
+        models:
+          - id: harwyn-4b
+            name: harwyn-4b
+            contextWindow: 32768
+            maxTokens: 16384
+            reasoningEfforts:
+              high: high
+```
