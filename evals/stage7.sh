@@ -40,7 +40,7 @@ evals() {  # evals MODEL OUTDIR [extra vllm args...]
 if ! done_ T; then
   echo "$(date +%T) T: QAT SFT top-up"
   PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True $TP $REPO/train/train_qat.py $W/models/h0 $W/data/sft_v2.jsonl $A $RUN \
-    --init $W/runs/grpo_v1/lora_it16.pt --max-len 16384 --rank 32 --lr 2e-5 --accum 16 --epochs 1 >> $OUT/T_train.log 2>&1
+    --init $W/runs/grpo_v1/lora_it16.pt --max-len 16384 --rank 32 --lr 5e-5 --accum 16 --epochs 1 >> $OUT/T_train.log 2>&1
   mark T
 fi
 if ! done_ F; then

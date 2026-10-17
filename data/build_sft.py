@@ -84,11 +84,14 @@ def from_row(name, r):
 
 
 def rows(name, ds, cfg, split):
-    if name == "tool_use":  # its tool schemas vary row to row, so `datasets` can't cast it: read the raw JSONL
+    raw = {"tool_use": ("Tool_Use", ("Tool_Use_part-5-of-9.jsonl", "Tool_Use_part-4-of-9.jsonl")),
+           "code_agent": ("Code_Agent", ("Code_Agent_part-5-of-7.jsonl", "Code_Agent_part-4-of-7.jsonl"))}
+    if name in raw:  # per-row schemas vary, so `datasets` can't cast these: read the raw JSONL
         from huggingface_hub import HfFileSystem
         fs = HfFileSystem()
-        for f in ("Tool_Use_part-5-of-9.jsonl", "Tool_Use_part-4-of-9.jsonl"):
-            with fs.open(f"datasets/{ds}/data/Tool_Use/{f}") as fh:
+        d, files = raw[name]
+        for f in files:
+            with fs.open(f"datasets/{ds}/data/{d}/{f}") as fh:
                 for line in fh:
                     yield json.loads(line)
         return

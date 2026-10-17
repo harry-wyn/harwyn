@@ -35,9 +35,14 @@ def think_len(content):
 
 
 rows, stats = [], {}
+try:  # resume: keep sections already in OUT, only build the missing ones
+    rows = [json.loads(l) for l in open(out)]
+except FileNotFoundError:
+    pass
+have = {r["source"].split("_")[0] for r in rows}   # kodcode / smoltalk2 / grpo / harness
 # code
 kept = seen = 0
-for r in load_dataset("KodCode/KodCode-V1-SFT-R1", split="train", streaming=True).shuffle(seed=0, buffer_size=20000):
+for r in ([] if "kodcode" in have else load_dataset("KodCode/KodCode-V1-SFT-R1", split="train", streaming=True).shuffle(seed=0, buffer_size=20000)):
     seen += 1
     if kept >= N_CODE or seen > N_CODE * 40:
         break
@@ -54,7 +59,7 @@ for r in load_dataset("KodCode/KodCode-V1-SFT-R1", split="train", streaming=True
 stats["code"] = (kept, seen)
 # general
 kept = 0
-for split in ("smoltalk_everyday_convs_reasoning_Qwen3_32B_think", "multi_turn_reasoning_if_think"):
+for split in (() if "smoltalk2" in have else ("smoltalk_everyday_convs_reasoning_Qwen3_32B_think", "multi_turn_reasoning_if_think")):
     for r in load_dataset("HuggingFaceTB/smoltalk2", "SFT", split=split, streaming=True).shuffle(seed=0, buffer_size=5000):
         if kept >= N_GEN:
             break
@@ -67,7 +72,7 @@ for split in ("smoltalk_everyday_convs_reasoning_Qwen3_32B_think", "multi_turn_r
 stats["general"] = kept
 # agentic replay: best stage-6 episodes, later iterations first
 eps = []
-for f in sorted(glob.glob(f"{s6}/rollouts_it*.jsonl.gz"), key=lambda p: -int(re.search(r"it(\d+)", p).group(1))):
+for f in ([] if "grpo" in have else sorted(glob.glob(f"{s6}/rollouts_it*.jsonl.gz"), key=lambda p: -int(re.search(r"it(\d+)", p).group(1)))):
     for l in gzip.open(f):
         e = json.loads(l)
         if "error" in e or e.get("reward") is None:
@@ -85,10 +90,17 @@ stats["agentic"] = (kept, len(eps))
 # multi-harness agentic replay
 sys.path.insert(0, __import__("os").path.dirname(__import__("os").path.abspath(__file__)))
 import build_sft as B
-for name, want in HARNESSES:
+for name, want in ([] if "harness" in have else HARNESSES):
     ds, cfg, split = next((d, c, sp) for n, d, c, sp, _ in B.MIX if n == name)
     kept = seen = 0
-    for r in B.rows(name, ds, cfg, split):
+    src = B.rows(name, ds, cfg, split)
+    while True:
+        try:
+            r = next(src)
+        except StopIteration:
+            break
+        except Exception as e:  # a source that fails mid-stream is skipped, the others still count
+            print("source", name, "stopped:", repr(e)[:120], flush=True); break
         seen += 1
         if kept >= want or seen > want * 40:
             break
