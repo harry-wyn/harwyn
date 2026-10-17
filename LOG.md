@@ -419,3 +419,32 @@ that finish pass, 21/164 still run to 32k), GPQA Diamond first 99 **32/99** (2% 
 **100/100/100/100**. Earlier stages were measured at 8k, so these are not directly comparable: the GPQA jump is
 mostly the larger budget, and HumanEval is within noise of stage 4. The open problem is a tail of runaway
 reasoning on ~13% of HumanEval problems that no budget fixes. Spend: $9.7 GPU + ~£1 judge.
+
+## Stage 7: coding top-up + final vs base benchmarks (2026-10-17)
+`data/build_sft2.py`, `evals/stage7.sh`. Short QAT SFT on the stage-6 LoRA (it16): 2,400 KodCode-V1-SFT-R1
+solutions that passed their unit tests, reasoning <= 3,000 tokens (13-gram decontaminated); 500 smoltalk2
+reasoning chats; ~600 agentic examples across five harness styles (UltraData Tool-Use, UltraData Code-Agent,
+SWE-QA-Pro, OpenHands traces, our stage-6 episodes) so the model isn't tied to one agent framework.
+3,503 examples, ~8.8M tokens, 218 steps, peak LR 5e-5 (first tried 2e-5; restarted at step 1 because it would
+barely move the model in 218 steps). Loss by 25-step block: 0.627, 0.583, 0.568, 0.557, ... (full log in
+`results/stage7/T_train.log`). Release `stage7-final`.
+
+**Final model vs base, same harness, 32k output budget.** Final = h0 + stage-7 LoRA at ~7.15 bpw with int4 KV
+(the deployment format); base = Qwen3.5-4B as shipped (bf16, bf16 KV).
+
+| | **harwyn-4b (final)** | Qwen3.5-4B (base) |
+|---|---|---|
+| HumanEval+ | 75.6% (plain 79.3%) | **81.7%** (plain 87.2%) |
+| HumanEval+, answers that finished | **89.9%** of 138 | 87.6% of 153 |
+| HumanEval answers still thinking at 32k | 26 (15.9%) | 11 (6.7%) |
+| GPQA Diamond, first 99 | **45/99 (45.5%)** | 27/99 (27.3%) |
+| GPQA median / mean output tokens | **3,726 / 5,525** | 15,908 / 17,530 |
+| GPQA answers hitting 32k | **0** | 18 |
+| HumanEval median output tokens | 1,949 | 1,094 |
+| RULER 32k (mk1/mk2/mk3/mv) | **100/100/96/100** | 100/100/88/99 |
+
+The pipeline gave +18 points on GPQA with ~4x shorter reasoning and better long-context retrieval, all in a
+~7.15 bpw model with a 4-bit KV cache. On HumanEval the final model is more accurate when it answers but more
+often never finishes: a minority of coding prompts send it into reasoning that runs to the budget (the eval log
+stores only the final text, so whether these are loops or long searches isn't recoverable). Neither the RFT,
+GRPO length pressure nor this concise-reasoning SFT removed that tail. Spend: ~$3.10.

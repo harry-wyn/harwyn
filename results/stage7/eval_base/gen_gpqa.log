@@ -1,0 +1,4 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using the latest cached version of the dataset since fingertap/GPQA-Diamond couldn't be found on the Hugging Face Hub
+Found the latest cached dataset configuration 'default' at /workspace/.cache/huggingface/datasets/fingertap___gpqa-diamond/default/0.0.0/68be7564497676e07a77a042fdb587deb88c51c3 (last modified on Sat Oct 17 09:22:35 2026).
+gpqa: 99 generated, 0 already done

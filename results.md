@@ -69,3 +69,10 @@ Run 2 is the one kept (`results/stage4_run2/`).
 | GPQA Diamond, first 99 | 32/99 |
 | RULER 32k (mk1/mk2/mk3/mv) | 100/100/100/100 |
 Training reward, first → last 4 iterations: coding 0.69 → 0.73, webdev 0.27 → 0.44. Not comparable with the 8k rows above.
+
+## Final: harwyn-4b vs base (32k budget, same harness)
+| Benchmark | harwyn-4b (q7 + int4 KV) | Qwen3.5-4B (bf16) |
+|---|---|---|
+| HumanEval+ | 75.6% (89.9% of finished answers; 26 hit 32k) | 81.7% (87.6% of finished; 11 hit 32k) |
+| GPQA Diamond, first 99 | **45/99** (median 3.7k tokens) | 27/99 (median 15.9k tokens) |
+| RULER 32k | **100/100/96/100** | 100/100/88/99 |

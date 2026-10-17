@@ -238,3 +238,4 @@ lists the rejoin command and SHA-256 sums). The base model is
 | 4 | [`stage4-sft`](https://github.com/harry-wyn/harwyn/releases/tag/stage4-sft) | QAT SFT LoRA, all checkpoints (step 212 = final) + eval outputs |
 | 5 | [`stage5-rft`](https://github.com/harry-wyn/harwyn/releases/tag/stage5-rft) | Rejection-sampling SFT LoRA on top of stage 4 (step 155 = final), not yet benchmarked |
 | 6 | [`stage6-grpo`](https://github.com/harry-wyn/harwyn/releases/tag/stage6-grpo) | GRPO LoRA, every iteration (it16 = final) |
+| 7 | [`stage7-final`](https://github.com/harry-wyn/harwyn/releases/tag/stage7-final) | **Final LoRA** (step 218): coding top-up on stage 6; final vs base table in results.md |
