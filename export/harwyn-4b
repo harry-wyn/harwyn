@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# harwyn-4b: serve the final harwyn-4b model as an OpenAI-compatible API on localhost (llama.cpp, CPU).
+#   Weights: the trained model with the same bit map it was trained for (Q6_K MLP gate/up, Q8_0 elsewhere)
+#   KV cache: 4-bit (q4_0), like the int4 KV cache it was trained with
+#   Endpoint: http://127.0.0.1:${HARWYN_PORT:-8080}/v1   (model name "harwyn-4b"; web chat UI at the root URL)
+# Settings (environment variables):
+#   HARWYN_PORT          port (default 8080)
+#   HARWYN_CTX           context length in tokens (default 32768)
+#   HARWYN_THINK_BUDGET  max reasoning tokens before it must answer (default 8192; -1 = unlimited)
+#   HARWYN_THREADS       generation threads (default 4 = physical cores)
+# Ctrl+C stops the server.
+set -euo pipefail
+ROOT="$HOME/.local/share/harwyn"
+BIN="$ROOT/llama.cpp/llama-b11709/llama-server"
+MODEL="${HARWYN_MODEL:-$HOME/Work/harwyn-weights/final/harwyn-4b-q7.gguf}"
+PORT="${HARWYN_PORT:-8080}"
+[ -x "$BIN" ] || { echo "harwyn-4b: llama.cpp server not found at $BIN" >&2; exit 1; }
+[ -f "$MODEL" ] || { echo "harwyn-4b: model not found at $MODEL" >&2; exit 1; }
+if ss -ltn 2>/dev/null | grep -q ":$PORT "; then
+  echo "harwyn-4b: port $PORT is already in use (already running?). Try HARWYN_PORT=8081 harwyn-4b" >&2; exit 1
+fi
+if [ "$(powerprofilesctl get 2>/dev/null)" = "power-saver" ]; then
+  echo "note: power-saver mode caps the CPU (~1 GHz) and makes generation several times slower;" >&2
+  echo "      switch with: powerprofilesctl set balanced   (or performance)" >&2
+fi
+cat <<EOF
+harwyn-4b
+  API:      http://127.0.0.1:$PORT/v1   (OpenAI-compatible; model "harwyn-4b")
+  Web chat: http://127.0.0.1:$PORT
+  Thinking budget: ${HARWYN_THINK_BUDGET:-8192} tokens   Context: ${HARWYN_CTX:-32768}   KV cache: 4-bit
+  Example:  curl http://127.0.0.1:$PORT/v1/chat/completions -H 'Content-Type: application/json' \\
+              -d '{"model":"harwyn-4b","messages":[{"role":"user","content":"Hello!"}]}'
+Loading (a few seconds)... Ctrl+C to stop.
+EOF
+exec "$BIN" -m "$MODEL" --alias harwyn-4b \
+  --host 127.0.0.1 --port "$PORT" \
+  -c "${HARWYN_CTX:-32768}" -fa on -ctk q4_0 -ctv q4_0 \
+  -t "${HARWYN_THREADS:-4}" -tb 8 \
+  --jinja --reasoning-format deepseek \
+  --reasoning-budget "${HARWYN_THINK_BUDGET:-8192}" \
+  --reasoning-budget-message $'\n\nI have thought about this enough. Time to give the final answer.\n' \
+  --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0

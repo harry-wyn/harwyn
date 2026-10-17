@@ -239,3 +239,14 @@ lists the rejoin command and SHA-256 sums). The base model is
 | 5 | [`stage5-rft`](https://github.com/harry-wyn/harwyn/releases/tag/stage5-rft) | Rejection-sampling SFT LoRA on top of stage 4 (step 155 = final), not yet benchmarked |
 | 6 | [`stage6-grpo`](https://github.com/harry-wyn/harwyn/releases/tag/stage6-grpo) | GRPO LoRA, every iteration (it16 = final) |
 | 7 | [`stage7-final`](https://github.com/harry-wyn/harwyn/releases/tag/stage7-final) | **Final LoRA** (step 218): coding top-up on stage 6; final vs base table in results.md |
+
+## Run it
+
+**On a laptop or any CPU (llama.cpp):** build the GGUF with `export/build_gguf.sh` (merge → convert →
+quantise with the model's own bit map: Q6_K MLP gate/up, Q8_0 elsewhere, 3.9 GiB) and start the server with
+`export/harwyn-4b`. It serves an OpenAI-compatible API at `http://127.0.0.1:8080/v1` (model name `harwyn-4b`,
+web chat at the root URL) with a 4-bit KV cache and an 8,192-token thinking budget, after which the model is
+told to answer (the runaway-reasoning fix from REPORT.md §9; `HARWYN_THINK_BUDGET=-1` disables it).
+
+**On a GPU (vLLM, the deployment format the model was trained for):** merge with `export/merge_lora.py`,
+then `vllm serve <dir> --kv-cache-dtype int4_per_token_head --reasoning-parser qwen3`.
