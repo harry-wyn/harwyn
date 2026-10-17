@@ -1,0 +1,4 @@
+code: n=80 mean_reward=0.588
+webdev: n=48 mean_reward=0.323
+errors=0 mean_turns=5.2 mean_tokens=8111
+groups=16 informative=6 rows=48

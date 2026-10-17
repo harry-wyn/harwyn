@@ -371,3 +371,51 @@ LoRA change between checkpoints shrank as the LR decayed (‖Δ‖ 1.29 for step
 instance's hard 3.5 h cap, and evals were deliberately skipped rather than started and cut off. The
 training-loss log and the generated dataset were on the instance and were not copied off in time
 (the weights were); the generation statistics above were read live during the run. Spend: $3.56.
+
+## Stage 6: GRPO with verifiable rewards (2026-10-16 → 17)
+`rl/` (harness, tasks, advantages, loop), `train/train_qat.py --advantage`. Starts from stage 5 (LoRA step 155).
+
+**Tasks and rewards.**
+- *Agentic coding*: KodCode-Light-RL problems not used in stage 5 (HumanEval-decontaminated). The model works
+  in an empty sandbox with tools (`bash`, `write_file`, `read_file`, `submit`) and must leave `solution.py`;
+  reward 1 if the problem's hidden pytest file passes, else 0.
+- *Webdev*: XiaomiMiMo/MiMo-V2.6-RL-oss `webdev` briefs. The model must leave a self-contained `index.html`
+  (CDN libraries allowed, no build step). It is rendered with Chromium inside MiMo's webdev image (unpacked
+  with `rl/rootfs.py`, run unprivileged with proot), served over loopback HTTP, screenshotted full-page at
+  1280px, and scored 0-10 by Gemini 3.8 Flash against a fixed rubric (temperature 0); reward = score / 10.
+- MiMo's `code` environments were not used: their test runner (`mimo_test_command.sh`) is not in the published
+  images and the grading fields are empty, the images are multi-GB each, and a 4B model rarely solves real-repo
+  issues, so GRPO would see almost no reward variance. `cyber` was left out.
+- Tool commands run as the unprivileged user `nobody`, in their own process group (background servers are
+  killed with the call), with a 60 s timeout; file tools can't leave the sandbox.
+
+**Loop.** Each iteration: serve the current policy on vLLM in its deployment format (q7 fake-quant weights,
+`--kv-cache-dtype int4_per_token_head`); 16 tasks x 8 episodes (≈ 60% coding / 40% webdev pool); prompts are
+rendered with the same chat template the trainer uses and tool calls are parsed by our own linear parser (vLLM's
+tool parser pinned its API-server thread at 100% CPU on long HTML outputs and stalled every request);
+group-normalised advantages, flat groups dropped; 2 optimiser steps of advantage-weighted QAT LoRA training
+(weights + int4 KV fake-quant). LR 2e-5 for iterations 1-3, then cosine 5e-5 → 5e-6 (planned over 22).
+
+**Run.** 16 iterations on one A100 40GB. Infrastructure issues fixed on the way, in order: a setup script that
+deleted its own working directory; `runuser` missing in the image; tool-call arguments sent to the API as dicts;
+web pages too long for a 4k-token turn (raised to 12k); file:// rendering of React pages (now HTTP); vLLM
+prefill starved by the hybrid model's 2048-token blocks (`--max-num-batched-tokens 16384`; 65536 OOMed);
+the tool-parser stall above. The host also had two network outages (not billed), with reboots; the loop
+resumed from its per-iteration markers.
+
+| Iterations | Coding reward | Webdev reward | Mean turns |
+|---|---|---|---|
+| 1-4 | 0.69 | 0.27 | 4.6 |
+| 5-8 | 0.68 | 0.26 | 4.7 |
+| 9-12 | 0.75 | 0.28 | 4.9 |
+| 13-16 | 0.73 | **0.44** | **3.3** |
+
+Webdev reward rose ~60% in the last block and episodes got shorter (fewer, more decisive tool calls); coding
+rose modestly. Each iteration draws new random tasks, so single-iteration values are noisy (full log:
+`results/stage6/log.tsv`).
+
+**Benchmarks (final model, q7 + int4 KV, 32k budget):** HumanEval+ 75.0% (plain 79.9%; 86.0% of the answers
+that finish pass, 21/164 still run to 32k), GPQA Diamond first 99 **32/99** (2% hit the budget), RULER 32k
+**100/100/100/100**. Earlier stages were measured at 8k, so these are not directly comparable: the GPQA jump is
+mostly the larger budget, and HumanEval is within noise of stage 4. The open problem is a tail of runaway
+reasoning on ~13% of HumanEval problems that no budget fixes. Spend: $9.7 GPU + ~£1 judge.

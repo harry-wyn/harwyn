@@ -1,0 +1,144 @@
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  72%|███████▏  | 306/426 [00:00<00:00, 3052.54it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 2980.88it/s]
+trainable 60.9M params
+initialised from /workspace/runs/rft_v1/lora_step155.pt
+step 1/2 loss -0.0604 lr 2.00e-05 tok/s 615 elapsed 5.6m
+step 2/2 loss 0.0031 lr 2.00e-05 tok/s 890 elapsed 8.5m
+exported 200 merged fake-quant tensors
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  74%|███████▎  | 314/426 [00:00<00:00, 3128.00it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 3070.72it/s]
+trainable 60.9M params
+resumed at step 2
+step 3/4 loss -0.0003 lr 2.00e-05 tok/s 2235 elapsed 2.4m
+step 4/4 loss 0.0206 lr 2.00e-05 tok/s 2444 elapsed 4.2m
+exported 200 merged fake-quant tensors
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  73%|███████▎  | 312/426 [00:00<00:00, 3118.54it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 3019.10it/s]
+trainable 60.9M params
+resumed at step 4
+step 5/6 loss 0.0181 lr 2.00e-05 tok/s 2715 elapsed 1.2m
+step 6/6 loss 0.0051 lr 2.00e-05 tok/s 2742 elapsed 2.5m
+exported 200 merged fake-quant tensors
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  75%|███████▍  | 318/426 [00:00<00:00, 3166.75it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 3141.07it/s]
+trainable 60.9M params
+resumed at step 6
+step 7/8 loss 0.0208 lr 5.00e-05 tok/s 2540 elapsed 1.2m
+step 8/8 loss 0.0074 lr 5.00e-05 tok/s 2611 elapsed 2.7m
+exported 200 merged fake-quant tensors
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  73%|███████▎  | 313/426 [00:00<00:00, 3111.77it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 3026.11it/s]
+trainable 60.9M params
+resumed at step 8
+step 9/10 loss 0.0489 lr 4.97e-05 tok/s 2853 elapsed 2.3m
+step 10/10 loss -0.0180 lr 4.97e-05 tok/s 2832 elapsed 4.6m
+exported 200 merged fake-quant tensors
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  74%|███████▎  | 314/426 [00:00<00:00, 3139.40it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 3065.99it/s]
+trainable 60.9M params
+resumed at step 10
+step 11/12 loss 0.0053 lr 4.86e-05 tok/s 2761 elapsed 2.3m
+step 12/12 loss 0.0217 lr 4.86e-05 tok/s 2791 elapsed 4.9m
+exported 200 merged fake-quant tensors
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  72%|███████▏  | 306/426 [00:00<00:00, 3058.70it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 2990.03it/s]
+trainable 60.9M params
+resumed at step 12
+step 13/14 loss 0.0085 lr 4.70e-05 tok/s 2797 elapsed 1.6m
+step 14/14 loss 0.0264 lr 4.70e-05 tok/s 2740 elapsed 2.8m
+exported 200 merged fake-quant tensors
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  72%|███████▏  | 305/426 [00:00<00:00, 3041.17it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 2975.31it/s]
+trainable 60.9M params
+resumed at step 14
+step 15/16 loss 0.0019 lr 4.47e-05 tok/s 2785 elapsed 1.3m
+step 16/16 loss 0.0378 lr 4.47e-05 tok/s 2761 elapsed 2.5m
+exported 200 merged fake-quant tensors
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  91%|█████████ | 387/426 [00:00<00:00, 3861.43it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 3881.89it/s]
+trainable 60.9M params
+resumed at step 16
+step 17/18 loss 0.0140 lr 4.20e-05 tok/s 2279 elapsed 3.1m
+step 18/18 loss 0.0322 lr 4.20e-05 tok/s 2356 elapsed 5.2m
+exported 200 merged fake-quant tensors
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  73%|███████▎  | 313/426 [00:00<00:00, 3116.15it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 3066.06it/s]
+trainable 60.9M params
+resumed at step 18
+step 19/20 loss -0.0220 lr 3.87e-05 tok/s 2567 elapsed 1.1m
+step 20/20 loss -0.0007 lr 3.87e-05 tok/s 2487 elapsed 2.4m
+exported 200 merged fake-quant tensors
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  73%|███████▎  | 311/426 [00:00<00:00, 3108.35it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 3049.50it/s]
+trainable 60.9M params
+resumed at step 20
+step 21/22 loss 0.0186 lr 3.52e-05 tok/s 2622 elapsed 2.0m
+step 22/22 loss -0.0056 lr 3.52e-05 tok/s 2537 elapsed 3.9m
+exported 200 merged fake-quant tensors
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  72%|███████▏  | 306/426 [00:00<00:00, 3057.48it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 2993.42it/s]
+trainable 60.9M params
+resumed at step 22
+step 23/24 loss -0.0230 lr 3.14e-05 tok/s 2706 elapsed 1.1m
+step 24/24 loss 0.0142 lr 3.14e-05 tok/s 2640 elapsed 2.3m
+exported 200 merged fake-quant tensors
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  74%|███████▍  | 316/426 [00:00<00:00, 3159.21it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 3064.71it/s]
+trainable 60.9M params
+resumed at step 24
+step 25/26 loss 0.0171 lr 2.75e-05 tok/s 2646 elapsed 2.3m
+step 26/26 loss -0.0039 lr 2.75e-05 tok/s 2574 elapsed 5.5m
+exported 200 merged fake-quant tensors
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  73%|███████▎  | 311/426 [00:00<00:00, 3106.20it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 3034.37it/s]
+trainable 60.9M params
+resumed at step 26
+step 27/28 loss -0.0061 lr 2.36e-05 tok/s 2668 elapsed 2.1m
+step 28/28 loss 0.0172 lr 2.36e-05 tok/s 2581 elapsed 4.4m
+exported 200 merged fake-quant tensors
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  71%|███████   | 301/426 [00:00<00:00, 2989.30it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 2931.09it/s]
+trainable 60.9M params
+resumed at step 28
+step 29/30 loss 0.0203 lr 1.98e-05 tok/s 2471 elapsed 1.9m
+step 30/30 loss -0.0039 lr 1.98e-05 tok/s 2437 elapsed 4.1m
+exported 200 merged fake-quant tensors
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] Missing validation function in 'RotaryEmbeddingConfigMixin' for 'rope_type'='axial'
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/426 [00:00<?, ?it/s]Loading weights:  76%|███████▌  | 323/426 [00:00<00:00, 3219.35it/s]Loading weights: 100%|██████████| 426/426 [00:00<00:00, 3135.55it/s]
+trainable 60.9M params
+resumed at step 30
+step 31/32 loss -0.0129 lr 1.63e-05 tok/s 2649 elapsed 1.2m
+step 32/32 loss 0.0010 lr 1.63e-05 tok/s 2573 elapsed 2.6m
+exported 200 merged fake-quant tensors

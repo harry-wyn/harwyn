@@ -61,3 +61,11 @@ The 4B collapses at 3.0 bpw (RCO's KL vs h0: 1.17). Details and caveats in [`LOG
 3 decimals throughout. HumanEval+ **78.0%** (plain 82.3%), GPQA **18/99**, RULER **100/100/100/100**.
 Run-to-run spread on HumanEval+ is ±2.5 pts, mostly from answers hitting the 8k budget (12.8% vs 5.5%).
 Run 2 is the one kept (`results/stage4_run2/`).
+
+## Stage 6: GRPO (harwyn-4b-grpo, q7 + int4 KV, **32k budget**)
+| Benchmark | Score |
+|---|---|
+| HumanEval+ | 75.0% (plain 79.9%) |
+| GPQA Diamond, first 99 | 32/99 |
+| RULER 32k (mk1/mk2/mk3/mv) | 100/100/100/100 |
+Training reward, first → last 4 iterations: coding 0.69 → 0.73, webdev 0.27 → 0.44. Not comparable with the 8k rows above.
