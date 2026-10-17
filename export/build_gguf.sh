@@ -11,3 +11,5 @@ python "$REPO/export/merge_lora.py" "$H0" "$LORA" "$REPO/results/stage2/assignme
 python "$LLAMA/src/convert_hf_to_gguf.py" "$OUT/harwyn-4b-hf" --outtype bf16 --outfile "$OUT/harwyn-4b-bf16.gguf"
 "$LLAMA/bin/llama-quantize" --tensor-type ffn_gate=q6_k --tensor-type ffn_up=q6_k \
   "$OUT/harwyn-4b-bf16.gguf" "$OUT/harwyn-4b-q7.gguf" q8_0
+# vision: the image encoder + projector as a separate file (llama-server --mmproj); unchanged from the base model
+python "$LLAMA/src/convert_hf_to_gguf.py" "$OUT/harwyn-4b-hf" --mmproj --outtype f16 --outfile "$OUT/harwyn-4b-mmproj-f16.gguf"

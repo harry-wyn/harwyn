@@ -245,7 +245,7 @@ lists the rejoin command and SHA-256 sums). The base model is
 **On a laptop or any CPU (llama.cpp):** build the GGUF with `export/build_gguf.sh` (merge → convert →
 quantise with the model's own bit map: Q6_K MLP gate/up, Q8_0 elsewhere, 3.9 GiB) and start the server with
 `export/harwyn-4b`. It serves an OpenAI-compatible API at `http://127.0.0.1:8080/v1` (model name `harwyn-4b`,
-web chat at the root URL) with a 4-bit KV cache and an 8,192-token thinking budget, after which the model is
+web chat at the root URL) with vision (images accepted; the image encoder is the base model's, untouched by training and not benchmarked), a 4-bit KV cache and an 8,192-token thinking budget, after which the model is
 told to answer (the runaway-reasoning fix from REPORT.md §9; `HARWYN_THINK_BUDGET=-1` disables it).
 
 **On a GPU (vLLM, the deployment format the model was trained for):** merge with `export/merge_lora.py`,
@@ -268,6 +268,7 @@ then `vllm serve <dir> --kv-cache-dtype int4_per_token_head --reasoning-parser q
         models:
           - id: harwyn-4b
             name: harwyn-4b
+            input: [text, image]
             contextWindow: 32768
             maxTokens: 16384
             reasoningEfforts:

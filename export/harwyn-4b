@@ -8,12 +8,16 @@
 #   HARWYN_CTX           context length in tokens (default 32768)
 #   HARWYN_THINK_BUDGET  max reasoning tokens before it must answer (default 8192; -1 = unlimited)
 #   HARWYN_THREADS       generation threads (default 4 = physical cores)
+#   HARWYN_VISION        1 = accept images (default; loads the vision projector), 0 = text only
 # Ctrl+C stops the server.
 set -euo pipefail
 ROOT="$HOME/.local/share/harwyn"
 BIN="$ROOT/llama.cpp/llama-b11709/llama-server"
 MODEL="${HARWYN_MODEL:-$HOME/Work/harwyn-weights/final/harwyn-4b-q7.gguf}"
 PORT="${HARWYN_PORT:-8080}"
+MMPROJ="${HARWYN_MMPROJ:-$HOME/Work/harwyn-weights/final/harwyn-4b-mmproj-f16.gguf}"
+VISION=()
+if [ "${HARWYN_VISION:-1}" != 0 ] && [ -f "$MMPROJ" ]; then VISION=(--mmproj "$MMPROJ"); fi
 [ -x "$BIN" ] || { echo "harwyn-4b: llama.cpp server not found at $BIN" >&2; exit 1; }
 [ -f "$MODEL" ] || { echo "harwyn-4b: model not found at $MODEL" >&2; exit 1; }
 if ss -ltn 2>/dev/null | grep -q ":$PORT "; then
@@ -27,12 +31,12 @@ cat <<EOF
 harwyn-4b
   API:      http://127.0.0.1:$PORT/v1   (OpenAI-compatible; model "harwyn-4b")
   Web chat: http://127.0.0.1:$PORT
-  Thinking budget: ${HARWYN_THINK_BUDGET:-8192} tokens   Context: ${HARWYN_CTX:-32768}   KV cache: 4-bit
+  Vision: $([ ${#VISION[@]} -gt 0 ] && echo on || echo off)   Thinking budget: ${HARWYN_THINK_BUDGET:-8192} tokens   Context: ${HARWYN_CTX:-32768}   KV cache: 4-bit
   Example:  curl http://127.0.0.1:$PORT/v1/chat/completions -H 'Content-Type: application/json' \\
               -d '{"model":"harwyn-4b","messages":[{"role":"user","content":"Hello!"}]}'
 Loading (a few seconds)... Ctrl+C to stop.
 EOF
-exec "$BIN" -m "$MODEL" --alias harwyn-4b \
+exec "$BIN" -m "$MODEL" "${VISION[@]}" --alias harwyn-4b \
   --host 127.0.0.1 --port "$PORT" \
   -c "${HARWYN_CTX:-32768}" -fa on -ctk q4_0 -ctv q4_0 \
   -t "${HARWYN_THREADS:-4}" -tb 8 \
